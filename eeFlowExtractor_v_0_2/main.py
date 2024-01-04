@@ -349,12 +349,12 @@ def visualize(all_templates):
 
     dot.view()
 
-all_templates=extract_from_script_parth(file_path = r"TestSet\test.txt")
+all_templates=extract_from_script_parth(file_path = r"eeFlowExtractor_v_0_2\TestSet\test.txt")
 # visualize(all_templates)
 # 使用GEE_Utils类
 gee_utils = GEEUtils()
-gee_utils.load_gee_apis("EE_API\GEE_APIs.csv")
-gee_utils.load_gee_params("EE_API\GEE_Params.csv")
+gee_utils.load_gee_apis("eeFlowExtractor_v_0_2\EE_API\GEE_APIs.csv")
+gee_utils.load_gee_params("eeFlowExtractor_v_0_2\EE_API\GEE_Params.csv")
 
 #? 记录service_node之间关系、workflow_template之间关系，workflow_template与service_node之间关系
 def record_all_relationships(all_templates):
@@ -375,8 +375,8 @@ def record_all_relationships(all_templates):
                             order=edge[2]
                         else:
                             order=1
-                        node_relationships.append({"node1":node1.node_name,"node1_type":node1.node_type,
-                                                   "node2":node2.node_name,"node2_type":node2.node_type,
+                        node_relationships.append({"node1":node1.node_name,"node1_type":node1.node_type,"node1_id":node1.id,
+                                                   "node2":node2.node_name,"node2_type":node2.node_type,"node2_id":node2.id,
                                                    "order":order,
                                                    "template_id":cur_template_id})
                         if node1.node_type=='eeFunction' and node2.node_type=='eeFunction':
@@ -386,11 +386,22 @@ def record_all_relationships(all_templates):
     return template_relationships,node_relationships,ee_relationships
 
 
-def write_to_txt(process_lines, filename):
-    with open(filename, 'w') as file:
-        for line in process_lines:
-            file.write(str(line) + '\n')
-
 _,node_relationships,ee_relationships= record_all_relationships(all_templates)
 
-write_to_txt(node_relationships,'output.txt')
+from Utils.MKProcess_generator import simplify_ids,convert_nodes_to_escaped_xml_string,convert_edges_to_relationship_xml_string
+
+simplified_json_list = simplify_ids(node_relationships)
+
+xml_nodes_string = convert_nodes_to_escaped_xml_string(simplified_json_list)
+xml_relationships_string = convert_edges_to_relationship_xml_string(simplified_json_list)
+
+with open('Node.txt', 'w') as file:
+    file.write(xml_nodes_string)
+
+with open('Relationship.txt', 'w') as file:
+    file.write(xml_relationships_string)
+
+with open('result.txt', 'w') as file:
+    for line in simplified_json_list:
+        file.write(str(line) + '\n')
+

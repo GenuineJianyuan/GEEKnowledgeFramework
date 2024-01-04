@@ -1,5 +1,5 @@
-var LULC = ee.Image("users/region/XunwuCounty/Xunwu"),
-    boundary = ee.FeatureCollection("users/region/XunwuCounty/XunwuBoundary");
+var LULC = ee.Image("users/region/XunwuCounty/Xunwu");
+var boundary = ee.FeatureCollection("users/region/XunwuCounty/XunwuBoundary");
 
 // Use the remap() method to replace original values with target values
 var remappedImage = LULC.remap([1, 2, 3, 6, 8, 9], [0.33, 0.60, 0.02, 0, 0.04, 0.01], 0);

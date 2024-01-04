@@ -1,6 +1,6 @@
 // parse.js
-// const acorn = require('c:/Users/Administrator/node_modules/acorn/dist/acorn');
-const acorn = require('c:/Users/Huawei/node_modules/acorn/dist/acorn');
+const acorn = require('c:/Users/Administrator/node_modules/acorn/dist/acorn');
+// const acorn = require('c:/Users/Huawei/node_modules/acorn/dist/acorn');
 const fs = require("fs");
 
 const type = process.argv[3]
