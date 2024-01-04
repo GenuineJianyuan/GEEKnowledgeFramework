@@ -1,4 +1,5 @@
 from langchain.chat_models import ErnieBotChat
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.prompts import ChatPromptTemplate
 from langchain.chains import LLMChain
@@ -14,8 +15,13 @@ def read_content_from_txt(filename):
 code=read_content_from_txt(r'eePromptEngineering_v_0_1\test_ee_script.txt')
 GCMDtheme=read_content_from_txt(r'eePromptEngineering_v_0_1\thematic_task_l1.txt')
 
-llm = ErnieBotChat(model_name="ERNIE-Bot-4",ernie_client_id="qU735xgmPWEikqBqI8zXKEve",ernie_client_secret="PomzS3b7r8hSmTqnVpvko9iDs6djaeU1")
-# llm_math = LLMMathChain(llm=llm)
+## use other LLMs
+# llm = ErnieBotChat(model_name="ERNIE-Bot-4",ernie_client_id="",ernie_client_secret="")
+## use ChatGPT
+import os
+os.environ['OPENAI_API_KEY'] = 'OpenAI API Key'
+llm = ChatOpenAI(model_name="gpt-3.5-turbo",temperature=0)
+
 prompt_template = """
 You are designed to be a professional GEE developer and GIS expert. Your goal is to extract 
 the required information from the given GEE workflow script according to the requirements. 
@@ -49,6 +55,49 @@ like the following example:
 6. Remember! Do not include any content other than the required response in your reply. Keep the format consistent with the example.
 """
 
-# print(final_prompt)
-ret=llm.predict(prompt_template)
-print(ret)
+prompt_template2="""
+Check if previous response is in JSON format, if it is, response True, 
+otherwise response False.
+Remember! Do not include any content other than the required response in your reply. 
+"""
+
+prompt_template3=\
+"An exception occurred: current response is not entirely in JSON format, redo the follow query"+ \
+    prompt_template
+
+
+limited_times=5
+current=0
+current_template=prompt_template
+result=None
+current_response=None
+while current<limited_times:
+    current_response=llm.predict(current_template)
+    next_response=llm.predict(prompt_template2)
+    print(next_response)
+    if "True" in next_response:
+        result=current_response
+        break
+    else:
+        print("Wait to generate")
+        print("Current response is:")
+        print(current_response)
+        current=current+1
+        current_template=prompt_template3
+
+if current==limited_times:
+    print("Exceed maximum times")
+if result is None:
+    print("Failed to generate")
+else:
+    print("Find correct response")
+    result=result[8:-4]
+
+
+
+
+
+
+
+    
+
