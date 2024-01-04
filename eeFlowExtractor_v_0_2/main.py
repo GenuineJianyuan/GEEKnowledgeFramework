@@ -349,7 +349,7 @@ def visualize(all_templates):
 
     dot.view()
 
-all_templates=extract_from_script_parth(file_path = r"eeFlowExtractor_v_0_2\TestSet\test.txt")
+all_templates=extract_from_script_parth(file_path = r"eeFlowExtractor_v_0_2\TestSet\landslide_susceptility_evaluation.txt")
 # visualize(all_templates)
 # 使用GEE_Utils类
 gee_utils = GEEUtils()
@@ -388,6 +388,10 @@ def record_all_relationships(all_templates):
 
 _,node_relationships,ee_relationships= record_all_relationships(all_templates)
 
+with open(r'eeFlowExtractor_v_0_2\ResultSet\origin.txt', 'w',encoding='utf-8') as file:
+    for line in node_relationships:
+        file.write(str(line) + '\n')
+
 from Utils.MKProcess_generator import simplify_ids,convert_nodes_to_escaped_xml_string,convert_edges_to_relationship_xml_string
 
 simplified_json_list = simplify_ids(node_relationships)
@@ -395,13 +399,9 @@ simplified_json_list = simplify_ids(node_relationships)
 xml_nodes_string = convert_nodes_to_escaped_xml_string(simplified_json_list)
 xml_relationships_string = convert_edges_to_relationship_xml_string(simplified_json_list)
 
-with open('Node.txt', 'w') as file:
+with open(r'eeFlowExtractor_v_0_2\ResultSet\Node.txt', 'w',encoding='utf-8') as file:
     file.write(xml_nodes_string)
 
-with open('Relationship.txt', 'w') as file:
+with open(r'eeFlowExtractor_v_0_2\ResultSet\Relationship.txt', 'w',encoding='utf-8') as file:
     file.write(xml_relationships_string)
-
-with open('result.txt', 'w') as file:
-    for line in simplified_json_list:
-        file.write(str(line) + '\n')
 
