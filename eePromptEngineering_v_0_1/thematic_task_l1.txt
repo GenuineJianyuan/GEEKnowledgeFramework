@@ -1,0 +1,14 @@
+ [
+    Agriculture,
+    Atmosphere,
+    Biological classification,
+    Biosphere,
+    Climate indicators,
+    Cryosphere,
+    Human dimensions,
+    Land surface, 
+    Oceans, 
+    Solid earth, 
+    Spectral/Engineering, 
+    Terrestrial hydrosphere
+]
