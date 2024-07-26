@@ -1,0 +1,146 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320000" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2011-06-19</StartTime>
+        <EndTime>2011-06-19</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[-101.05259, 37.93418]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LT05/C02/T1_TOA/LT05_031034_20110619</SourceName>
+            <Value>LANDSAT/LT05/C02/T1_TOA/LT05_031034_20110619</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Vegetation</Value>
+        <Description>This script detects edges in an NDVI image derived from a Landsat 5 image using the Canny Edge Detector algorithm. The outputs are the NDVI image and the detected edges.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: 'FF0000'}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="literal">FF0000</Node>
+   <Node id="5" type="literal">0</Node>
+   <Node id="6" type="complex">{min: 0, max: 1}</Node>
+   <Node id="7" type="literal">1</Node>
+   <Node id="8" type="literal">37.93418</Node>
+   <Node id="9" type="eeFunction">Map.setCenter</Node>
+   <Node id="10" type="literal">13</Node>
+   <Node id="11" type="literal">B4</Node>
+   <Node id="12" type="eeFunction">ee.List</Node>
+   <Node id="13" type="literal">B3</Node>
+   <Node id="14" type="literal">LANDSAT/LT05/C02/T1_TOA/LT05_031034_20110619</Node>
+   <Node id="15" type="eeFunction">ee.Image</Node>
+   <Node id="16" type="eeFunction">normalizedDifference</Node>
+   <Node id="17" type="eeFunction">Map.addLayer</Node>
+   <Node id="18" type="literal">Landsat NDVI</Node>
+   <Node id="19" type="literal">0.7</Node>
+   <Node id="20" type="eeFunction">ee.Algorithms.CannyEdgeDetector</Node>
+   <Node id="21" type="eeFunction">updateMask</Node>
+   <Node id="22" type="eeFunction">Map.addLayer</Node>
+   <Node id="23" type="literal">Canny Edges</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="9"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="12"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="15"></Relation>
+   <Relation id="11" sourceNodeId="12" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="6" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="18" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="16" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="19" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="20" sourceNodeId="2" targetNodeId="22"></Relation>
+   <Relation id="21" sourceNodeId="23" targetNodeId="22"></Relation>
+   <Relation id="22" sourceNodeId="21" targetNodeId="22"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Canny Edge Detector .</Content>
+    </Script>
+    <Script line="3" startPosition="28" endPosition="70">
+        <Content type="comment">// Load an image and compute NDVI from it.</Content>
+    </Script>
+    <Script line="4" startPosition="72" endPosition="141">
+        <Content type="code">var image = ee.Image('LANDSAT/LT05/C02/T1_TOA/LT05_031034_20110619');</Content>
+    </Script>
+    <Script line="5" startPosition="143" endPosition="194">
+        <Content type="code">var ndvi = image.normalizedDifference(['B4','B3']);</Content>
+    </Script>
+    <Script line="7" startPosition="198" endPosition="231">
+        <Content type="comment">// Detect edges in the composite.</Content>
+    </Script>
+    <Script line="8" startPosition="233" endPosition="288">
+        <Content type="code">var canny = ee.Algorithms.CannyEdgeDetector(ndvi, 0.7);</Content>
+    </Script>
+    <Script line="10" startPosition="292" endPosition="356">
+        <Content type="comment">// Mask the image with itself to get rid of areas with no edges.</Content>
+    </Script>
+    <Script line="11" startPosition="358" endPosition="390">
+        <Content type="code">canny = canny.updateMask(canny);</Content>
+    </Script>
+    <Script line="13" startPosition="394" endPosition="434">
+        <Content type="code">Map.setCenter(-101.05259, 37.93418, 13);</Content>
+    </Script>
+    <Script line="14" startPosition="436" endPosition="489">
+        <Content type="code">Map.addLayer(ndvi, {min: 0, max: 1}, 'Landsat NDVI');</Content>
+    </Script>
+    <Script line="15" startPosition="491" endPosition="563">
+        <Content type="code">Map.addLayer(canny, {min: 0, max: 1, palette: 'FF0000'}, 'Canny Edges');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>4</ServiceNodeId>
+        <GEEScriptPart startPosition="538" endPosition="544">FF0000</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="183" endPosition="185">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="188" endPosition="190">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="94" endPosition="138">LANDSAT/LT05/C02/T1_TOA/LT05_031034_20110619</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="474" endPosition="486">Landsat NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="549" endPosition="560">Canny Edges</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

@@ -1,0 +1,149 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320006" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>Congo Republic(geonameId=2260494)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>LSIB 2017: Large Scale International Boundary Polygons, Simplified</SourceName>
+            <Value>USDOS/LSIB_SIMPLE/2017</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>UMD/hansen/global_forest_change_2015</SourceName>
+            <Value>UMD/hansen/global_forest_change_2015</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Forest science</Value>
+        <Description>The script aims to calculate the sum of forest loss pixels in the Congo Republic using the Global Forest Change dataset.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">loss</Node>
+   <Node id="2" type="eeFunction">ee.List</Node>
+   <Node id="3" type="literal">UMD/hansen/global_forest_change_2015</Node>
+   <Node id="4" type="eeFunction">ee.Image</Node>
+   <Node id="5" type="eeFunction">select</Node>
+   <Node id="6" type="literal">country_na</Node>
+   <Node id="7" type="eeFunction">ee.Filter.eq</Node>
+   <Node id="8" type="literal">Rep of the Congo</Node>
+   <Node id="9" type="literal">USDOS/LSIB_SIMPLE/2017</Node>
+   <Node id="10" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="11" type="eeFunction">filter</Node>
+   <Node id="12" type="eeFunction">ee.Reducer.sum</Node>
+   <Node id="13" type="complex">{
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: congo,
+
+  scale: 30
+
+}</Node>
+   <Node id="14" type="literal">30</Node>
+   <Node id="15" type="eeFunction">reduceRegion</Node>
+   <Node id="16" type="eeFunction">print</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="2" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="5" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="7" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="12" sourceNodeId="11" targetNodeId="13"></Relation>
+   <Relation id="13" sourceNodeId="13" targetNodeId="15"></Relation>
+   <Relation id="14" sourceNodeId="5" targetNodeId="15"></Relation>
+   <Relation id="15" sourceNodeId="15" targetNodeId="16"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="15">
+        <Content type="comment">//Forest Change</Content>
+    </Script>
+    <Script line="3" startPosition="19" endPosition="99">
+        <Content type="comment">// Load country features from Large Scale International Boundary (LSIB) dataset.</Content>
+    </Script>
+    <Script line="4" startPosition="101" endPosition="164">
+        <Content type="code">var countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');</Content>
+    </Script>
+    <Script line="6" startPosition="168" endPosition="220">
+        <Content type="comment">// Subset the Congo Republic feature from countries.</Content>
+    </Script>
+    <Script line="7" startPosition="222" endPosition="299">
+        <Content type="code">var congo = countries.filter(ee.Filter.eq('country_na', 'Rep of the Congo'));</Content>
+    </Script>
+    <Script line="9" startPosition="303" endPosition="332">
+        <Content type="comment">// Get the forest loss image.</Content>
+    </Script>
+    <Script line="10" startPosition="334" endPosition="397">
+        <Content type="code">var gfc2014 = ee.Image('UMD/hansen/global_forest_change_2015');</Content>
+    </Script>
+    <Script line="11" startPosition="399" endPosition="440">
+        <Content type="code">var lossImage = gfc2014.select(['loss']);</Content>
+    </Script>
+    <Script line="13" startPosition="444" endPosition="506">
+        <Content type="comment">// Sum the values of forest loss pixels in the Congo Republic.</Content>
+    </Script>
+    <Script line="14,15,16,17,18" startPosition="508" endPosition="612">
+        <Content type="code">var stats = lossImage.reduceRegion({
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: congo,
+
+  scale: 30
+
+});</Content>
+    </Script>
+    <Script line="19" startPosition="614" endPosition="627">
+        <Content type="code">print(stats);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>1</ServiceNodeId>
+        <GEEScriptPart startPosition="432" endPosition="436">loss</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="358" endPosition="394">UMD/hansen/global_forest_change_2015</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>6</ServiceNodeId>
+        <GEEScriptPart startPosition="265" endPosition="275">country_na</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="279" endPosition="295">Rep of the Congo</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="139" endPosition="161">USDOS/LSIB_SIMPLE/2017</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

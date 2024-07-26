@@ -1,0 +1,126 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320013" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2016-03-23</StartTime>
+        <EndTime>2016-03-23</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>Tegucigalpa(geonameId=3600949)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LC08/C02/T1_TOA/LC08_044034_20160323</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_TOA/LC08_044034_20160323</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>This script loads a Landsat image over San Francisco, California, and displays it using nearest neighbor and bicubic resampling methods for comparison.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="complex">['B4', 'B3', 'B2']</Node>
+   <Node id="2" type="complex">{bands: ['B4', 'B3', 'B2'], max: 0.3}</Node>
+   <Node id="3" type="literal">0.3</Node>
+   <Node id="4" type="literal">37.6193</Node>
+   <Node id="5" type="eeFunction">Map.setCenter</Node>
+   <Node id="6" type="literal">15</Node>
+   <Node id="7" type="literal">LANDSAT/LC08/C02/T1_TOA/LC08_044034_20160323</Node>
+   <Node id="8" type="eeFunction">ee.Image</Node>
+   <Node id="9" type="literal">bicubic</Node>
+   <Node id="10" type="eeFunction">resample</Node>
+   <Node id="11" type="literal">resampled</Node>
+   <Node id="12" type="eeFunction">Map.addLayer</Node>
+   <Node id="13" type="literal">original image</Node>
+   <Node id="14" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="5"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="8" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="10" targetNodeId="12"></Relation>
+   <Relation id="10" sourceNodeId="2" targetNodeId="12"></Relation>
+   <Relation id="11" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="8" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="2" targetNodeId="14"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="11">
+        <Content type="comment">// Resample</Content>
+    </Script>
+    <Script line="3" startPosition="15" endPosition="75">
+        <Content type="comment">// Load a Landsat image over San Francisco, California, UAS.</Content>
+    </Script>
+    <Script line="4" startPosition="77" endPosition="148">
+        <Content type="code">var landsat = ee.Image('LANDSAT/LC08/C02/T1_TOA/LC08_044034_20160323');</Content>
+    </Script>
+    <Script line="6" startPosition="152" endPosition="196">
+        <Content type="comment">// Set display and visualization parameters.</Content>
+    </Script>
+    <Script line="7" startPosition="198" endPosition="237">
+        <Content type="code">Map.setCenter(-122.37383, 37.6193, 15);</Content>
+    </Script>
+    <Script line="8" startPosition="239" endPosition="293">
+        <Content type="code">var visParams = {bands: ['B4', 'B3', 'B2'], max: 0.3};</Content>
+    </Script>
+    <Script line="10" startPosition="297" endPosition="372">
+        <Content type="comment">// Display the Landsat image using the default nearest neighbor resampling.</Content>
+    </Script>
+    <Script line="11" startPosition="374" endPosition="431">
+        <Content type="comment">// when reprojecting to Mercator for the Code Editor map.</Content>
+    </Script>
+    <Script line="12" startPosition="433" endPosition="484">
+        <Content type="code">Map.addLayer(landsat, visParams, 'original image');</Content>
+    </Script>
+    <Script line="14" startPosition="488" endPosition="559">
+        <Content type="comment">// Force the next reprojection on this image to use bicubic resampling.</Content>
+    </Script>
+    <Script line="15" startPosition="561" endPosition="605">
+        <Content type="code">var resampled = landsat.resample('bicubic');</Content>
+    </Script>
+    <Script line="17" startPosition="609" endPosition="663">
+        <Content type="comment">// Display the Landsat image using bicubic resampling.</Content>
+    </Script>
+    <Script line="18" startPosition="665" endPosition="713">
+        <Content type="code">Map.addLayer(resampled, visParams, 'resampled');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="101" endPosition="145">LANDSAT/LC08/C02/T1_TOA/LC08_044034_20160323</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="595" endPosition="602">bicubic</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="701" endPosition="710">resampled</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="467" endPosition="481">original image</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

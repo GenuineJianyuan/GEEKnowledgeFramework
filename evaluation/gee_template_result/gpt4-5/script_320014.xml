@@ -1,0 +1,284 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320014" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[37.45, 37.75, -122.35, -122.05]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LC08/C01/T1_TOA</SourceName>
+            <Value>LANDSAT/LC08/C01/T1_TOA</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Vegetation</Value>
+        <Description>This script calculates the Leaf Area Index (LAI) for the San Francisco Bay Area using Landsat 8 data from 2020. The outputs include the LAI image and its statistical information.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="eeFunction">ee.Reducer.stdDev</Node>
+   <Node id="2" type="complex">{
+
+    reducer2: ee.Reducer.stdDev(),
+
+    sharedInputs: true
+
+  }</Node>
+   <Node id="3" type="literal">True</Node>
+   <Node id="4" type="eeFunction">ee.Reducer.mean</Node>
+   <Node id="5" type="eeFunction">combine</Node>
+   <Node id="6" type="literal">0</Node>
+   <Node id="7" type="complex">{
+
+  min: 0,
+
+  max: 6,                                                         
+
+  palette: ['000000', '00FF00']                               
+
+}</Node>
+   <Node id="8" type="literal">6</Node>
+   <Node id="9" type="complex">['000000', '00FF00']</Node>
+   <Node id="10" type="literal">B5</Node>
+   <Node id="11" type="eeFunction">ee.List</Node>
+   <Node id="12" type="literal">B4</Node>
+   <Node id="13" type="literal">LANDSAT/LC08/C01/T1_TOA</Node>
+   <Node id="14" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="15" type="literal">37.45</Node>
+   <Node id="16" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="17" type="literal">37.75</Node>
+   <Node id="18" type="complex">{
+
+  reducer: ee.Reducer.mean().combine({
+
+    reducer2: ee.Reducer.stdDev(),
+
+    sharedInputs: true
+
+  }),
+
+  geometry: roi,
+
+  scale: 30                                                     
+
+}</Node>
+   <Node id="19" type="literal">30</Node>
+   <Node id="20" type="literal">10</Node>
+   <Node id="21" type="eeFunction">Map.centerObject</Node>
+   <Node id="22" type="eeFunction">filterBounds</Node>
+   <Node id="23" type="eeFunction">filterDate</Node>
+   <Node id="24" type="literal">2020-01-01</Node>
+   <Node id="25" type="literal">2020-12-31</Node>
+   <Node id="26" type="eeFunction">median</Node>
+   <Node id="27" type="eeFunction">normalizedDifference</Node>
+   <Node id="28" type="complex">{
+
+    'NDVI': ndvi
+
+  }</Node>
+   <Node id="29" type="literal">0.899 * (1.007 / (NDVI - 0.069) - 0.018)</Node>
+   <Node id="30" type="eeFunction">expression</Node>
+   <Node id="31" type="eeFunction">reduceRegion</Node>
+   <Node id="32" type="literal">LAI Mean:</Node>
+   <Node id="33" type="eeFunction">print</Node>
+   <Node id="34" type="literal">Leaf Area Index (LAI)</Node>
+   <Node id="35" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="2" targetNodeId="5"></Relation>
+   <Relation id="5" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="7"></Relation>
+   <Relation id="8" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="5" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="16" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="17" sourceNodeId="16" targetNodeId="21"></Relation>
+   <Relation id="18" sourceNodeId="14" targetNodeId="22"></Relation>
+   <Relation id="19" sourceNodeId="16" targetNodeId="22"></Relation>
+   <Relation id="20" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="23" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="11" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="26" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="27" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="28" sourceNodeId="28" targetNodeId="30"></Relation>
+   <Relation id="29" sourceNodeId="27" targetNodeId="30"></Relation>
+   <Relation id="30" sourceNodeId="18" targetNodeId="31"></Relation>
+   <Relation id="31" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="32" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="33" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="34" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="35" sourceNodeId="30" targetNodeId="35"></Relation>
+   <Relation id="36" sourceNodeId="7" targetNodeId="35"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="18">
+        <Content type="comment">// LAI Calculation</Content>
+    </Script>
+    <Script line="3" startPosition="22" endPosition="45">
+        <Content type="comment">// Select analysis area</Content>
+    </Script>
+    <Script line="4" startPosition="47" endPosition="111">
+        <Content type="code">var roi = ee.Geometry.Rectangle(-122.35, 37.45, -122.05, 37.75);</Content>
+    </Script>
+    <Script line="4" startPosition="112" endPosition="169">
+        <Content type="comment">// For example, the San Francisco Bay Area is chosen here</Content>
+    </Script>
+    <Script line="6" startPosition="173" endPosition="197">
+        <Content type="comment">// Import Landsat 8 Data</Content>
+    </Script>
+    <Script line="7,8,9" startPosition="199" endPosition="334">
+        <Content type="code">var landsatCollection = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA')
+
+  .filterBounds(roi)
+
+  .filterDate('2020-01-01', '2020-12-31');</Content>
+    </Script>
+    <Script line="9" startPosition="335" endPosition="374">
+        <Content type="comment">// Replace with your desired date range</Content>
+    </Script>
+    <Script line="11" startPosition="378" endPosition="440">
+        <Content type="comment">// Select an image (multiple images can be selected as needed)</Content>
+    </Script>
+    <Script line="12" startPosition="442" endPosition="488">
+        <Content type="code">var landsatImage = landsatCollection.median();</Content>
+    </Script>
+    <Script line="14" startPosition="492" endPosition="550">
+        <Content type="comment">// Calculate NDVI (Normalized Difference Vegetation Index)</Content>
+    </Script>
+    <Script line="15" startPosition="552" endPosition="611">
+        <Content type="code">var ndvi = landsatImage.normalizedDifference(['B5', 'B4']);</Content>
+    </Script>
+    <Script line="17" startPosition="615" endPosition="631">
+        <Content type="comment">// Calculate LAI</Content>
+    </Script>
+    <Script line="18,19,20,21,22,23" startPosition="633" endPosition="738">
+        <Content type="code">var lai = ndvi.expression(
+
+  '0.899 * (1.007 / (NDVI - 0.069) - 0.018)',
+
+  {
+
+    'NDVI': ndvi
+
+  }
+
+);</Content>
+    </Script>
+    <Script line="25" startPosition="742" endPosition="758">
+        <Content type="comment">// Visualize LAI</Content>
+    </Script>
+    <Script line="26,27,28,29,30" startPosition="760" endPosition="921">
+        <Content type="code">var laiVis = {
+
+  min: 0,
+
+  max: 6, // Adjust the maximum value according to your data range
+
+  palette: ['000000', '00FF00'] // Customize the color palette
+
+};</Content>
+    </Script>
+    <Script line="28" startPosition="797" endPosition="853">
+        <Content type="comment">// Adjust the maximum value according to your data range</Content>
+    </Script>
+    <Script line="29" startPosition="887" endPosition="917">
+        <Content type="comment">// Customize the color palette</Content>
+    </Script>
+    <Script line="32" startPosition="925" endPosition="951">
+        <Content type="code">Map.centerObject(roi, 10);</Content>
+    </Script>
+    <Script line="33" startPosition="953" endPosition="1004">
+        <Content type="code">Map.addLayer(lai, laiVis, 'Leaf Area Index (LAI)');</Content>
+    </Script>
+    <Script line="35" startPosition="1008" endPosition="1057">
+        <Content type="comment">// Print statistical information of the LAI image</Content>
+    </Script>
+    <Script line="36,37,38,39,40,41,42,43" startPosition="1059" endPosition="1285">
+        <Content type="code">var stats = lai.reduceRegion({
+
+  reducer: ee.Reducer.mean().combine({
+
+    reducer2: ee.Reducer.stdDev(),
+
+    sharedInputs: true
+
+  }),
+
+  geometry: roi,
+
+  scale: 30 // Set an appropriate value based on data resolution
+
+});</Content>
+    </Script>
+    <Script line="42" startPosition="1228" endPosition="1280">
+        <Content type="comment">// Set an appropriate value based on data resolution</Content>
+    </Script>
+    <Script line="45" startPosition="1289" endPosition="1315">
+        <Content type="code">print('LAI Mean:', stats);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="599" endPosition="601">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="605" endPosition="607">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="243" endPosition="266">LANDSAT/LC08/C01/T1_TOA</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="307" endPosition="317">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>25</ServiceNodeId>
+        <GEEScriptPart startPosition="321" endPosition="331">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>29</ServiceNodeId>
+        <GEEScriptPart startPosition="664" endPosition="704">0.899 * (1.007 / (NDVI - 0.069) - 0.018)</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="1296" endPosition="1305">LAI Mean:</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="980" endPosition="1001">Leaf Area Index (LAI)</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

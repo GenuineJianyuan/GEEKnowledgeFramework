@@ -1,0 +1,436 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320004" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2000-01-01</StartTime>
+        <EndTime>2001-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[30.110383818311096, 31.609824974226175, 29.972731783841393, 32.56550522134139]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>MODIS/006/MCD12Q1</SourceName>
+            <Value>MODIS/006/MCD12Q1</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 7 Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LE07/C02/T1</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>The script upscales MODIS landcover classification to Landsat resolution using a supervised classifier. The output is an upsampled landcover image.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{
+
+  min: 0,
+
+  max: 0.3,
+
+  bands: ['B3', 'B2', 'B1']
+
+}</Node>
+   <Node id="3" type="literal">0.3</Node>
+   <Node id="4" type="complex">['B3', 'B2', 'B1']</Node>
+   <Node id="5" type="literal">LANDSAT/LE07/C02/T1</Node>
+   <Node id="6" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="7" type="literal">0</Node>
+   <Node id="8" type="complex">{
+
+  palette: landcoverPalette,
+
+  min: 0,
+
+  max: 16,
+
+  format: 'png'
+
+}</Node>
+   <Node id="9" type="literal">16</Node>
+   <Node id="10" type="literal">png</Node>
+   <Node id="11" type="complex">'05450a,086a10,54a708,78d203,009900,c6b044,dcd159,' +
+
+  'dade48,fbff13,b6ff05,27ff87,c24f44,a5a5a5,ff6d4c,69fff8,f9ffa4,1c0dff'</Node>
+   <Node id="12" type="literal">MODIS/006/MCD12Q1</Node>
+   <Node id="13" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="14" type="eeFunction">filterDate</Node>
+   <Node id="15" type="literal">2001-01-01</Node>
+   <Node id="16" type="literal">2001-12-31</Node>
+   <Node id="17" type="eeFunction">first</Node>
+   <Node id="18" type="eeFunction">select</Node>
+   <Node id="19" type="literal">LC_Type1</Node>
+   <Node id="20" type="eeFunction">subtract</Node>
+   <Node id="21" type="literal">1</Node>
+   <Node id="22" type="eeFunction">ee.Serializer.toReadableJSON</Node>
+   <Node id="23" type="eeFunction">print</Node>
+   <Node id="24" type="literal">MODIS landcover</Node>
+   <Node id="25" type="eeFunction">Map.addLayer</Node>
+   <Node id="26" type="complex">[[29.972731783841393, 31.609824974226175],
+
+    [29.972731783841393, 30.110383818311096],
+
+    [32.56550522134139, 30.110383818311096],
+
+    [32.56550522134139, 31.609824974226175]]</Node>
+   <Node id="27" type="eeFunction">ee.List</Node>
+   <Node id="28" type="eeFunction">ee.Geometry.Polygon</Node>
+   <Node id="29" type="literal">None</Node>
+   <Node id="30" type="literal">False</Node>
+   <Node id="31" type="literal">30</Node>
+   <Node id="32" type="complex">{
+
+  region: geometry,
+
+  scale: 30,
+
+  numPixels: 1000
+
+}</Node>
+   <Node id="33" type="literal">1000</Node>
+   <Node id="34" type="eeFunction">filterBounds</Node>
+   <Node id="35" type="eeFunction">filterDate</Node>
+   <Node id="36" type="literal">2000-01-01</Node>
+   <Node id="37" type="literal">2001-01-01</Node>
+   <Node id="38" type="literal">True</Node>
+   <Node id="39" type="complex">{
+
+  collection: l7,
+
+  asFloat: true
+
+}</Node>
+   <Node id="40" type="eeFunction">ee.Algorithms.Landsat.simpleComposite</Node>
+   <Node id="41" type="eeFunction">addBands</Node>
+   <Node id="42" type="eeFunction">sample</Node>
+   <Node id="43" type="literal">LC_Type1</Node>
+   <Node id="44" type="complex">{
+
+  features: training,
+
+  classProperty: 'LC_Type1',
+
+}</Node>
+   <Node id="45" type="eeFunction">ee.Classifier.smileCart</Node>
+   <Node id="46" type="eeFunction">train</Node>
+   <Node id="47" type="eeFunction">classify</Node>
+   <Node id="48" type="eeFunction">clip</Node>
+   <Node id="49" type="eeFunction">ee.Serializer.toReadableJSON</Node>
+   <Node id="50" type="eeFunction">print</Node>
+   <Node id="51" type="literal">Upsampled landcover</Node>
+   <Node id="52" type="eeFunction">Map.addLayer</Node>
+   <Node id="53" type="eeFunction">ee.Serializer.toReadableJSON</Node>
+   <Node id="54" type="eeFunction">print</Node>
+   <Node id="55" type="eeFunction">Map.addLayer</Node>
+   <Node id="56" type="literal">Landsat composite</Node>
+   <Node id="57" type="literal">11</Node>
+   <Node id="58" type="eeFunction">Map.centerObject</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="8"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="8"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="8"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="14" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="18" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="20" targetNodeId="22"></Relation>
+   <Relation id="19" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="21" sourceNodeId="20" targetNodeId="25"></Relation>
+   <Relation id="22" sourceNodeId="8" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="25" sourceNodeId="29" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="30" targetNodeId="28"></Relation>
+   <Relation id="27" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="28" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="29" sourceNodeId="28" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="6" targetNodeId="34"></Relation>
+   <Relation id="31" sourceNodeId="28" targetNodeId="34"></Relation>
+   <Relation id="32" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="33" sourceNodeId="36" targetNodeId="35"></Relation>
+   <Relation id="34" sourceNodeId="37" targetNodeId="35"></Relation>
+   <Relation id="35" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="36" sourceNodeId="35" targetNodeId="39"></Relation>
+   <Relation id="37" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="38" sourceNodeId="20" targetNodeId="41"></Relation>
+   <Relation id="39" sourceNodeId="40" targetNodeId="41"></Relation>
+   <Relation id="40" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="41" sourceNodeId="32" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="43" sourceNodeId="42" targetNodeId="44"></Relation>
+   <Relation id="44" sourceNodeId="45" targetNodeId="46"></Relation>
+   <Relation id="45" sourceNodeId="44" targetNodeId="46"></Relation>
+   <Relation id="46" sourceNodeId="40" targetNodeId="47"></Relation>
+   <Relation id="47" sourceNodeId="46" targetNodeId="47"></Relation>
+   <Relation id="48" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="49" sourceNodeId="28" targetNodeId="48"></Relation>
+   <Relation id="50" sourceNodeId="48" targetNodeId="49"></Relation>
+   <Relation id="51" sourceNodeId="49" targetNodeId="50"></Relation>
+   <Relation id="52" sourceNodeId="51" targetNodeId="52"></Relation>
+   <Relation id="53" sourceNodeId="48" targetNodeId="52"></Relation>
+   <Relation id="54" sourceNodeId="8" targetNodeId="52"></Relation>
+   <Relation id="55" sourceNodeId="40" targetNodeId="53"></Relation>
+   <Relation id="56" sourceNodeId="53" targetNodeId="54"></Relation>
+   <Relation id="57" sourceNodeId="2" targetNodeId="55"></Relation>
+   <Relation id="58" sourceNodeId="56" targetNodeId="55"></Relation>
+   <Relation id="59" sourceNodeId="40" targetNodeId="55"></Relation>
+   <Relation id="60" sourceNodeId="57" targetNodeId="58"></Relation>
+   <Relation id="61" sourceNodeId="28" targetNodeId="58"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="22">
+        <Content type="comment">//Egypt Classification</Content>
+    </Script>
+    <Script line="3" startPosition="26" endPosition="86">
+        <Content type="comment">// Upsample MODIS landcover classification (250m) to Landsat</Content>
+    </Script>
+    <Script line="4" startPosition="88" endPosition="138">
+        <Content type="comment">// resolution (30m) using a supervised classifier.</Content>
+    </Script>
+    <Script line="6,7,8,9,10" startPosition="142" endPosition="379">
+        <Content type="code">var geometry = ee.Geometry.Polygon(
+
+  [[[29.972731783841393, 31.609824974226175],
+
+    [29.972731783841393, 30.110383818311096],
+
+    [32.56550522134139, 30.110383818311096],
+
+    [32.56550522134139, 31.609824974226175]]], null, false);</Content>
+    </Script>
+    <Script line="12" startPosition="383" endPosition="428">
+        <Content type="comment">// Use the MCD12 land-cover as training data.</Content>
+    </Script>
+    <Script line="13" startPosition="430" endPosition="497">
+        <Content type="comment">// See the collection docs to get details on classification system.</Content>
+    </Script>
+    <Script line="14,15,16,17,18,19" startPosition="499" endPosition="707">
+        <Content type="code">var modisLandcover = ee.ImageCollection('MODIS/006/MCD12Q1')
+
+  .filterDate('2001-01-01', '2001-12-31')
+
+  .first()
+
+  .select('LC_Type1')
+
+  // Quick hack to get the labels to start at zero.
+
+  .subtract(1);</Content>
+    </Script>
+    <Script line="18" startPosition="641" endPosition="690">
+        <Content type="comment">// Quick hack to get the labels to start at zero.</Content>
+    </Script>
+    <Script line="21" startPosition="711" endPosition="781">
+        <Content type="comment">// A palette to use for visualizing landcover images. You can get this</Content>
+    </Script>
+    <Script line="22" startPosition="783" endPosition="824">
+        <Content type="comment">// from the properties of the collection.</Content>
+    </Script>
+    <Script line="23,24" startPosition="826" endPosition="978">
+        <Content type="code">var landcoverPalette = '05450a,086a10,54a708,78d203,009900,c6b044,dcd159,' +
+
+  'dade48,fbff13,b6ff05,27ff87,c24f44,a5a5a5,ff6d4c,69fff8,f9ffa4,1c0dff';</Content>
+    </Script>
+    <Script line="26" startPosition="982" endPosition="1047">
+        <Content type="comment">// A set of visualization parameters using the landcover palette.</Content>
+    </Script>
+    <Script line="27,28,29,30,31,32" startPosition="1049" endPosition="1153">
+        <Content type="code">var landcoverVisualization = {
+
+  palette: landcoverPalette,
+
+  min: 0,
+
+  max: 16,
+
+  format: 'png'
+
+};</Content>
+    </Script>
+    <Script line="34" startPosition="1157" endPosition="1237">
+        <Content type="comment">// Center map over the region of interest and display the MODIS landcover image.</Content>
+    </Script>
+    <Script line="35" startPosition="1239" endPosition="1270">
+        <Content type="code">Map.centerObject(geometry, 11);</Content>
+    </Script>
+    <Script line="36" startPosition="1272" endPosition="1344">
+        <Content type="code">Map.addLayer(modisLandcover, landcoverVisualization, 'MODIS landcover');</Content>
+    </Script>
+    <Script line="37" startPosition="1346" endPosition="1397">
+        <Content type="code">print(ee.Serializer.toReadableJSON(modisLandcover))</Content>
+    </Script>
+    <Script line="38" startPosition="1399" endPosition="1431">
+        <Content type="comment">// Load and filter Landsat data.</Content>
+    </Script>
+    <Script line="39,40,41" startPosition="1433" endPosition="1554">
+        <Content type="code">var l7 = ee.ImageCollection('LANDSAT/LE07/C02/T1')
+
+  .filterBounds(geometry)
+
+  .filterDate('2000-01-01', '2001-01-01');</Content>
+    </Script>
+    <Script line="43" startPosition="1558" endPosition="1618">
+        <Content type="comment">// Draw the Landsat composite, visualizing true color bands.</Content>
+    </Script>
+    <Script line="44,45,46,47" startPosition="1620" endPosition="1723">
+        <Content type="code">var landsatComposite = ee.Algorithms.Landsat.simpleComposite({
+
+  collection: l7,
+
+  asFloat: true
+
+});</Content>
+    </Script>
+    <Script line="48,49,50,51,52" startPosition="1725" endPosition="1836">
+        <Content type="code">Map.addLayer(landsatComposite, {
+
+  min: 0,
+
+  max: 0.3,
+
+  bands: ['B3', 'B2', 'B1']
+
+}, 'Landsat composite');</Content>
+    </Script>
+    <Script line="53" startPosition="1838" endPosition="1891">
+        <Content type="code">print(ee.Serializer.toReadableJSON(landsatComposite))</Content>
+    </Script>
+    <Script line="54" startPosition="1893" endPosition="1951">
+        <Content type="comment">// Make a training dataset by sampling the stacked images.</Content>
+    </Script>
+    <Script line="55,56,57,58,59" startPosition="1953" endPosition="2077">
+        <Content type="code">var training = modisLandcover.addBands(landsatComposite).sample({
+
+  region: geometry,
+
+  scale: 30,
+
+  numPixels: 1000
+
+});</Content>
+    </Script>
+    <Script line="61" startPosition="2081" endPosition="2126">
+        <Content type="comment">// Train a classifier using the training data</Content>
+    </Script>
+    <Script line="62,63,64,65" startPosition="2128" endPosition="2236">
+        <Content type="code">var classifier = ee.Classifier.smileCart().train({
+
+  features: training,
+
+  classProperty: 'LC_Type1',
+
+});</Content>
+    </Script>
+    <Script line="67" startPosition="2240" endPosition="2290">
+        <Content type="comment">// Apply the classifier to the original composite.</Content>
+    </Script>
+    <Script line="68" startPosition="2292" endPosition="2361">
+        <Content type="code">var upsampled = landsatComposite.classify(classifier).clip(geometry);</Content>
+    </Script>
+    <Script line="70" startPosition="2365" endPosition="2403">
+        <Content type="comment">// Draw the upsampled landcover image.</Content>
+    </Script>
+    <Script line="71" startPosition="2405" endPosition="2476">
+        <Content type="code">Map.addLayer(upsampled, landcoverVisualization, 'Upsampled landcover');</Content>
+    </Script>
+    <Script line="74" startPosition="2482" endPosition="2528">
+        <Content type="code">print(ee.Serializer.toReadableJSON(upsampled))</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="1462" endPosition="1481">LANDSAT/LE07/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="1145" endPosition="1148">png</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="540" endPosition="557">MODIS/006/MCD12Q1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="576" endPosition="586">2001-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="1541" endPosition="1551">2001-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="590" endPosition="600">2001-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="627" endPosition="635">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="2221" endPosition="2229">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="1326" endPosition="1341">MODIS landcover</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>36</ServiceNodeId>
+        <GEEScriptPart startPosition="1527" endPosition="1537">2000-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>37</ServiceNodeId>
+        <GEEScriptPart startPosition="576" endPosition="586">2001-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>37</ServiceNodeId>
+        <GEEScriptPart startPosition="1541" endPosition="1551">2001-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>43</ServiceNodeId>
+        <GEEScriptPart startPosition="627" endPosition="635">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>43</ServiceNodeId>
+        <GEEScriptPart startPosition="2221" endPosition="2229">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>51</ServiceNodeId>
+        <GEEScriptPart startPosition="2454" endPosition="2473">Upsampled landcover</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>56</ServiceNodeId>
+        <GEEScriptPart startPosition="1816" endPosition="1833">Landsat composite</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

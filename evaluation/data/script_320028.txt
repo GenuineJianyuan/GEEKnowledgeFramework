@@ -1,0 +1,34 @@
+// Crop Area Detection
+
+// Set the research area: For example, select a region in India
+var indiaRegion = ee.Geometry.Rectangle([75, 15, 85, 25]);
+
+// Load the MODIS land cover dataset
+var modisLandCover = ee.ImageCollection("MODIS/006/MCD12Q1")
+                      .filterDate('2020-01-01', '2020-12-31')
+                      .first();
+
+// Select the correct band - for example, 'LC_Type1'
+var landCover = modisLandCover.select('LC_Type1').clip(indiaRegion);
+
+// Select the land cover type for corn areas
+// Assuming that in the land cover types, corn fields are marked with a specific number, such as 12 (this number needs to be verified according to the actual dataset)
+var cornLandCoverType = 12;
+
+// Identify corn areas
+var cornAreas = landCover.eq(cornLandCoverType);
+
+// Visualization
+Map.centerObject(indiaRegion, 5);
+Map.addLayer(cornAreas, {min: 0, max: 1, palette: ['yellow','green']}, 'Corn Areas');
+
+// Calculate the area of corn cultivation
+var area = cornAreas.multiply(ee.Image.pixelArea()).reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: indiaRegion,
+  scale: 500, // Adjust based on the dataset's resolution
+  maxPixels: 1e9
+});
+
+// Output area results
+print('Corn Field Area in India Region:', area);

@@ -1,0 +1,15 @@
+API1,API2
+filterDate,select
+ee.Image,ee.Algorithms.Terrain
+select,median
+ee.Algorithms.Terrain,select
+Array,Array.matrixPseudoInverse
+reduce.median,Image.toArray
+ee.Image,Image.matrixMultiply
+Image.toArray,Image.matrixMultiply
+Array.transpose,ee.Image
+Image.toArray,Image.toArray
+ee.ImageCollection,filterDate
+Array.matrixPseudoInverse,Array.transpose
+Image.arrayProject,Image.arrayFlatten
+Image.matrixMultiply,Image.arrayProject

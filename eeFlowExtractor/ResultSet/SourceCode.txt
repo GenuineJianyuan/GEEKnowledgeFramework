@@ -1,0 +1,53 @@
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="54">
+        <Content type="code">var LULC = ee.Image("users/region/XunwuCounty/Xunwu");</Content>
+    </Script>
+    <Script line="2" startPosition="55" endPosition="133">
+        <Content type="code">var boundary = ee.FeatureCollection("users/region/XunwuCounty/XunwuBoundary");</Content>
+    </Script>
+    <Script line="4" startPosition="135" endPosition="206">
+        <Content type="comment">// Use the remap() method to replace original values with target values</Content>
+    </Script>
+    <Script line="5" startPosition="207" endPosition="296">
+        <Content type="code">var remappedImage = LULC.remap([1, 2, 3, 6, 8, 9], [0.33, 0.60, 0.02, 0, 0.04, 0.01], 0);</Content>
+    </Script>
+    <Script line="7" startPosition="298" endPosition="376">
+        <Content type="code">var landsat = ee.Image("users/region/XunwuCounty/Landsat_2018").clip(boundary)</Content>
+    </Script>
+    <Script line="9" startPosition="378" endPosition="395">
+        <Content type="comment">// Calculate NDVI</Content>
+    </Script>
+    <Script line="10" startPosition="396" endPosition="450">
+        <Content type="code">var ndvi = landsat.normalizedDifference(['B5', 'B4']);</Content>
+    </Script>
+    <Script line="12" startPosition="452" endPosition="493">
+        <Content type="comment">// Load SRTM Digital Elevation Model data</Content>
+    </Script>
+    <Script line="13" startPosition="494" endPosition="533">
+        <Content type="code">var dem = ee.Image('USGS/SRTMGL1_003');</Content>
+    </Script>
+    <Script line="15" startPosition="535" endPosition="553">
+        <Content type="comment">// Calculate slope</Content>
+    </Script>
+    <Script line="16" startPosition="554" endPosition="588">
+        <Content type="code">var slope = ee.Terrain.slope(dem);</Content>
+    </Script>
+    <Script line="18" startPosition="590" endPosition="619">
+        <Content type="comment">// Create a conditional image</Content>
+    </Script>
+    <Script line="19,20,21,22,23,24,25" startPosition="620" endPosition="818">
+        <Content type="code">var slope_categories = slope.expression(
+    "b('slope') &lt; 20 ? 0.65 :" +
+    "b('slope') &lt; 30 ? 0.31 :" +
+    "b('slope') &lt; 40 ? 0.02 :" +
+    "b('slope') &lt; 50 ? 0.01 :" +
+    "0"
+).clip(boundary);</Content>
+    </Script>
+    <Script line="27" startPosition="820" endPosition="920">
+        <Content type="code">var result = ndvi.multiply(1.5).add(slope_categories.multiply(6.2)).add(remappedImage.multiply(2.3))</Content>
+    </Script>
+    <Script line="29" startPosition="922" endPosition="982">
+        <Content type="code">Export.image.toDrive(result,'exported_result',30, boundary);</Content>
+    </Script>
+</SourceCode>

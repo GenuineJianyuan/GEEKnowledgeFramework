@@ -1,0 +1,21 @@
+API1,API2
+ee.Geometry.Rectangle,filterBounds
+Image.pixelArea,Image.multiply
+Image.select,Image.classify
+Classifier.smileRandomForest,Classifier.train
+reduce.median,Image.select
+map,Classifier.train
+filterBounds,filterDate
+ee.FeatureCollection,map
+Image.reduceRegion,Element.setMulti
+Image.eq,Image.multiply
+Classifier.train,Image.classify
+Image.select,Image.reduceRegion
+Reducer.sum,Image.reduceRegion
+filter,reduce.median
+ee.ImageCollection,filter
+Image.classify,Image.eq
+Image.multiply,Image.reduceRegion
+Reducer.first,Image.reduceRegion
+geometry, Image.reduceRegion
+

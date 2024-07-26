@@ -1,0 +1,30 @@
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>1</ServiceNodeId>
+        <GEEScriptPart startPosition="514" endPosition="530">USGS/SRTMGL1_003</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="438" endPosition="440">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="444" endPosition="446">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="322" endPosition="359">users/region/XunwuCounty/Landsat_2018</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="92" endPosition="130">users/region/XunwuCounty/XunwuBoundary</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="21" endPosition="51">users/region/XunwuCounty/Xunwu</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="951" endPosition="966">exported_result</GEEScriptPart>
+    </MapEntry>
+</Mapping>

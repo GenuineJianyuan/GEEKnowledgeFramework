@@ -1,0 +1,10 @@
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="50" endPosition="66">USGS/SRTMGL1_003</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="515" endPosition="518">DEM</GEEScriptPart>
+    </MapEntry>
+</Mapping>

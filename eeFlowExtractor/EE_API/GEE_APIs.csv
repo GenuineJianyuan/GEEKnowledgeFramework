@@ -1,0 +1,1080 @@
+index,full_name,short_name,description,output_type
+1,ee.Algorithms.CannyEdgeDetector,ee.Algorithms.CannyEdgeDetector,"Applies the Canny edge detection algorithm to an image. The output is an image whose bands have the same names as the input bands, and in which non-zero values indicate edges, and the magnitude of the value is the gradient magnitude.",Image
+2,ee.Algorithms.Collection,ee.Algorithms.Collection,Returns a Collection containing the specified features.,FeatureCollection
+3,ee.Algorithms.CrossCorrelation,ee.Algorithms.CrossCorrelation,"Gives information on the quality of image registration between two (theoretically) co-registered images. The input is two images with the same number of bands. This function outputs an image composed of four bands of information. The first three are distances: the deltaX, deltaY, and the Euclidean distance for each pixel in imageA to the pixel which has the highest corresponding correlation coefficient in imageB. The fourth band is the value of the correlation coefficient for that pixel [-1 : +1].",Image
+4,ee.Algorithms.Date,ee.Algorithms.Date,Creates a Date.,Date
+5,ee.Algorithms.Describe,ee.Algorithms.Describe,Describes an object using a simple JSON-compatible structure.,Object
+6,ee.Algorithms.Dictionary,ee.Algorithms.Dictionary,Constructs a dictionary.,Dictionary
+7,ee.Algorithms.FMask.fillMinima,ee.Algorithms.FMask.fillMinima,Fills local minima.  Only works on INT types.,Image
+8,ee.Algorithms.FMask.matchClouds,ee.Algorithms.FMask.matchClouds,"Runs the FMask cloud and shadow matching.  Outputs a single band ('csm'), containing the computed cloud and shadow masks.",Image
+9,ee.Algorithms.Feature,ee.Algorithms.Feature,Returns a Feature composed of the given geometry and metadata.,Feature
+10,ee.Algorithms.GeometryConstructors.BBox,ee.Algorithms.GeometryConstructors.BBox,Constructs a rectangle whose edges are lines of latitude and longitude.,Geometry
+11,ee.Algorithms.GeometryConstructors.LineString,ee.Algorithms.GeometryConstructors.LineString,Constructs a LineString from the given coordinates.,Geometry
+12,ee.Algorithms.GeometryConstructors.LinearRing,ee.Algorithms.GeometryConstructors.LinearRing,"Constructs a LinearRing from the given coordinates, automatically adding the first point at the end if the ring is not explicitly closed.",Geometry
+13,ee.Algorithms.GeometryConstructors.MultiGeometry,ee.Algorithms.GeometryConstructors.MultiGeometry,Constructs a MultiGeometry from the given list of geometry elements.,Geometry
+14,ee.Algorithms.GeometryConstructors.MultiLineString,ee.Algorithms.GeometryConstructors.MultiLineString,Constructs a MultiLineString from the given coordinates.,Geometry
+15,ee.Algorithms.GeometryConstructors.MultiPoint,ee.Algorithms.GeometryConstructors.MultiPoint,Constructs a MultiPoint from the given coordinates.,Geometry
+16,ee.Algorithms.GeometryConstructors.MultiPolygon,ee.Algorithms.GeometryConstructors.MultiPolygon,Constructs a MultiPolygon from the given coordinates.,Geometry
+17,ee.Algorithms.GeometryConstructors.Point,ee.Algorithms.GeometryConstructors.Point,"Constructs a new Point from the given x,y coordinates.",Geometry
+18,ee.Algorithms.GeometryConstructors.Polygon,ee.Algorithms.GeometryConstructors.Polygon,Constructs a Polygon from the given coordinates.,Geometry
+19,ee.Algorithms.GeometryConstructors.Rectangle,ee.Algorithms.GeometryConstructors.Rectangle,Constructs a rectangular polygon from the given corner points.,Geometry
+20,ee.Algorithms.HillShadow,ee.Algorithms.HillShadow,"Creates a shadow band, with output 1 where pixels are illumunated and 0 where they are shadowed. Takes as input an elevation band, azimuth and zenith of the light source in degrees, a neighborhood size, and whether or not to apply hysteresis when a shadow appears. Currently, this algorithm only works for Mercator projections, in which light rays are parallel.",Image
+21,ee.Algorithms.HoughTransform,ee.Algorithms.HoughTransform,"Applies the Hough transform to an image. For every input band, outputs a band where lines are detected by thresholding the Hough transform with a value of lineThreshold. The output band is named [input]_lines, where [input] is the name of the original band. The defaults provided for the parameters are intended as a starting point for use with UINT8 images.",Image
+22,ee.Algorithms.If,ee.Algorithms.If,"Selects one of its inputs based on a condition, similar to an if-then-else construct.",Object
+23,ee.Algorithms.Image.Segmentation.GMeans,ee.Algorithms.Image.Segmentation.GMeans,"Performs G-Means clustering on the input image. Iteratively applies k-means followed by a normality test to automatically determine the number of clusters to use. The output contains a 'clusters' band containing the integer ID of the cluster that each pixel belongs to. The algorithm can work either on a fixed grid of non-overlapping cells (gridSize, which can be smaller than a tile) or on tiles with overlap (neighborhoodSize). The default is to use tiles with no overlap. Clusters in one cell or tile are unrelated to clusters in another. Any cluster that spans a cell or tile boundary may receive two different labels in the two halves. Any input pixels with partial masks are fully masked in the output. This algorithm is only expected to perform well for images with a narrow dynamic range (i.e. bytes or shorts).",Image
+24,ee.Algorithms.Image.Segmentation.KMeans,ee.Algorithms.Image.Segmentation.KMeans,"Performs K-Means clustering on the input image. Outputs a 1-band image  containing the ID of the cluster that each pixel belongs to.  The algorithm can work either on a fixed grid of non-overlapping cells (gridSize, which can be smaller than a tile) or on tiles with overlap (neighborhoodSize). The default is to use tiles with no overlap.  Clusters in one cell or tile are unrelated to clusters in another.  Any cluster that spans a cell or tile boundary may receive two different labels in the two halves.  Any input pixels with partial masks are fully masked in the output.",Image
+25,ee.Algorithms.Image.Segmentation.SNIC,ee.Algorithms.Image.Segmentation.SNIC,"Superpixel clustering based on SNIC (Simple Non-Iterative Clustering). Outputs a band of cluster IDs and the per-cluster averages for each of the input bands. If the 'seeds' image isn't provided as input, the output will include a 'seeds' band containing the generated seed locations. See: Achanta, Radhakrishna and Susstrunk, Sabine, 'Superpixels and Polygons using Simple Non-Iterative Clustering', CVPR, 2017.",Image
+26,ee.Algorithms.Image.Segmentation.seedGrid,ee.Algorithms.Image.Segmentation.seedGrid,Selects seed pixels for clustering.,Image
+27,ee.Algorithms.IsEqual,ee.Algorithms.IsEqual,Returns whether two objects are equal.,Boolean
+28,ee.Algorithms.Landsat.TOA,ee.Algorithms.Landsat.TOA,Calibrates Landsat DN to TOA reflectance and brightness temperature for Landsat and similar data. For recently-acquired scenes calibration coefficients are extracted from the image metadata; for older scenes the coefficients are derived from:,Image
+29,ee.Algorithms.Landsat.calibratedRadiance,ee.Algorithms.Landsat.calibratedRadiance,Calibrates each band of an image by applying linear transformation with slope  and y-intercept ; these values are extracted from the image metadata.,Image
+30,ee.Algorithms.Landsat.pathRowLimit,ee.Algorithms.Landsat.pathRowLimit,"Limits requests to an ImageCollection of Landsat scenes to return a controllable number of the best scenes for each request. This is intended for use with statistical algorithms like median composites that need a certain amount of good data to perform well, but that do not benefit substantially from additional data beyond that while becoming needlessly expensive.  The default arguments select approximately one year's worth of good data.",ImageCollection
+31,ee.Algorithms.Landsat.simpleCloudScore,ee.Algorithms.Landsat.simpleCloudScore,"Computes a simple cloud-likelihood score in the range [0,100] using a combination of brightness, temperature, and NDSI.  This is not a robust cloud detector, and is intended mainly to compare multiple looks at the same point for  cloud likelihood.",Image
+32,ee.Algorithms.Landsat.simpleComposite,ee.Algorithms.Landsat.simpleComposite,Computes a Landsat TOA composite from a collection of raw Landsat scenes.  It applies standard TOA calibration and then assigns a cloud score to each pixel using the SimpleLandsatCloudScore algorithm. It selects the lowest possible range of cloud scores at each point and then computes per-band percentile values from the accepted pixels.  This algorithm also uses the LandsatPathRowLimit algorithm to select only the least-cloudy scenes in regions where more than maxDepth input scenes are available.,Image
+33,ee.Algorithms.ObjectType,ee.Algorithms.ObjectType,Returns a string representing the type of the given object.,String
+34,ee.Algorithms.ProjectionTransform,ee.Algorithms.ProjectionTransform,Transforms the geometry of a feature to a specific projection.,Feature
+35,ee.Algorithms.Sentinel2.CDI,ee.Algorithms.Sentinel2.CDI,"Computes the Cloud Displacement Index (CDI) from a Sentinel-2 Level 1C image. CDI is a measure of the optical separation in elevated objects due to sensor parallax. Returns a floating point band named ""cdi"".",Image
+36,ee.Algorithms.String,ee.Algorithms.String,Converts the input to a string.,String
+37,ee.Algorithms.TemporalSegmentation.Ccdc,ee.Algorithms.TemporalSegmentation.Ccdc,"Implements the Continuous Change Detection and Classification temporal breakpoint algorithm.  This algorithm finds temporal breakpoints in an image collection by iteratively fitting harmonic functions to the data.  Fit coefficients are produced for all input bands, but the bands used for breakpoint detection can be specified with the 'breakpointBands' argument.",Image
+38,ee.Algorithms.TemporalSegmentation.Ewmacd,ee.Algorithms.TemporalSegmentation.Ewmacd,Exponentially Weighted Moving Average Change Detection. This algorithm computes a harmonic model for the 'training' portion of the input data and subtracts that from the original results.  The residuals are then subjected to Shewhart X-bar charts and an exponentially weighted moving average.  Disturbed pixels are indicated when the charts signal a deviation from the given control limits.,Image
+39,ee.Algorithms.TemporalSegmentation.LandTrendr,ee.Algorithms.TemporalSegmentation.LandTrendr,"Landsat-based detection of Trends in Disturbance and Recovery: temporally segments a time-series of images by extracting the spectral trajectories of change over time. The first band of each image is used to find breakpoints, and those breakpoints are used to perform fitting on all subsequent bands. The breakpoints are returned as a 2-D matrix of 4 rows and as many columns as images. The first two rows are the original X and Y values. The third row contains the Y values fitted to the estimated segments, and the 4th row contains a 1 if the corresponding point was used as a segment vertex or 0 if not. Any additional fitted bands are appended as rows in the output. Breakpoint fitting assumes that increasing values represent disturbance and decreasing values represent recovery.",Image
+40,ee.Algorithms.TemporalSegmentation.LandTrendrFit,ee.Algorithms.TemporalSegmentation.LandTrendrFit,"Interpolates a time series using a set of LandTrendr breakpoint years. For each input band in the timeSeries, outputs a new 1D array-valued band containing the input values interpolated between the breakpoint times identified by the vertices image.  See the LandTrendr Algorithm for more details.",Image
+41,ee.Algorithms.TemporalSegmentation.StructuralChangeBreakpoints,ee.Algorithms.TemporalSegmentation.StructuralChangeBreakpoints,"Runs breakpoint detection, similar to R's strucchange::breakpoints function.",Image
+42,ee.Algorithms.TemporalSegmentation.VCT,ee.Algorithms.TemporalSegmentation.VCT,"Vegetation Change Tracker, an automated approach for reconstructing recent forest disturbance history using dense Landsat time series stacks.",Image
+43,ee.Algorithms.TemporalSegmentation.Verdet,ee.Algorithms.TemporalSegmentation.Verdet,"Vegetation Regeneration and Disturbance Estimates through Time, forest change detection algorithm. This algorithm generates a yearly clear-sky composite from satellite imagery, calculates a spectral vegetation index for each pixel in that composite, spatially segments the vegetation index image into patches, temporally divides the time series into differently sloped segments, and then labels those segments as disturbed, stable, or regenerating. Segmentation at both the spatial and temporal steps are performed using total variation regularization.",Image
+44,ee.Algorithms.Terrain,ee.Algorithms.Terrain,"Calculates slope, aspect, and a simple hillshade from a terrain DEM.",Image
+45,ee.apply,apply,Call a function with a dictionary of named arguments.,ComputedObject
+46,ee.Array,ee.Array,Returns an array with the given coordinates.,Array
+47,ee.Array.accum,accum,"Accumulates elements of an array along the given axis, by setting each element of the result to the reduction of elements along that axis up to and including the current position. May be used to make a cumulative sum, a monotonically increasing sequence, etc.",Array
+48,ee.Array.argmax,argmax,"Returns the position, as a list of indices in each array axis, of the maximum value in an array, or null if the array is empty. If there are multiple occurrences of the maximum, returns the position of the first.",List
+49,ee.Array.bitsToArray,bitsToArray,"Convert the bits of an integer to an Array.  The array has as many elements as the position of the highest set bit, or a single 0 for a value of 0.",Array
+50,ee.Array.cut,cut,Cut an array along one or more axes.,Array
+51,ee.Array.dotProduct,dotProduct,Compute the dot product between two 1-D arrays.,Number
+52,ee.Array.eigen,eigen,"Computes the real eigenvectors and eigenvalues of a square 2D array of A rows and A columns. Returns an array with A rows and A+1 columns, where each row contains an eigenvalue in the first column, and the corresponding eigenvector in the remaining A columns. The rows are sorted by eigenvalue, in descending order.",Array
+53,ee.Array.erfc,erfc,"On an element-wise basis, computes the complementary error function of the input.",Array
+54,ee.Array.erfcInv,erfcInv,"On an element-wise basis, computes the inverse complementary error function of the input.",Array
+55,ee.Array.firstNonZero,firstNonZero,"On an element-wise basis, selects the first value if it is non-zero, and the second value otherwise.",Array
+56,ee.Array.identity,identity,Creates a 2D identity matrix of the given size.,Array
+57,ee.Array.matrixTrace,matrixTrace,Computes the trace of the matrix.,Number
+58,ee.Array.pad,pad,"Pad an array to a given length. The pad value will be repeatedly appended to the array to extend it to given length along each axis. If the array is already as large or larger than a given length, it will remain unchanged along that axis.",Array
+59,ee.Array.project,project,Projects an array to a lower dimensional space by specifying the axes to retain. Dropped axes must be at most length 1.,Array
+60,ee.Array.repeat,ee.Array.repeat,"Repeats the array along the given axis. The result will have the shape of the input, except length along the repeated axis will be multiplied by the given number of copies.",Array
+61,ee.Array.reshape,reshape,Reshapes an array to a new list of dimension lengths.,Array
+62,ee.Array.transpose,transpose,Transposes two dimensions of an array.,Array
+63,ee.Blob,ee.Blob,Loads a Blob from a Google Cloud Storage URL.,Blob
+64,ee.Blob.string,string,Returns the contents of the blob as a String.,String
+65,ee.Blob.url,url,Returns the Blob's Google Cloud Storage URL.,String
+66,ee.call,call,Call a function with the given positional arguments.,ComputedObject
+67,ee.Classifier.amnhMaxent,ee.Classifier.amnhMaxent,"Creates a Maximum Entropy classifier.  Maxent is used to model species distribution probabilities using environmental data for locations of known presence and for a large number of 'background' locations. For more information and to cite, see: https://biodiversityinformatics.amnh.org/open_source/maxent/ and the reference  publication: Phillips, et. al., 2004 A maximum entropy approach to species distribution  modeling, Proceedings of the Twenty-First International Conference on Machine Learning. The output is a single band named 'probability', containing the modeled probability,  and an additional band named 'clamp' when the 'writeClampGrid' argument is true.",Classifier
+68,ee.Classifier.confusionMatrix,ee.Classifier.confusionMatrix,"Computes a 2D confusion matrix for a classifier based on its training data (ie: resubstitution error).  Axis 0 of the matrix corresponds to the input classes, and axis 1 corresponds to the output classes.  The rows and columns  start at class 0 and increase sequentially up to the maximum class value, so some rows or columns might be empty if the input classes aren't 0-based or sequential.",ConfusionMatrix
+69,ee.Classifier.decisionTree,ee.Classifier.decisionTree,Creates a classifier that applies the given decision tree.,Classifier
+70,ee.Classifier.decisionTreeEnsemble,ee.Classifier.decisionTreeEnsemble,Creates a classifier that applies the given decision trees.,Classifier
+71,ee.Classifier.explain,ee.Classifier.explain,Describe the results of a trained classifier.,Dictionary
+72,ee.Classifier.libsvm,ee.Classifier.libsvm,Creates an empty Support Vector Machine classifier.,Classifier
+73,ee.Classifier.minimumDistance,ee.Classifier.minimumDistance,"Creates a minimum distance classifier for the given distance metric.  In CLASSIFICATION mode, the nearest class is returned.  In REGRESSION mode, the distance to the nearest class center is returned.  In RAW mode, the distance to every class center is returned.",Classifier
+74,ee.Classifier.mode,ee.Classifier.mode,"Returns the classifier mode: , , , ,  or .",String
+75,ee.Classifier.schema,ee.Classifier.schema,"Returns the names of the inputs used by this classifier, or null if this classifier has not had any training data added yet.",List
+76,ee.Classifier.setOutputMode,ee.Classifier.setOutputMode,Sets the output mode.,Classifier
+77,ee.Classifier.smileCart,ee.Classifier.smileCart,Creates an empty CART classifier. See:,Classifier
+78,ee.Classifier.smileGradientTreeBoost,ee.Classifier.smileGradientTreeBoost,Creates an empty Gradient Tree Boost classifier.,Classifier
+79,ee.Classifier.smileNaiveBayes,ee.Classifier.smileNaiveBayes,"Creates an empty Naive Bayes classifier.  This classifier assumes that the feature vector consists of positive integers, and negative inputs are discarded.",Classifier
+80,ee.Classifier.smileRandomForest,ee.Classifier.smileRandomForest,Creates an empty Random Forest classifier.,Classifier
+81,ee.Classifier.spectralRegion,ee.Classifier.spectralRegion,Creates a classifier that tests if its inputs lie within a polygon defined by a set  of coordinates in an arbitrary 2D coordinate system.  Each input to be classified  must have 2 values (e.g.: images must have 2 bands).  The result will be 1 wherever  the input values are contained within the given polygon and 0 otherwise.,Classifier
+82,ee.Classifier.train,train,"Trains the classifier on a collection of features, using the specified numeric properties of each feature as training data. The geometry of the features is ignored.",Classifier
+83,ee.Clusterer.schema,ee.Clusterer.schema,"Returns the names of the inputs used by this Clusterer, or null if this Clusterer has not had any training data added yet.",List
+84,ee.Clusterer.train,train,"Trains the Clusterer on a collection of features, using the specified numeric properties of each feature as training data. The geometry of the features is ignored.",Clusterer
+85,ee.Clusterer.wekaCascadeKMeans,ee.Clusterer.wekaCascadeKMeans,"Cascade simple k-means, selects the best k according to the Calinski-Harabasz criterion. For more information see:",Clusterer
+86,ee.Clusterer.wekaCobweb,ee.Clusterer.wekaCobweb,Implementation of the Cobweb clustering algorithm. For more information see:,Clusterer
+87,ee.Clusterer.wekaKMeans,ee.Clusterer.wekaKMeans,"Cluster data using the k means algorithm. Can use either the Euclidean distance (default) or the Manhattan distance. If the Manhattan distance is used, then centroids are computed as the component-wise median rather than mean. For more information see:",Clusterer
+88,ee.Clusterer.wekaLVQ,ee.Clusterer.wekaLVQ,"A Clusterer that implements the Learning Vector Quantization algorithm. For more details, see:",Clusterer
+89,ee.Clusterer.wekaXMeans,ee.Clusterer.wekaXMeans,X-Means is K-Means with an efficient estimation of the number of clusters. For more information see:,Clusterer
+90,ee.ConfusionMatrix,ee.ConfusionMatrix,"Creates a confusion matrix. Axis 0 (the rows) of the matrix correspond to the actual values, and Axis 1 (the columns) to the predicted values.",ConfusionMatrix
+91,ee.ConfusionMatrix.accuracy,accuracy,Computes the overall accuracy of a confusion matrix defined as correct / total.,Float
+92,ee.ConfusionMatrix.array,array,Returns a confusion matrix as an Array.,Array
+93,ee.ConfusionMatrix.consumersAccuracy,consumersAccuracy,Computes the consumer's accuracy (reliability) of a confusion matrix defined as (correct / total) for each row.,Array
+94,ee.ConfusionMatrix.fscore,fscore,Computes the Fβ-score for the confusion matrix.,Array
+95,ee.ConfusionMatrix.kappa,kappa,Computes the Kappa statistic for the confusion matrix.,Float
+96,ee.ConfusionMatrix.order,order,Returns the name and order of the rows and columns of the matrix.,List
+97,ee.ConfusionMatrix.producersAccuracy,producersAccuracy,Computes the producer's accuracy of a confusion matrix defined as (correct / total) for each column.,Array
+98,ee.data.authenticateViaOauth,authenticateViaOauth,Configures client-side authentication of EE API calls through the Google APIs Client Library for JavaScript. The library will be loaded automatically if it is not already loaded on the page. The user will be asked to grant the application identified by clientId access to their EE data if they have not done so previously.,EMPTY
+99,ee.data.authenticateViaPopup,authenticateViaPopup,Shows a popup asking for the user's permission. Should only be called if ee.data.authenticate() called its opt_onImmediateFailed argument in the past.,EMPTY
+100,ee.data.authenticateViaPrivateKey,authenticateViaPrivateKey,"Configures server-side authentication of EE API calls through the Google APIs Node.js Client. Private key authentication is strictly for server-side API calls: for browser-based applications, use ee.data.authenticateViaOauth(). No user interaction (e.g. authentication popup) is necessary when using server-side authentication.",EMPTY
+101,ee.data.cancelOperation,cancelOperation,Cancels the given operation(s).,EMPTY
+102,ee.data.computeValue,computeValue,Sends a request to compute a value.,Object|Value
+103,ee.data.copyAsset,copyAsset,Copies the asset from sourceId into destinationId.,EMPTY
+104,ee.data.createAsset,createAsset,"Creates an asset from a JSON value. To create an empty image collection or folder, pass in a ""value"" object with a ""type"" key whose value is one of ee.data.AssetType.* (i.e. ""ImageCollection"" or ""Folder"").",Object
+105,ee.data.createAssetHome,createAssetHome,"Attempts to create a home root folder (e.g. ""users/joe"") for the current user. This results in an error if the user already has a home root folder or the requested ID is unavailable.",EMPTY
+106,ee.data.createFolder,createFolder,Creates an asset folder.,Object
+107,ee.data.deleteAsset,deleteAsset,Deletes the asset with the given id.,EMPTY
+108,ee.data.getAsset,getAsset,"Load info for an asset, given an asset id.",Object
+109,ee.data.getAssetAcl,getAssetAcl,Returns the access control list of the asset with the given ID.,AssetAcl
+110,ee.data.getAssetRootQuota,getAssetRootQuota,Returns quota usage details for the asset root with the given ID.,AssetQuotaDetails
+111,ee.data.getAssetRoots,getAssetRoots,"Returns the list of the root folders the user owns. The ""id"" values for roots are two levels deep, e.g. ""users/johndoe"" not ""users/johndoe/notaroot"".",List
+112,ee.data.getDownloadId,getDownloadId,Get a Download ID.,DownloadId
+113,ee.data.getFeatureViewTilesKey,getFeatureViewTilesKey,Get a tiles key for a given map or asset. The tiles key can be passed to an instance of FeatureViewTileSource which can be rendered on a base map outside of the Code Editor.,FeatureViewTilesKey
+114,ee.data.getFilmstripThumbId,getFilmstripThumbId,Get a Filmstrip Thumbnail Id for a given asset.,ThumbnailId
+115,ee.data.getMapId,getMapId,Get a Map ID for a given asset,RawMapId
+116,ee.data.getOperation,getOperation,Gets information on an operation or list of operations.,Dictionary
+117,ee.data.getPixels (Python only),getPixels (Python only),Fetches pixels from an image asset.,Object|Value
+118,ee.data.getTableDownloadId,getTableDownloadId,Get a download ID.,DownloadId
+119,ee.data.getTileUrl,getTileUrl,"Generate a URL for map tiles from a Map ID and coordinates. If formatTileUrl is not present, we generate it by using or guessing the urlFormat string, and add urlFormat and formatTileUrl to  for future use.",String
+120,ee.data.getVideoThumbId,getVideoThumbId,Get a Video Thumbnail Id for a given asset.,ThumbnailId
+121,ee.data.listAssets,listAssets,"Returns a list of the contents in an asset collection or folder, in an object that includes an  array and an optional .",api.ListAssetsResponse
+122,ee.data.listBuckets,listBuckets,Returns a list of asset roots belonging to the user or Cloud Project. Leave the project field blank to use the current project.,api.ListAssetsResponse
+123,ee.data.listFeatures,listFeatures,List features for a given table asset.,api.ListFeaturesResponse
+124,ee.data.listImages,listImages,"Returns a list of the contents in an image collection, in an object that includes an  array and an optional .",ListImagesResponse
+125,ee.data.listOperations,listOperations,Returns see getOperation for details on the Operation object.,List
+126,ee.data.makeDownloadUrl,makeDownloadUrl,Create a download URL from a docid and token.,String
+127,ee.data.makeTableDownloadUrl,makeTableDownloadUrl,Create a table download URL from a docid and token.,String
+128,ee.data.makeThumbUrl,makeThumbUrl,Create a thumbnail URL from a thumbid and token.,String
+129,ee.data.newTaskId,newTaskId,"Generates an ""unsubmitted"" ID for a long-running task.",List
+130,ee.data.renameAsset,renameAsset,Renames the asset from sourceId to destinationId.,EMPTY
+131,ee.data.resetWorkloadTag,resetWorkloadTag,"Resets the tag back to the default. If resetDefault parameter is set to true, the default will be set to empty before resetting.",EMPTY
+132,ee.data.setAssetAcl,setAssetAcl,Sets the access control list of the asset with the given ID.,EMPTY
+133,ee.data.setDefaultWorkloadTag,setDefaultWorkloadTag,"Sets the workload tag, and as the default for which to reset back to.",EMPTY
+134,ee.data.setWorkloadTag,setWorkloadTag,"Sets the workload tag, used to label computation and exports.",EMPTY
+135,ee.data.startIngestion,startIngestion,Creates an image asset ingestion task.,ProcessingResponse
+136,ee.data.startProcessing,startProcessing,Create processing task that exports or pre-renders an image.,ProcessingResponse
+137,ee.data.startTableIngestion,startTableIngestion,Creates a table asset ingestion task.,ProcessingResponse
+138,ee.data.updateAsset,updateAsset,Updates an asset.,Object
+139,ee.data.updateTask,updateTask,"Update one or more tasks' properties. For now, only the following properties may be updated: State (to CANCELLED)",List
+140,ee.Date,ee.Date,Constructs a new Date object.,Date
+141,ee.Date.advance,advance,Create a new Date by adding the specified units to the given Date.,Date
+142,ee.Date.fromYMD,fromYMD,"Returns a Date given year, month, day.",Date
+143,ee.Date.getFraction,getFraction,Returns this date's elapsed fraction of the specified unit (between 0 and 1).,Float
+144,ee.Date.getRange,getRange,"Returns a DateRange covering the unit of the specified type that contains this date, e.g. Date('2013-3-15').getRange('year') returns DateRange('2013-1-1', '2014-1-1').",DateRange
+145,ee.Date.getRelative,getRelative,"Returns the specified (0-based) unit of this date relative to a larger unit, e.g. getRelative('day', 'year') returns a value between 0 and 365.",Long
+146,ee.Date.millis,millis,The number of milliseconds since 1970-01-01T00:00:00Z.,Long
+147,ee.Date.parse,ee.Date.parse,"Parse a date string, given a string describing its format.",Date
+148,ee.Date.unitRatio,unitRatio,"Returns the ratio of the length of one unit to the length of another, e.g. unitRatio('day', 'minute') returns 1440.  Valid units are 'year', 'month' 'week', 'day', 'hour', 'minute', and 'second'.",Float
+149,ee.Date.update,update,Create a new Date by setting one or more of the units of the given Date to a new value.  If a timeZone is given the new value(s) is interpreted in that zone.,Date
+150,ee.DateRange,ee.DateRange,"Creates a DateRange with the given start (inclusive) and end (exclusive), which may be Dates, numbers (interpreted as milliseconds since 1970-01-01T00:00:00Z), or strings (such as '1996-01-01T08:00'). If 'end' is not specified, a 1-millisecond range starting at 'start' is created.",DateRange
+151,ee.DateRange.end,end,Returns the (exclusive) end of this DateRange.,Date
+152,ee.DateRange.isEmpty,isEmpty,Returns true if this DateRange contains no dates (i.e. start >= end).,Boolean
+153,ee.DateRange.start,start,Returns the (inclusive) start of this DateRange.,Date
+154,ee.Dictionary,ee.Dictionary,Constructs a new Dictionary.,Dictionary
+155,ee.Dictionary.fromLists,fromLists,Construct a dictionary from two parallel lists of keys and values.,Dictionary
+156,ee.Dictionary.keys,keys,Retrieve the keys of a dictionary as a list.  The keys will be sorted in natural order.,List
+157,ee.Dictionary.toImage,toImage,"Creates an image of constants from values in a dictionary. The bands of the image are ordered and named according to the names argument.  If no names are specified, the bands are sorted alpha-numerically.",Image
+158,ee.Dictionary.values,values,"Returns the values of a dictionary as a list.  If no keys are specified, all values are returned in the natural ordering of the dictionary's keys.",List
+159,ee.ErrorMargin,ErrorMargin,Returns an ErrorMargin of the given type with the given value.,ErrorMargin
+160,ee.Feature,ee.Feature,Features can be constructed from one of the following arguments plus an optional dictionary of properties:,Feature
+161,ee.Feature.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry of a given feature. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+162,ee.Feature.setGeometry,setGeometry,"Returns the feature, with the geometry replaced by the specified geometry.",Feature
+163,ee.Feature.symmetricDifference,symmetricDifference,Returns a feature containing the symmetric difference between geometries of two features.,Feature
+164,ee.FeatureCollection,ee.FeatureCollection,FeatureCollections can be constructed from the following arguments:,FeatureCollection
+165,ee.FeatureCollection.inverseDistance,inverseDistance,Returns an inverse-distance weighted estimate of the value at each pixel.,Image
+166,ee.FeatureCollection.kriging,kriging,Returns the results of sampling a Kriging estimator at each pixel.,Image
+167,ee.FeatureCollection.makeArray,makeArray,"Add a 1-D Array to each feature in a collection by combining a list of properties for each feature into a 1-D Array. All of the properties must be numeric values.  If a feature doesn't contain all of the named properties, or any of them aren't numeric, the feature will be dropped from the resulting collection.",FeatureCollection
+168,ee.FeatureCollection.randomPoints,randomPoints,"Generates points that are uniformly random on the sphere, and within the given region.",FeatureCollection
+169,ee.Filter,ee.Filter,Constructs a new filter. This constructor accepts the following args:,Filter
+170,ee.Filter.and,ee.Filter.and,Combine two or more filters using boolean AND.,Filter
+171,ee.Filter.area,ee.Filter.area,Returns a filter that passes if the specified geometry has an area within the given range (inclusive).,Filter
+172,ee.Filter.aside,ee.Filter.aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+173,ee.Filter.bounds,ee.Filter.bounds,Creates a filter that passes if the object's geometry intersects the given geometry.,Filter
+174,ee.Filter.calendarRange,ee.Filter.calendarRange,"Returns a filter that passes if the object's timestamp falls within the given range of a calendar field. The , , , and  are 1-based. Times are assumed to be in UTC. Weeks are assumed to begin on Monday as day 1. If  <  then this tests for  >=  OR  <= , to allow for wrapping.",Filter
+175,ee.Filter.contains,ee.Filter.contains,Creates a unary or binary filter that passes if the left geometry contains the right geometry (empty geometries are not contained in anything).,Filter
+176,ee.Filter.date,ee.Filter.date,"Filter a collection by date range. The start and end may be Dates, numbers",Filter
+177,ee.Filter.dateRangeContains,ee.Filter.dateRangeContains,"Creates a unary or binary filter that passes if the left operand, a date range, contains the right operand, a date.",Filter
+178,ee.Filter.dayOfYear,ee.Filter.dayOfYear,Returns a filter that passes if the object's timestamp falls within the given day-of-year range.,Filter
+179,ee.Filter.disjoint,ee.Filter.disjoint,Creates a unary or binary filter that passes unless the left geometry intersects the right geometry.,Filter
+180,ee.Filter.eq,ee.Filter.eq,Filter to metadata equal to the given value.,Filter
+181,ee.Filter.equals,ee.Filter.equals,Creates a unary or binary filter that passes if the two operands are equals.,Filter
+182,ee.Filter.evaluate,ee.Filter.evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+183,ee.Filter.expression,ee.Filter.expression,Constructs a filter tree from a string.,Filter
+184,ee.Filter.getInfo,ee.Filter.getInfo,Retrieves the value of this object from the server.,Object
+185,ee.Filter.greaterThan,ee.Filter.greaterThan,Creates a unary or binary filter that passes if the left operand is greater than the right operand.,Filter
+186,ee.Filter.greaterThanOrEquals,ee.Filter.greaterThanOrEquals,Creates a unary or binary filter that passes unless the left operand is less than the right operand.,Filter
+187,ee.Filter.gt,ee.Filter.gt,Filter on metadata greater than the given value.,Filter
+188,ee.Filter.gte,ee.Filter.gte,Filter on metadata greater than or equal to the given value.,Filter
+189,ee.Filter.hasType,ee.Filter.hasType,"Creates a unary or binary filter that passes if the left operand has the type, or is a subtype of the type named in the right operand.",Filter
+190,ee.Filter.inList,ee.Filter.inList,Filter on metadata contained in a list.,Filter
+191,ee.Filter.intersects,ee.Filter.intersects,Creates a unary or binary filter that passes if the left geometry intersects the right geometry.,Filter
+192,ee.Filter.isContained,ee.Filter.isContained,Creates a unary or binary filter that passes if the right geometry contains the left geometry (empty geometries are not contained in anything).,Filter
+193,ee.Filter.lessThan,ee.Filter.lessThan,Creates a unary or binary filter that passes if the left operand is less than the right operand.,Filter
+194,ee.Filter.lessThanOrEquals,ee.Filter.lessThanOrEquals,Creates a unary or binary filter that passes unless the left operand is greater than the right operand.,Filter
+195,ee.Filter.listContains,ee.Filter.listContains,"Creates a unary or binary filter that passes if the left operand, a list, contains the right operand.",Filter
+196,ee.Filter.lt,ee.Filter.lt,Filter to metadata less than the given value.,Filter
+197,ee.Filter.lte,ee.Filter.lte,Filter on metadata less than or equal to the given value.,Filter
+198,ee.Filter.maxDifference,ee.Filter.maxDifference,"Creates a unary or binary filter that passes if the left and right operands, both numbers, are within a given maximum difference. If used as a join condition, this numeric difference is used as a join measure.",Filter
+199,ee.Filter.neq,ee.Filter.neq,Filter to metadata not equal to the given value.,Filter
+200,ee.Filter.not,ee.Filter.not,"Returns the opposite of the input filter, i.e. the resulting filter will match if and only if the input filter doesn't match.",Filter
+201,ee.Filter.notEquals,ee.Filter.notEquals,Creates a unary or binary filter that passes unless the two operands are equals.,Filter
+202,ee.Filter.notNull,ee.Filter.notNull,Returns a filter that passes if all the named properties are not null.,Filter
+203,ee.Filter.or,ee.Filter.or,Combine two or more filters using boolean OR.,Filter
+204,ee.Filter.rangeContains,ee.Filter.rangeContains,Returns a filter that passes if the value of the selected field is in the specified range (inclusive).,Filter
+205,ee.Filter.serialize,ee.Filter.serialize,Returns the serialized representation of this object.,String
+206,ee.Filter.stringContains,ee.Filter.stringContains,"Creates a unary or binary filter that passes if the left operand, a string, contains the right operand, also a string.",Filter
+207,ee.Filter.stringEndsWith,ee.Filter.stringEndsWith,"Creates a unary or binary filter that passes if the left operand, a string, ends with the right operand, also a string.",Filter
+208,ee.Filter.stringStartsWith,ee.Filter.stringStartsWith,"Creates a unary or binary filter that passes if the left operand, a string, starts with the right operand, also a string.",Filter
+209,ee.Filter.withinDistance,ee.Filter.withinDistance,"Creates a unary or binary filter that passes if the left geometry is within a specified distance of the right geometry. If used as a join condition, this distance is used as a join measure.",Filter
+210,ee.Geometry,ee.Geometry,Creates a geometry.,Geometry
+211,ee.Geometry.BBox,BBox,Constructs a rectangle whose edges are lines of latitude and longitude.,Geometry.BBox
+212,ee.Geometry.toGeoJSONString,toGeoJSONString,Returns a GeoJSON string representation of the geometry.,String
+213,ee.Geometry.LineString,ee.Geometry.LineString,Constructs an ee.Geometry describing a LineString.,Geometry.LineString
+214,ee.Geometry.BBox.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+215,ee.Geometry.BBox.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+216,ee.Geometry.toGeoJSON,toGeoJSON,Returns a GeoJSON representation of the geometry.,GeoJSONGeometry
+217,ee.Geometry.LinearRing,ee.Geometry.LinearRing,"Constructs an ee.Geometry describing a LinearRing. If the last point is not equal to the first, a duplicate of the first point will be added at the end.",Geometry.LinearRing
+218,ee.Geometry.MultiLineString,ee.Geometry.MultiLineString,Constructs an ee.Geometry describing a MultiLineString.,Geometry.MultiLineString
+219,ee.Geometry.LineString.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+220,ee.Geometry.LineString.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+221,ee.Geometry.Rectangle.toGeoJSONString,toGeoJSONString,Returns a GeoJSON string representation of the geometry.,String
+222,ee.Geometry.MultiPoint,ee.Geometry.MultiPoint,Constructs an ee.Geometry describing a MultiPoint.,Geometry.MultiPoint
+223,ee.Geometry.Rectangle.toGeoJSON,toGeoJSON,Returns a GeoJSON representation of the geometry.,GeoJSONGeometry
+224,ee.Geometry.MultiPolygon,ee.Geometry.MultiPolygon,Constructs an ee.Geometry describing a MultiPolygon.,Geometry.MultiPolygon
+225,ee.Geometry.LinearRing.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+226,ee.Geometry.LinearRing.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+227,ee.Geometry.Point,ee.Geometry.Point,Constructs an ee.Geometry describing a point.,Geometry.Point
+228,ee.Geometry.Polygon.toGeoJSONString,toGeoJSONString,Returns a GeoJSON string representation of the geometry.,String
+229,ee.Geometry.Polygon,ee.Geometry.Polygon,Constructs an ee.Geometry describing a polygon.,Geometry.Polygon
+230,ee.Geometry.MultiLineString.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+231,ee.Geometry.MultiLineString.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+232,ee.Geometry.Polygon.toGeoJSON,toGeoJSON,Returns a GeoJSON representation of the geometry.,GeoJSONGeometry
+233,ee.Geometry.Rectangle,ee.Geometry.Rectangle,Constructs an ee.Geometry describing a rectangular polygon.,Geometry.Rectangle
+234,ee.Geometry.MultiPoint.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+235,ee.Geometry.MultiPoint.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+236,ee.Geometry.Point.toGeoJSONString,toGeoJSONString,Returns a GeoJSON string representation of the geometry.,String
+237,ee.Image,ee.Image,An object to represent an Earth Engine image. This constructor accepts a variety of arguments:,Image
+238,ee.Image.addBands,addBands,"Returns an image containing all bands copied from the first input and selected bands from the second input, optionally overwriting bands in the first image with the same name. The new image has the metadata and footprint from the first input image.",Image
+239,ee.Image.arrayAccum,arrayAccum,"Accumulates elements of each array pixel along the given axis, by setting each element of the result array pixel to the reduction of elements in that pixel along the given axis, up to and including the current position on the axis. May be used to make a cumulative sum, a monotonically increasing sequence, etc.",Image
+240,ee.Image.arrayArgmax,arrayArgmax,"Computes the positional indices of the maximum value in image of array values. If there are multiple occurrences of the maximum, the indices reflect the first.",Image
+241,ee.Image.arrayCat,arrayCat,Creates an array image by concatenating each array pixel along the given axis in each band.,Image
+242,ee.Image.arrayDimensions,arrayDimensions,"Returns the number of dimensions in each array band, and 0 for scalar image bands.",Image
+243,ee.Image.arrayDotProduct,arrayDotProduct,Computes the dot product of each pair of 1-D arrays in the bands of the input images.,Image
+244,ee.Image.arrayFlatten,arrayFlatten,"Converts a single band image of equal-shape multidimensional pixels to an image of scalar pixels, with one band for each element of the array.",Image
+245,ee.Image.arrayGet,arrayGet,"For each band, an output band of the same name is created with the value at the given position extracted from the input multidimensional pixel in that band.",Image
+246,ee.Image.arrayLength,arrayLength,Returns the length of each pixel's array along the given axis.,Image
+247,ee.Image.arrayLengths,arrayLengths,Returns a 1D array image with the length of each array axis.,Image
+248,ee.Image.arrayMask,arrayMask,"Creates an array image where each array-valued pixel is masked with another array-valued pixel, retaining only the elements where the mask is non-zero. If the mask image has one band it will be applied to all the bands of 'input', otherwise they must have the same number of bands.",Image
+249,ee.Image.arrayPad,arrayPad,Pads the array values in each pixel to be a fixed length. The pad value will be appended to each array to extend it to given length along each axis.  All bands of the image must be array-valued and have the same dimensions.,Image
+250,ee.Image.arrayProject,arrayProject,Projects the array in each pixel to a lower dimensional space by specifying the axes to retain. Dropped axes must be at most length 1.,Image
+251,ee.Image.arrayReduce,arrayReduce,Reduces elements of each array pixel.,Image
+252,ee.Image.arrayRepeat,arrayRepeat,"Repeats each array pixel along the given axis. Each output pixel will have the shape of the input pixel, except length along the repeated axis, which will be multiplied by the number of copies.",Image
+253,ee.Image.arrayReshape,arrayReshape,"Converts array bands of an image with equally-shaped, possibly multidimensional pixels to an image of arrays with a new shape.",Image
+254,ee.Image.arraySlice,arraySlice,"Creates a subarray by slicing out each position along the given axis from the 'start' (inclusive) to 'end' (exclusive) by increments of 'step'. The result will have as many dimensions as the input, and the same length in all directions except the slicing axis, where the length will be the number of positions from 'start' to 'end' by 'step' that are in range of the input array's length along 'axis'. This means the result can be length 0 along the given axis if start=end, or if the start or end values are entirely out of range.",Image
+255,ee.Image.arraySort,arraySort,Sorts elements of each array pixel along one axis.,Image
+256,ee.Image.arrayTranspose,arrayTranspose,Transposes two dimensions of each array pixel.,Image
+257,ee.Image.bandNames,bandNames,Returns a list containing the names of the bands of an image.,List
+258,ee.Image.bandTypes,bandTypes,Returns a dictionary of the image's band types.,Dictionary
+259,ee.Image.bitsToArrayImage,bitsToArrayImage,Turns the bits of an integer into a 1-D array.  The array has a lengthup to the highest 'on' bit in the input.,Image
+260,ee.Image.blend,blend,"Overlays one image on top of another. The images are blended together using the masks as opacity. If either of images has only 1 band, it is replicated to match the number of bands in the other image.",Image
+261,ee.Image.changeProj,changeProj,"Tweaks the projection of the input image, moving each pixel from its location in srcProj to the same coordinates in dstProj.",Image
+262,ee.Image.clip,clip,Clips an image to a Geometry or Feature.,Image
+263,ee.Image.clipToBoundsAndScale,clipToBoundsAndScale,"Clips an image to the bounds of a Geometry, and scales the clipped image to a particular size or scale.",Image
+264,ee.Image.clipToCollection,clipToCollection,"Clips an image to a FeatureCollection. The output bands correspond exactly the input bands, except data not covered by the geometry of at least one feature from the collection is masked. The output image retains the metadata of the input image.",Image
+265,ee.Image.connectedComponents,connectedComponents,"Finds connected components with the same value of the first band of the input and labels them with a globally unique value.  Connectedness is specified by the given kernel.  Objects larger than maxSize are considered background, and are masked.",Image
+266,ee.Image.connectedPixelCount,connectedPixelCount,Generate an image where each pixel contains the number of 4- or 8-connected neighbors (including itself).,Image
+267,ee.Image.constant,constant,Generates an image containing a constant value everywhere.,Image
+268,ee.Image.convolve,convolve,Convolves each band of an image with the given kernel.,Image
+269,ee.Image.cumulativeCost,cumulativeCost,Computes a cumulative cost map based on an image containing costs to traverse each pixel and an image containing source locations.,Image
+270,ee.Image.date,date,Returns the acquisition time of an image as a Date object. This helper function is equivalent to .,Date
+271,ee.Image.derivative,derivative,"Computes the X and Y discrete derivatives for each band in the input image, in pixel coordinates.",Image
+272,ee.Image.directionalDistanceTransform,directionalDistanceTransform,"For each zero-valued pixel in the source, get the distance to the nearest non-zero pixels in the given direction.",Image
+273,ee.Image.displace,displace,Warps an image using an image of displacements.,Image
+274,ee.Image.displacement,displacement,"Determines displacements required to register an image to a reference image while allowing local, rubber sheet deformations. Displacements are computed in the CRS of the reference image, at a scale dictated by the lowest resolution of the following three projections: input image projection, reference image projection, and requested projection. The displacements are then transformed into the user-specified projection for output.",Image
+275,ee.Image.entropy,entropy,"Computes the windowed entropy for each band using the specified kernel centered on each input pixel. Entropy is computed as -sum(p * log2(p)), where p is the normalized probability of occurrence of the values encountered in each window.",Image
+276,ee.Image.erfc,erfc,Computes the complementary error function of the input.,Image
+277,ee.Image.erfcInv,erfcInv,Computes the inverse complementary error function of the input.,Image
+278,ee.Image.fastDistanceTransform,fastDistanceTransform,"Returns the distance, as determined by the specified distance metric, to the nearest non-zero valued pixel in the input.  The output contains values for all pixels within the given neighborhood size, regardless of the input's mask.  Note: the default distance metric returns squared distance.",Image
+279,ee.Image.firstNonZero,firstNonZero,"Selects the first value if it is non-zero, and the second value otherwise for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+280,ee.Image.focalMax,focalMax,Applies a morphological reducer() filter to each band of an image using a named or custom kernel.,Image
+281,ee.Image.focalMean,focalMean,Applies a morphological mean filter to each band of an image using a named or custom kernel.,Image
+282,ee.Image.focalMedian,focalMedian,Applies a morphological reducer() filter to each band of an image using a named or custom kernel.,Image
+283,ee.Image.focalMin,focalMin,Applies a morphological reducer() filter to each band of an image using a named or custom kernel.,Image
+284,ee.Image.focalMode,focalMode,Applies a morphological reducer() filter to each band of an image using a named or custom kernel.,Image
+285,ee.Image.getThumbURL,getThumbURL,Get a thumbnail URL for this image.,Object|String
+286,ee.Image.glcmTexture,glcmTexture,"Computes texture metrics from the Gray Level Co-occurrence Matrix around each pixel of every band.  The GLCM is a tabulation of how often different combinations of pixel brightness values (grey levels) occur in an image.  It counts the number of times a pixel of value X lies next to a pixel of value Y, in a particular direction and distance. and then derives statistics from this tabulation.",Image
+287,ee.Image.gradient,gradient,Calculates the x and y gradient.,Image
+288,ee.Image.hersFeature,hersFeature,Computes the Histogram Error Ring Statistic (HERS) for each pixel in each band matching the keys in the descriptor. Only the bands for which HERS could be computed are returned.,Image
+289,ee.Image.hersImage,hersImage,Computes the Histogram Error Ring Statistic (HERS) for each pair of pixels in each band present in both images. Only the bands for which HERS could be computed are returned.,Image
+290,ee.Image.hsvToRgb,hsvToRgb,"Transforms the image from the HSV color space to the RGB color space.  Expects a 3 band image in the range [0, 1], and produces three bands: red, green and blue with values in the range [0, 1].",Image
+291,ee.Image.interpolate,interpolate,"Interpolates each point in the first band of the input image into the piecewise-linear function specified by the x and y arrays.  The x values must be strictly increasing.  If an input point is less than the first or greater than the last x value, then the output is specified by the ""behavior"" argument: ""extrapolate"" specifies the output value is extrapolated from the two nearest points, ""clamp"" specifies the output value is taken from the nearest point, ""input""  specifies the output value is copied from the input and ""mask"" specifies the output value is masked.",Image
+292,ee.Image.linkCollection,linkCollection,Links the source image to a matching image from an image collection.,Image
+293,ee.Image.load,ee.Image.load,Returns the image given its ID.,Image
+294,ee.Image.loadGeoTIFF,ee.Image.loadGeoTIFF,Loads a GeoTIFF as an Image.,Image
+295,ee.Image.matrixIdentity,matrixIdentity,Creates an image where each pixel is a 2D identity matrix of the given size.,Image
+296,ee.Image.matrixTrace,matrixTrace,Computes the trace of the matrix.,Image
+297,ee.Image.medialAxis,medialAxis,Computes the discrete medial axis of the zero valued pixels of the first band of the input.  Outputs 4 bands:,Image
+298,ee.Image.metadata,metadata,Generates a constant image of type double from a metadata property.,Image
+299,ee.Image.neighborhoodToArray,neighborhoodToArray,"Turns the neighborhood of each pixel in a scalar image into a 2D array. Axes 0 and 1 of the output array correspond to Y and X axes of the image, respectively. The output image will have as many bands as the input; each output band has the same mask as the corresponding input band. The footprint and metadata of the input image are preserved.",Image
+300,ee.Image.neighborhoodToBands,neighborhoodToBands,"Turn the neighborhood of a pixel into a set of bands. The neighborhood is specified using a Kernel, and only non-zero-weight kernel values are used. The weights of the kernel is otherwise ignored.",Image
+301,ee.Image.normalizedDifference,normalizedDifference,"Computes the normalized difference between two bands. If the bands to use are not specified, uses the first two bands. The normalized difference is computed as (first �?second) / (first + second). Note that the returned image band name is 'nd', the input image properties are not retained in the output image, and a negative pixel value in either input band will cause the output pixel to be masked. To avoid masking negative input values, use  to compute normalized difference.",Image
+302,ee.Image.paint,paint,"Paints the geometries of a collection onto an image, using the given 'color' value to replace each band's values where any geometry covers the image (or, if a line width is specified, where the perimeters do).",Image
+303,ee.Image.pixelCoordinates,pixelCoordinates,Creates a two band image containing the x and y coordinates of each pixel in the given projection.,Image
+304,ee.Image.polynomial,polynomial,Compute a polynomial at each pixel using the given coefficients.,Image
+305,ee.Image.random,random,"Generates a random number at each pixel location.  When using the 'uniform' distribution, outputs are in the range of [0 to 1).  Using the 'normal' distribution, the outputs have μ=0, 𝛔=1, but no explicit limits.",Image
+306,ee.Image.randomVisualizer,randomVisualizer,"Creates a visualization image by assigning a random color to each unique value of the pixels of the first band. The first three bands of the output image will contain 8-bit R, G and B values, followed by all bands of the input image.",Image
+307,ee.Image.reduceConnectedComponents,reduceConnectedComponents,Applies a reducer to all of the pixels inside of each 'object'. Pixels are considered to belong to an object if they are connected (8-way) and have the same value in the 'label' band.  The label band is only used to identify the connectedness; the rest are provided as inputs to the reducer.,Image
+308,ee.Image.reduceNeighborhood,reduceNeighborhood,"Applies the given reducer to the neighborhood around each pixel, as determined by the given kernel. If the reducer has a single input, it will be applied separately to each band of the collection; otherwise it must have the same number of inputs as the input image has bands.",Image
+309,ee.Image.reduceRegion,reduceRegion,Apply a reducer to all the pixels in a specific region.,Dictionary
+310,ee.Image.reduceRegions,reduceRegions,Apply a reducer over the area of each feature in the given collection.,FeatureCollection
+311,ee.Image.reduceResolution,reduceResolution,"Enables reprojection using the given reducer to combine all input pixels corresponding to each output pixel. If the reducer has a single input, it will be applied separately to each band of the collection; otherwise it must have the same number of inputs as the input image has bands.",Image
+312,ee.Image.reduceToVectors,reduceToVectors,"Convert an image to a feature collection by reducing homogeneous regions. Given an image containing a band of labeled segments and zero or more additional bands, runs a reducer over the pixels in each segment producing a feature per segment.",FeatureCollection
+313,ee.Image.regexpRename,regexpRename,Renames the bands of an image by applying a regular expression replacement to the current band names.  Any bands not matched by the regex will be copied over without renaming.,Image
+314,ee.Image.register,register,"Registers an image to a reference image while allowing local, rubber sheet deformations. Displacements are computed in the CRS of the reference image, at a scale dictated by the lowest resolution of the following three projections: input image projection, reference image projection, and requested projection. The displacements then applied to the input image to register it with the reference.",Image
+315,ee.Image.reproject,reproject,Force an image to be computed in a given projection and resolution.,Image
+316,ee.Image.resample,resample,"An algorithm that returns an image identical to its argument, but which uses bilinear or bicubic interpolation (rather than the default nearest-neighbor) to compute pixels in projections other than its native projection or other levels of the same image pyramid.",Image
+317,ee.Image.rgb,rgb,Create a 3-band image specifically for visualization. This uses the first band in each image.,Image
+318,ee.Image.rgbToHsv,rgbToHsv,"Transforms the image from the RGB color space to the HSV color space.  Expects a 3 band image in the range [0, 1], and produces three bands: hue, saturation and value with values in the range [0, 1].",Image
+319,ee.Image.rsedTransform,rsedTransform,"Computes the 2D maximal height surface created by placing an inverted parabola over each non-zero pixel of the input image, where the pixel's value is the height of the parabola.  Viewed as a binary image (zero/not-zero) this is equivalent to buffering each non-zero input pixel by the square root of its value, in pixels.",Image
+320,ee.Image.sample,sample,"Samples the pixels of an image, returning them as a FeatureCollection. Each feature will have 1 property per band in the input image. Note that the default behavior is to drop features that intersect masked pixels, which result in null-valued properties (see dropNulls argument).",FeatureCollection
+321,ee.Image.sampleRectangle,sampleRectangle,"Extracts a rectangular region of pixels from an image into a ND array per band. The arrays are returned in a feature retaining the same properties as the image and a geometry the same as that used to sample the image (or the image footprint if unspecified). Each band is sampled in its input projection, and if no geometry is specified, sampled using its footprint. For scalar bands, the output array is 2D. For array bands the output array is (2+N)D where N is the number of dimensions in the original band. If sampling array bands, all arrays must have the same number of elements. If a band's sampled region is entirely masked and a default array value is specified, the default array value is used in-lieu of sampling the image.",Feature
+322,ee.Image.sampleRegions,sampleRegions,"Converts each pixel of an image (at a given scale) that intersects one or more regions to a Feature, returning them as a FeatureCollection.  Each output feature will have one property per band of the input image, as well as any specified properties copied from the input feature.",FeatureCollection
+323,ee.Image.selfMask,selfMask,Updates an image's mask at all positions where the existing mask is not zero using the value of the image as the new mask value. The output image retains the metadata and footprint of the input image.,Image
+324,ee.Image.setDefaultProjection,setDefaultProjection,Set a default projection to be applied to this image. The projection's resolution may be overridden by later operations.,Image
+325,ee.Image.sldStyle,sldStyle,Styles a raster input with the provided OGC SLD styling.,Image
+326,ee.Image.spectralDilation,spectralDilation,Computes the spectral/spatial dilation of an image by computing the spectral distance of each pixel under a structuring kernel from the centroid of all pixels under the kernel and taking the most distant result. See 'Spatial/spectral endmember extraction by multidimensional morphological operations.' IEEE transactions on geoscience and remote sensing 40.9 (2002): 2025-2041.,Image
+327,ee.Image.spectralDistance,spectralDistance,Computes the per-pixel spectral distance between two images.  If the images are array based then only the first band of each image is used; otherwise all bands are involved in the distance computation.  The two images are therefore expected  to contain the same number of bands or have the same 1-dimensional array length.,Image
+328,ee.Image.spectralErosion,spectralErosion,Computes the spectral/spatial erosion of an image by computing the spectral distance of each pixel under a structuring kernel from the centroid of all pixels under the kernel and taking the closest result.  See 'Spatial/spectral endmember extraction by multidimensional morphological operations.' IEEE transactions on geoscience and remote sensing 40.9 (2002): 2025-2041.,Image
+329,ee.Image.spectralGradient,spectralGradient,"Computes the spectral gradient over all bands of an image (or the first band if the image is Array typed) by computing the per-pixel difference between the spectral erosion and dilation with a given structuring kernel and distance metric. See: Plaza, Antonio, et al. 'Spatial/spectral endmember extraction by multidimensional morphological operations.' IEEE transactions on geoscience and remote sensing 40.9 (2002): 2025-2041.",Image
+330,ee.Image.stratifiedSample,stratifiedSample,"Extracts a stratified random sample of points from an image.  Extracts the specified number of samples for each distinct value discovered within the 'classBand'.  Returns a FeatureCollection of 1 Feature per extracted point, with each feature having 1 property per band in the input image.  If there are less than the specified number of samples available for a given class value, then all of the points for that class will be included.  Requires that the classBand contain integer values.",FeatureCollection
+331,ee.Image.unmask,unmask,"Replaces mask and value of the input image with the mask and value of another image at all positions where the input mask is zero. The output image retains the metadata of the input image. By default, the output image also retains the footprint of the input, but setting sameFootprint to false allows to extend the footprint.",Image
+332,ee.Image.unmix,unmix,"Unmix each pixel with the given endmembers, by computing the pseudo-inverse and multiplying it through each pixel.  Returns an image of doubles with the same number of bands as endmembers.",Image
+333,ee.Image.updateMask,updateMask,Updates an image's mask at all positions where the existing mask is not zero. The output image retains the metadata and footprint of the input image.,Image
+334,ee.Image.visualize,visualize,"Produces an RGB or grayscale visualization of an image.  Each of the gain, bias, min, max and gamma arguments can take either a single value, which will be applied to all bands, or a list of values the same length as bands.",Image
+335,ee.Image.where,where,Performs conditional replacement of values.,Image
+336,ee.Image.zeroCrossing,zeroCrossing,Finds zero-crossings on each band of an image.,Image
+337,ee.ImageCollection,ee.ImageCollection,ImageCollections can be constructed from the following arguments:,ImageCollection
+338,ee.ImageCollection.count,count,Reduces an image collection by calculating the number of images with a valid mask at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+339,ee.ImageCollection.formaTrend,formaTrend,"Computes the long and short term trends of a time series or optionally, the trends of the ratio of the time series and a covariate.  The long term trend is estimated from the linear term of a regression on the full time series.  The short term trend is computed as the windowed minimum over the time series.",Image
+340,ee.ImageCollection.fromImages,fromImages,Returns the image collection containing the given images.,ImageCollection
+341,ee.ImageCollection.getFilmstripThumbURL,getFilmstripThumbURL,Get the URL of a tiled thumbnail for this ImageCollection.,Object|String
+342,ee.ImageCollection.getRegion,getRegion,"Output an array of values for each [pixel, band, image] tuple in an ImageCollection.  The output contains rows of id, lon, lat, time, and all bands for each image that intersects each pixel in the given region. Attempting to extract more than 1048576 values will result in an error.",List
+343,ee.ImageCollection.getVideoThumbURL,getVideoThumbURL,Get the URL of an animated thumbnail for this ImageCollection.,Object|String
+344,ee.ImageCollection.load,ee.ImageCollection.load,Returns the image collection given its ID.,ImageCollection
+345,ee.ImageCollection.mean,mean,Reduces an image collection by calculating the mean of all values at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+346,ee.ImageCollection.median,median,Reduces an image collection by calculating the median of all values at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+347,ee.ImageCollection.mode,mode,Reduces an image collection by calculating the most common value at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+348,ee.ImageCollection.mosaic,mosaic,"Composites all the images in a collection, using the mask.",Image
+349,ee.ImageCollection.product,product,Reduces an image collection by calculating the product of all values at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+350,ee.ImageCollection.qualityMosaic,qualityMosaic,"Composites all the images in a collection, using a quality band as a per-pixel ordering function.",Image
+351,ee.ImageCollection.sum,sum,Reduces an image collection by calculating the sum of all values at each pixel across the stack of all matching bands. Bands are matched by name.,Image
+352,ee.ImageCollection.toArrayPerBand,toArrayPerBand,Concatenates multiple images into a single array image. The result will be masked if any input is masked.,Image
+353,ee.ImageCollection.toBands,toBands,Converts a collection to a single multi-band image containing all of the bands of every image in the collection.  Output bands are named by prefixing the existing band names with the image id from which it came (e.g.: 'image1_band1'). Note: The maximum number of bands is 5000,Image
+354,ee.initialize,initialize,"Initialize the library.  If this hasn't been called by the time any object constructor is used, it will be called then.  If this is called a second time with a different baseurl or tileurl, this doesn't do an un-initialization of e.g.: the previously loaded Algorithms, but will overwrite them and let point at alternate servers.",EMPTY
+355,ee.Join.apply,ee.Join.apply,Joins two collections.,FeatureCollection
+356,ee.Join.inner,ee.Join.inner,"Returns a join that pairs elements from the primary collection with matching elements from the secondary collection. Each result has a 'primary' property that contains the element from the primary collection, and a 'secondary' property containing the matching element from the secondary collection. If measureKey is specified, the join measure is also attached to the object as a property.",Join
+357,ee.Join.saveAll,ee.Join.saveAll,"Returns a join that pairs each element from the first collection with a group of matching elements from the second collection. The list of matches is added to each result as an additional property. If measureKey is specified, each match has the value of its join measure attached. Join measures are produced when withinDistance or maxDifference filters are used as the join condition.",Join
+358,ee.Join.saveBest,ee.Join.saveBest,Returns a join that pairs each element from the first collection with a matching element from the second collection. The match with the best join measure is added to each result as an additional property. Join measures are produced when withinDistance or maxDifference filters are used as the join condition.,Join
+359,ee.Join.saveFirst,ee.Join.saveFirst,Returns a join that pairs each element from the first collection with a matching element from the second collection. The first match is added to the result as an additional property.,Join
+360,ee.Kernel.chebyshev,ee.Kernel.chebyshev,Generates a distance kernel based on Chebyshev distance (greatest distance along any dimension).,Kernel
+361,ee.Kernel.circle,ee.Kernel.circle,Generates a circle-shaped boolean kernel.,Kernel
+362,ee.Kernel.compass,ee.Kernel.compass,Generates a 3x3 Prewitt's Compass edge-detection kernel.,Kernel
+363,ee.Kernel.cross,ee.Kernel.cross,Generates a cross-shaped boolean kernel.,Kernel
+364,ee.Kernel.diamond,ee.Kernel.diamond,Generates a diamond-shaped boolean kernel.,Kernel
+365,ee.Kernel.euclidean,ee.Kernel.euclidean,Generates a distance kernel based on Euclidean (straight-line) distance.,Kernel
+366,ee.Kernel.fixed,ee.Kernel.fixed,Creates a Kernel.,Kernel
+367,ee.Kernel.gaussian,ee.Kernel.gaussian,Generates a Gaussian kernel from a sampled continuous Gaussian.,Kernel
+368,ee.Kernel.inverse,ee.Kernel.inverse,Returns a kernel which has each of its weights multiplicatively inverted. Weights with a value of zero are not inverted and remain zero.,Kernel
+369,ee.Kernel.kirsch,ee.Kernel.kirsch,Generates a 3x3 Kirsch's Compass edge-detection kernel.,Kernel
+370,ee.Kernel.laplacian4,ee.Kernel.laplacian4,Generates a 3x3 Laplacian-4 edge-detection kernel.,Kernel
+371,ee.Kernel.laplacian8,ee.Kernel.laplacian8,Generates a 3x3 Laplacian-8 edge-detection kernel.,Kernel
+372,ee.Kernel.manhattan,ee.Kernel.manhattan,Generates a distance kernel based on rectilinear (city-block) distance.,Kernel
+373,ee.Kernel.octagon,ee.Kernel.octagon,Generates an octagon-shaped boolean kernel.,Kernel
+374,ee.Kernel.plus,ee.Kernel.plus,Generates a plus-shaped boolean kernel.,Kernel
+375,ee.Kernel.prewitt,ee.Kernel.prewitt,Generates a 3x3 Prewitt edge-detection kernel.,Kernel
+376,ee.Kernel.rectangle,ee.Kernel.rectangle,Generates a rectangular-shaped kernel.,Kernel
+377,ee.Kernel.roberts,ee.Kernel.roberts,Generates a 2x2 Roberts edge-detection kernel.,Kernel
+378,ee.Kernel.rotate,ee.Kernel.rotate,Creates a Kernel.,Kernel
+379,ee.Kernel.sobel,ee.Kernel.sobel,Generates a 3x3 Sobel edge-detection kernel.,Kernel
+380,ee.Kernel.square,ee.Kernel.square,Generates a square-shaped boolean kernel.,Kernel
+381,ee.List,ee.List,Constructs a new list.,List
+382,ee.List.containsAll,containsAll,"Returns true if list contains all of the elements of other, regardless of order.",Boolean
+383,ee.List.frequency,frequency,Returns the number of elements in list equal to element.,Integer
+384,ee.List.indexOf,indexOf,"Returns the position of the first occurrence of target in list, or -1 if list does not contain target.",Integer
+385,ee.List.indexOfSublist,indexOfSublist,"Returns the starting position of the first occurrence of target within list, or -1 if there is no such occurrence.",Integer
+386,ee.List.insert,insert,Inserts element at the specified position in list. A negative index counts backwards from the end of the list.,List
+387,ee.List.join,join,Returns a string containing the elements of the list joined together with the specified separator between elements.,String
+388,ee.List.lastIndexOfSubList,lastIndexOfSubList,"Returns the starting position of the last occurrence of target within list, or -1 if there is no such occurrence.",Integer
+389,ee.List.removeAll,removeAll,Removes from list all of the elements that are contained in other list.,List
+390,ee.List.repeat,ee.List.repeat,Returns a new list containing value repeated count times.,List
+391,ee.List.replaceAll,replaceAll,Replaces all occurrences of oldVal in list with newVal.,List
+392,ee.List.reverse,reverse,Reverses the order of the elements in list.,List
+393,ee.List.rotate,rotate,Rotates the elements of the list by the specified distance.,List
+394,ee.List.sequence,sequence,"Generate a sequence of numbers from start to end (inclusive) in increments of step, or in count equally-spaced increments.  If end is not specified it is computed from start + step * count, so at least one of end or count must be specified.",List
+395,ee.List.shuffle,shuffle,"Randomly permute the specified list.  Note that the permutation order will always be the same for any given seed, unless the value for seed is 'false'.",List
+396,ee.List.splice,splice,"Starting at the start index, removes count elements from list and insert the contents of other at that location.  If start is negative, it counts backwards from the end of the list.",List
+397,ee.List.swap,swap,Swaps the elements at the specified positions.  A negative position counts backwards from the end of the list.,List
+398,ee.List.unzip,unzip,"Transposes a list of lists, extracting the first element of each inner list into one list the second elements into another, etc., up to the length of the shortest inner list. The remaining items are discarded. The result is a list of lists.",List
+399,ee.List.zip,zip,"Pairs the elements of two lists to create a list of two-element lists.  When the input lists are of different sizes, the final list has the same size as the shortest one.",List
+400,ee.Model.fromAiPlatformPredictor,fromAiPlatformPredictor,Returns an ee.Model from a description of an AI Platform prediction model. (See https://cloud.google.com/ml-engine/).,Model
+401,ee.Model.fromVertexAi,fromVertexAi,Returns an ee.Model from a description of a Vertex AI model endpoint. (See https://cloud.google.com/vertex-ai).,Model
+402,ee.Model.predictImage,predictImage,Make predictions from pixel tiles of an image. The predictions are merged as bands with the input image.,Image
+403,ee.Model.predictProperties,predictProperties,Make predictions for each feature in a collection. Predicted properties are merged with the properties of the input feature.,FeatureCollection
+404,ee.Number,ee.Number,Constructs a new Number.,Number
+405,ee.Number.erfc,erfc,Computes the complementary error function of the input.,Number
+406,ee.Number.erfcInv,erfcInv,Computes the inverse complementary error function of the input.,Number
+407,ee.Number.firstNonZero,firstNonZero,"Selects the first value if it is non-zero, and the second value otherwise.",Number
+408,ee.Number.parse,ee.Number.parse,Convert a string to a number.,Number
+409,ee.PixelType,PixelType,"Returns a PixelType of the given precision with the given limits per element, and an optional dimensionality.",PixelType
+410,ee.PixelType.dimensions,dimensions,Returns the number of dimensions for this type. Will be 0 for scalar values and >= 1 for array values.,Integer
+411,ee.PixelType.maxValue,maxValue,Returns the maximum value of the PixelType.,Number
+412,ee.PixelType.minValue,minValue,Returns the minimum value of the PixelType.,Number
+413,ee.PixelType.precision,precision,"Returns the precision of the PixelType.  One of 'int', 'float', or 'double'.",String
+414,ee.Projection,ee.Projection,"Returns a Projection with the given base coordinate system and the given transform between projected coordinates and the base. If no transform is specified, the identity transform is assumed.",Projection
+415,ee.Projection.atScale,atScale,"Returns the projection scaled such that its units have the given scale in linear meters, as measured at the point of true scale.",Projection
+416,ee.Projection.crs,crs,"Returns the authority code (e.g. 'EPSG:4326') for the base coordinate system of this projection, or null if the base coordinate system is not found in any available database.",String
+417,ee.Projection.nominalScale,nominalScale,"Returns the linear scale in meters of the units of this projection, as measured at the point of true scale.",Float
+418,ee.Projection.scale,scale,Returns the projection scaled by the given amount in each axis.,Projection
+419,ee.Projection.wkt,wkt,Returns a WKT representation of the base coordinate system of this Projection.,String
+420,ee.Reducer.autoHistogram,ee.Reducer.autoHistogram,"Create a reducer that will compute a histogram of the inputs.  The output is a Nx2 array of the lower bucket bounds and the counts (or cumulative counts) of each bucket, and is suitable for use per-pixel.",Reducer
+421,ee.Reducer.combine,ee.Reducer.combine,"Creates a Reducer that runs two reducers in parallel.  The combined reducer's outputs will be those of reducer1 followed by those of reducer2, where the output names of reducer2 are prefixed with the given string.",Reducer
+422,ee.Reducer.disaggregate,ee.Reducer.disaggregate,"Separates aggregate inputs (Arrays, Lists or Dictionaries) into individual items that are then each passed to the specified reducer.  When used on dictionaries, the dictionary keys are ignored.  Non-aggregated inputs (ie: numbers or strings) are passed to the underlying reducer directly.",Reducer
+423,ee.Reducer.fixed2DHistogram,ee.Reducer.fixed2DHistogram,"Creates a reducer that will compute a 2D histogram of the inputs using a fixed number of fixed width bins. Values outside of the [min, max) range on either axis are ignored. The output is a 2D array of counts, and 2 1-D arrays of bucket lower edges for the xAxis and the yXais. This reducer is suitable for use per-pixel, however it is always unweighted.  The maximum count for any bucket is 2^31 - 1.",Reducer
+424,ee.Reducer.fixedHistogram,ee.Reducer.fixedHistogram,"Creates a reducer that will compute a histogram of the inputs using a fixed number of fixed width bins. Values outside of the [min, max) range are ignored.  The output is a Nx2 array of bucket lower edges and counts (or cumulative counts) and is suitable for use per-pixel.",Reducer
+425,ee.Reducer.forEach,ee.Reducer.forEach,"Creates a Reducer by combining a copy of the given reducer for each output name in the given list.  If the reducer has a single output, the output names are used as-is; otherwise they are prefixed to the original output names.",Reducer
+426,ee.Reducer.forEachBand,ee.Reducer.forEachBand,"Creates a Reducer by combining a copy of the given reducer for each band in the given image, using the band names as output names.",Reducer
+427,ee.Reducer.forEachElement,ee.Reducer.forEachElement,"Separately reduces each position in array inputs of equal shape, producing an array output of the same shape.",Reducer
+428,ee.Reducer.geometricMedian,ee.Reducer.geometricMedian,Creates a reducer that computes the geometric median across a set of inputs.,Reducer
+429,ee.Reducer.getOutputs,ee.Reducer.getOutputs,Returns a list of the output names of the given reducer.,List
+430,ee.Reducer.group,ee.Reducer.group,"Groups reducer records by the value of a given input, and reduces each group with the given reducer.",Reducer
+431,ee.Reducer.histogram,ee.Reducer.histogram,Create a reducer that will compute a histogram of the inputs.,Reducer
+432,ee.Reducer.intervalMean,ee.Reducer.intervalMean,Creates a Reducer to compute the mean of all inputs in the specified percentile range.  For small numbers of inputs (up to maxRaw) the mean will be computed directly; for larger numbers of inputs the mean will be derived from a histogram.,Reducer
+433,ee.Reducer.kendallsCorrelation,ee.Reducer.kendallsCorrelation,Creates a reducer that computes the Kendall's Tau-b rank correlation.  A positive tau value indicates an increasing trend; negative value indicates a decreasing trend. See https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/stat/correlation/KendallsCorrelation.html for details.,Reducer
+434,ee.Reducer.linearRegression,ee.Reducer.linearRegression,Creates a reducer that computes a linear least squares regression with numX independent variables and numY dependent variables.,Reducer
+435,ee.Reducer.max,ee.Reducer.max,"Creates a reducer that outputs the maximum value of its (first) input.  If numInputs is greater than one, also outputs the corresponding values of the additional inputs.",Reducer
+436,ee.Reducer.median,ee.Reducer.median,Create a reducer that will compute the median of the inputs.  For small numbers of inputs (up to maxRaw) the median will be computed directly; for larger numbers of inputs the median will be derived from a histogram.,Reducer
+437,ee.Reducer.min,ee.Reducer.min,"Creates a reducer that outputs the minimum value of its (first) input.  If numInputs is greater than one, also outputs the corresponding values of the additional inputs.",Reducer
+438,ee.Reducer.mode,ee.Reducer.mode,Create a reducer that will compute the mode of the inputs.  For small numbers of inputs (up to maxRaw) the mode will be computed directly; for larger numbers of inputs the mode will be derived from a histogram.,Reducer
+439,ee.Reducer.percentile,ee.Reducer.percentile,"Create a reducer that will compute the specified percentiles, e.g. given [0, 50, 100] will produce outputs named 'p0', 'p50', and 'p100' with the min, median, and max respectively.  For small numbers of inputs (up to maxRaw) the percentiles will be computed directly; for larger numbers of inputs the percentiles will be derived from a histogram.",Reducer
+440,ee.Reducer.repeat,ee.Reducer.repeat,"Creates a Reducer by combining the specified number of copies of the given reducer.  Output names are the same as the given reducer, but each is a list of the corresponding output from each of the reducers.",Reducer
+441,ee.Reducer.ridgeRegression,ee.Reducer.ridgeRegression,Creates a reducer that computes a ridge regression with numX independent variables (not including constant) followed by numY dependent variables.  Ridge regression is a form of Tikhonov regularization which shrinks the regression coefficients by imposing a penalty on their size. With this implementation of ridge regression there NO NEED to include a constant value for bias.,Reducer
+442,ee.Reducer.robustLinearRegression,ee.Reducer.robustLinearRegression,"Creates a reducer that computes a robust least squares regression with numX independent variables and numY dependent variables, using iteratively reweighted least squares with the Talwar cost function. A point is considered an outlier if the RMS of residuals is greater than beta.",Reducer
+443,ee.Reducer.setOutputs,ee.Reducer.setOutputs,"Returns a Reducer with the same inputs as the given Reducer, but with outputs renamed and/or removed.",Reducer
+444,ee.Reducer.splitWeights,ee.Reducer.splitWeights,"Returns a Reducer with the same outputs as the given Reducer, but with each weighted input replaced by two unweighted inputs.",Reducer
+445,ee.Reducer.toCollection,ee.Reducer.toCollection,Returns a reducer that collects its inputs into a FeatureCollection.,Reducer
+446,ee.Reducer.toList,ee.Reducer.toList,"Creates a reducer that collects its inputs into a list, optionally grouped into tuples.",Reducer
+447,ee.Reducer.unweighted,ee.Reducer.unweighted,"Returns a Reducer with the same inputs and outputs as the given Reducer, but with no weighted inputs.",Reducer
+448,ee.String,ee.String,Constructs a new String.,String
+449,ee.String.compareTo,compareTo,Compares two strings lexicographically. Returns: the value 0 if the two strings are lexicographically equal; a value less than 0 if string1 is less than string2;  and a value greater than 0 if string1 is lexicographically greater than string2.,Integer
+450,ee.String.decodeJSON,decodeJSON,Decodes a JSON string.,Object
+451,ee.String.encodeJSON,encodeJSON,"Encodes an object to JSON.  Supports primitives, lists and dictionaries.",String
+452,ee.String.index,index,"Searches a string for the first occurrence of a substring.  Returns the index of the first match, or -1.",Integer
+453,ee.String.match,match,Matches a string against a regular expression.  Returns a list of matching strings.,List
+454,ee.String.rindex,rindex,"Searches a string for the last occurrence of a substring.  Returns the index of the first match, or -1.",Integer
+455,ee.String.split,split,"Splits a string on a regular expression, Returning a list of strings.",List
+456,ee.String.toLowerCase,toLowerCase,Converts all of the characters in a string to lower case.,String
+457,ee.String.toUpperCase,toUpperCase,Converts all of the characters in a string to upper case.,String
+458,ee.String.trim,trim,"Returns a string whose value is the original string, with any leading and trailing whitespace removed.",String
+459,ee.Terrain.aspect,ee.Terrain.aspect,Calculates aspect in degrees from a terrain DEM.,Image
+460,ee.Terrain.fillMinima,ee.Terrain.fillMinima,Fills local minima.  Only works on INT types.,Image
+461,ee.Terrain.hillShadow,ee.Terrain.hillShadow,"Creates a shadow band, with output 1 where pixels are illumunated and 0 where they are shadowed. Takes as input an elevation band, azimuth and zenith of the light source in degrees, a neighborhood size, and whether or not to apply hysteresis when a shadow appears. Currently, this algorithm only works for Mercator projections, in which light rays are parallel.",Image
+462,ee.Terrain.hillshade,ee.Terrain.hillshade,Computes a simple hillshade from a DEM.,Image
+463,ee.Terrain.products,ee.Terrain.products,"Calculates slope, aspect, and a simple hillshade from a terrain DEM.",Image
+464,ee.Terrain.slope,ee.Terrain.slope,Calculates slope in degrees from a terrain DEM.,Image
+465,Export.image.toAsset,Export.image.toAsset,Creates a batch task to export an Image as a raster to an Earth Engine asset. Tasks can be started from the Tasks tab.,EMPTY
+466,Export.image.toCloudStorage,Export.image.toCloudStorage,Creates a batch task to export an Image as a raster to Google Cloud Storage. Tasks can be started from the Tasks tab.,EMPTY
+467,Export.image.toDrive,Export.image.toDrive,"Creates a batch task to export an Image as a raster to Drive. Tasks can be started from the Tasks tab. ""crsTransform"", ""scale"", and ""dimensions"" are mutually exclusive.",EMPTY
+468,Export.map.toCloudStorage,Export.map.toCloudStorage,"Creates a batch task to export an Image as a rectangular pyramid of map tiles for use with web map viewers. The map tiles will be accompanied by a reference index.html file that displays them using the Google Maps API, and an earth.html file for opening the map on Google Earth.",EMPTY
+469,Export.table.toAsset,Export.table.toAsset,Creates a batch task to export a feature collection to an Earth Engine table asset. Tasks can be started from the Tasks tab.,EMPTY
+470,Export.table.toBigQuery,Export.table.toBigQuery,Creates a batch task to export a FeatureCollection to BigQuery. Tasks can be started from the Tasks tab.,EMPTY
+471,Export.table.toCloudStorage,Export.table.toCloudStorage,Creates a batch task to export a FeatureCollection as a table to Google Cloud Storage. Tasks can be started from the Tasks tab.,EMPTY
+472,Export.table.toDrive,Export.table.toDrive,Creates a batch task to export a FeatureCollection as a table to Drive. Tasks can be started from the Tasks tab.,EMPTY
+473,Export.table.toFeatureView,Export.table.toFeatureView,Creates a batch task to export a FeatureCollection to a FeatureView asset. Tasks can be started from the Tasks tab.,EMPTY
+474,Export.video.toCloudStorage,Export.video.toCloudStorage,"Creates a batch task to export an ImageCollection as a video to Google Cloud Storage. The collection must only contain RGB images. Tasks can be started from the Tasks tab. ""crsTransform"", ""scale"", and ""dimensions"" are mutually exclusive.",EMPTY
+475,Export.video.toDrive,Export.video.toDrive,"Creates a batch task to export an ImageCollection as a video to Drive. The collection must only contain RGB images. Tasks can be started from the Tasks tab. ""crsTransform"", ""scale"", and ""dimensions"" are mutually exclusive.",EMPTY
+476,ee.Feature.area,area,"Returns the area of the feature's default geometry. Area of points and line strings is 0, and the area of multi geometries is the sum of the areas of their components (intersecting areas are counted multiple times).",Float
+486,ee.Geometry.area,area,"Returns the area of the geometry. Area of points and line strings is 0, and the area of multi geometries is the sum of the areas of their components (intersecting areas are counted multiple times).",Float
+487,ee.Date.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+488,ee.Dictionary.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+489,ee.Feature.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+490,ee.FeatureCollection.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+500,ee.Geometry.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+501,ee.Image.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+502,ee.ImageCollection.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+503,ee.List.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+504,ee.Number.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+505,ee.String.aside,aside,"Calls a function passing this object as the first argument, and returning itself. Convenient e.g. when debugging:",ComputedObject
+506,ee.Feature.bounds,bounds,Returns a feature containing the bounding box of the geometry of a given feature.,Feature
+516,ee.Geometry.bounds,bounds,Returns the bounding rectangle of the geometry.,Geometry
+517,ee.Feature.buffer,buffer,"Returns the input buffered by a given distance. If the distance is positive, the geometry is expanded, and if the distance is negative, the geometry is contracted.",Feature
+527,ee.Geometry.buffer,buffer,"Returns the input buffered by a given distance. If the distance is positive, the geometry is expanded, and if the distance is negative, the geometry is contracted.",Geometry
+528,ee.Feature.centroid,centroid,"Returns a feature containing the point at the center of the highest-dimension components of the geometry of a feature. Lower-dimensional components are ignored, so the centroid of a geometry containing two polygons, three lines and a point is equivalent to the centroid of a geometry containing just the two polygons.",Feature
+538,ee.Geometry.centroid,centroid,"Returns a point at the center of the highest-dimension components of the geometry. Lower-dimensional components are ignored, so the centroid of a geometry containing two polygons, three lines and a point is equivalent to the centroid of a geometry containing just the two polygons.",Geometry
+539,ee.Feature.containedIn,containedIn,Returns true iff the geometry of one feature is contained in the geometry of another.,Boolean
+549,ee.Geometry.containedIn,containedIn,Returns true iff one geometry is contained in the other.,Boolean
+550,ee.Feature.convexHull,convexHull,"Returns the feature, with the geometry replaced by the convex hull of the original geometry. The convex hull of a single point is the point itself, the convex hull of collinear points is a line, and the convex hull of  everything else is a polygon. Note that a degenerate polygon with all vertices on the same line will result in a line segment.",Feature
+560,ee.Geometry.convexHull,convexHull,"Returns the convex hull of the given geometry. The convex hull of a single point is the point itself, the convex hull of collinear points is a line, and the convex hull of  everything else is a polygon. Note that a degenerate polygon with all vertices on the same line will result in a line segment.",Geometry
+570,ee.Geometry.coordinates,coordinates,Returns a GeoJSON-style list of the geometry's coordinates.,List
+571,ee.Feature.copyProperties,copyProperties,Copies metadata properties from one element to another.,Feature
+572,ee.FeatureCollection.copyProperties,copyProperties,Copies metadata properties from one element to another.,FeatureCollection
+573,ee.Image.copyProperties,copyProperties,Copies metadata properties from one element to another.,Image
+574,ee.ImageCollection.copyProperties,copyProperties,Copies metadata properties from one element to another.,ImageCollection
+584,ee.Geometry.coveringGrid,coveringGrid,"Returns a collection of features that cover this geometry, where each feature is a rectangle in the grid defined by the given projection.",FeatureCollection
+585,ee.Feature.cutLines,cutLines,"Converts LineString, MultiLineString, and LinearRing geometries into a MultiLineString by cutting them into parts no longer than the given distance along their length. All other geometry types will be converted to an empty MultiLineString.",Feature
+595,ee.Geometry.cutLines,cutLines,"Converts LineString, MultiLineString, and LinearRing geometries into a MultiLineString by cutting them into parts no longer than the given distance along their length. All other geometry types will be converted to an empty MultiLineString.",Geometry
+596,ee.Feature.disjoint,disjoint,Returns true iff the feature geometries are disjoint.,Boolean
+606,ee.Geometry.disjoint,disjoint,Returns true iff the geometries are disjoint.,Boolean
+607,ee.Feature.dissolve,dissolve,"Returns a feature containing the union of the geometry of a feature. This leaves single geometries untouched, and unions multi geometries.",Feature
+617,ee.Geometry.dissolve,dissolve,"Returns the union of the geometry. This leaves single geometries untouched, and unions multi geometries.",Geometry
+618,ee.FeatureCollection.draw,draw,Paints a vector collection for visualization. Not intended for use as input to other algorithms.,Image
+619,ee.ImageCollection.draw,draw,Paints a image collection for visualization. Not intended for use as input to other algorithms.,Image
+629,ee.Geometry.edgesAreGeodesics,edgesAreGeodesics,"Returns true if the geometry edges, if any, are geodesics along a spherical model of the earth; if false, any edges are straight lines in the projection.",Boolean
+630,ee.FeatureCollection.errorMatrix,errorMatrix,"Computes a 2D error matrix for a collection by comparing two columns of a collection: one containing the actual values, and one containing predicted values.The values are expected to be small contiguous integers, starting from 0. Axis 0 (the rows) of the matrix correspond to the actual values, and Axis 1 (the columns) to the predicted values.",ConfusionMatrix
+631,ee.ImageCollection.errorMatrix,errorMatrix,"Computes a 2D error matrix for a collection by comparing two columns of a collection: one containing the actual values, and one containing predicted values.The values are expected to be small contiguous integers, starting from 0. Axis 0 (the rows) of the matrix correspond to the actual values, and Axis 1 (the columns) to the predicted values.",ConfusionMatrix
+641,ee.Geometry.geodesic,geodesic,"If false, edges are straight in the projection. If true, edges are curved to follow the shortest path on the surface of the Earth.",Boolean
+651,ee.Geometry.geometries,geometries,"Returns the list of geometries in a GeometryCollection, or a singleton list of the geometry for single geometries.",List
+652,ee.Date.getInfo,getInfo,Retrieves the value of this object from the server.,Object
+654,ee.Feature.getInfo,getInfo,An imperative function that returns information about this feature via an AJAX call.,GeoJSONFeature
+655,ee.FeatureCollection.getInfo,getInfo,An imperative function that returns all the known information about this collection via an AJAX call.,FeatureCollectionDescription
+665,ee.Geometry.getInfo,getInfo,Retrieves the value of this object from the server.,Object
+666,ee.Image.getInfo,getInfo,An imperative function that returns information about this image via an AJAX call.,ImageDescription
+667,ee.ImageCollection.getInfo,getInfo,An imperative function that returns all the known information about this collection via an AJAX call.,ImageCollectionDescription
+671,ee.Feature.getMap,getMap,"An imperative function that returns a map ID and optional token, suitable for generating a Map overlay.",Object
+672,ee.FeatureCollection.getMap,getMap,"An imperative function that returns a map id and token, suitable for generating a Map overlay.",Object
+673,ee.Image.getMap,getMap,"An imperative function that returns a map id and optional token, suitable for generating a Map overlay.",Object
+674,ee.ImageCollection.getMap,getMap,An imperative function that returns a mapid via a synchronous AJAX call.,Object
+675,ee.Feature.hersDescriptor,hersDescriptor,Creates a dictionary of Histogram Error Ring Statistic (HERS) descriptor arrays from square array properties of an element. The HERS radius is taken to be the array's (side_length - 1) / 2.,Dictionary
+676,ee.Image.hersDescriptor,hersDescriptor,Creates a dictionary of Histogram Error Ring Statistic (HERS) descriptor arrays from square array properties of an element. The HERS radius is taken to be the array's (side_length - 1) / 2.,Dictionary
+677,ee.Feature.id,id,Returns the ID of a given element within a collection. Objects outside collections are not guaranteed to have IDs.,String
+678,ee.Image.id,id,Returns the ID of a given element within a collection. Objects outside collections are not guaranteed to have IDs.,String
+679,ee.FeatureCollection.iterate,iterate,"Applies a user-supplied function to each element of a collection. The user-supplied function is given two arguments: the current element, and the value returned by the previous call to iterate() or the first argument, for the first iteration. The result is the value returned by the final call to the user-supplied function.",ComputedObject
+680,ee.ImageCollection.iterate,iterate,"Applies a user-supplied function to each element of a collection. The user-supplied function is given two arguments: the current element, and the value returned by the previous call to iterate() or the first argument, for the first iteration. The result is the value returned by the final call to the user-supplied function.",ComputedObject
+681,ee.List.iterate,iterate,"Iterate an algorithm over a list.  The algorithm is expected to take two objects, the current list item, and the result from the previous iteration or the value of first for the first iteration.",Object
+682,ee.Dictionary.map,map,"Map an algorithm over a dictionary.  The algorithm is expected to take 2 arguments, a key from the existing dictionary and the value it corresponds to, and return a new value for the given key.  If the algorithm returns null, the key is dropped.",Dictionary
+683,ee.FeatureCollection.map,map,Maps an algorithm over a collection.,Collection
+684,ee.ImageCollection.map,map,Maps an algorithm over a collection.,Collection
+685,ee.List.map,map,Map an algorithm over a list.  The algorithm is expected to take an Object and return an Object.,List
+690,ee.Geometry.perimeter,perimeter,Returns the length of the perimeter of the polygonal parts of the geometry. The perimeter of multi geometries is the sum of the perimeters of their components.,Float
+691,ee.Feature.propertyNames,propertyNames,Returns the names of properties on this element.,List
+692,ee.FeatureCollection.propertyNames,propertyNames,Returns the names of properties on this element.,List
+693,ee.Image.propertyNames,propertyNames,Returns the names of properties on this element.,List
+694,ee.ImageCollection.propertyNames,propertyNames,Returns the names of properties on this element.,List
+695,ee.FeatureCollection.randomColumn,randomColumn,"Adds a column of deterministic pseudorandom numbers to a collection.  The outputs are double-precision floating point numbers. When using the 'uniform' distribution (default), outputs are in the range of [0, 1). Using the 'normal' distribution, outputs have μ=0, 𝛔=1, but have no explicit limits.",FeatureCollection
+696,ee.ImageCollection.randomColumn,randomColumn,"Adds a column of deterministic pseudorandom numbers to a collection.  The outputs are double-precision floating point numbers. When using the 'uniform' distribution (default), outputs are in the range of [0, 1). Using the 'normal' distribution, outputs have μ=0, 𝛔=1, but have no explicit limits.",ImageCollection
+697,ee.Array.reduce,reduce,Apply a reducer to an array by collapsing all the input values along each specified axis into a single output value computed by the reducer.,Array
+698,ee.Image.reduce,reduce,Applies a reducer to all of the bands of an image.,Image
+699,ee.ImageCollection.reduce,reduce,Applies a reducer across all of the images in a collection.,Image
+700,ee.List.reduce,reduce,"Apply a reducer to a list.  If the reducer takes more than 1 input, then each element in the list is assumed to be a list of inputs.  If the reducer returns a single output, it is returned directly, otherwise returns a dictionary containing the named reducer outputs.",Object
+701,ee.FeatureCollection.reduceColumns,reduceColumns,"Apply a reducer to each element of a collection, using the given selectors to determine the inputs.",Dictionary
+702,ee.ImageCollection.reduceColumns,reduceColumns,"Apply a reducer to each element of a collection, using the given selectors to determine the inputs.",Dictionary
+703,ee.FeatureCollection.reduceToImage,reduceToImage,Creates an image from a feature collection by applying a reducer over the selected properties of all the features that intersect each pixel.,Image
+704,ee.ImageCollection.reduceToImage,reduceToImage,Creates an image from a feature collection by applying a reducer over the selected properties of all the features that intersect each pixel.,Image
+709,ee.Geometry.symmetricDifference,symmetricDifference,Returns the symmetric difference between two geometries.,Geometry
+732,ee.Geometry.type,type,Returns the GeoJSON type of the geometry.,String
+733,ee.Feature.withinDistance,withinDistance,Returns true iff the geometries of two features are within a specified distance.,Boolean
+743,ee.Geometry.withinDistance,withinDistance,Returns true iff the geometries are within a specified distance.,Boolean
+744,ee.Feature.contains,contains,Returns true iff the geometry of one feature contains the geometry of another.,Boolean
+754,ee.Geometry.contains,contains,Returns true iff one geometry contains the other.,Boolean
+755,ee.DateRange.contains,contains,Returns true if the given Date or DateRange is within this DateRange.,Boolean
+756,ee.Dictionary.contains,contains,Returns true if the dictionary contains the given key.,Boolean
+757,ee.List.contains,contains,Returns true if list contains element.,Boolean
+758,ee.Feature.difference,difference,"Returns a feature with the properties of the 'left' feature, and the geometry that results from subtracting the 'right' geometry from the 'left' geometry.",Feature
+768,ee.Geometry.difference,difference,Returns the result of subtracting the 'right' geometry from the 'left' geometry.,Geometry
+769,ee.Date.difference,difference,Returns the difference between two Dates in the specified units; the result is floating-point and based on the average length of the unit.,Float
+770,ee.Feature.distance,distance,Returns the minimum distance between the geometries of two features.,Float
+780,ee.Geometry.distance,distance,Returns the minimum distance between two geometries.,Float
+781,ee.ImageCollection.distance,distance,"Produces a DOUBLE image where each pixel is the distance in meters from the pixel center to the nearest Point, LineString, or polygonal boundary in the collection. Note distance is also measured within interiors of polygons. Pixels that are not within 'searchRadius' meters of a geometry will be masked out.",Image
+782,ee.FeatureCollection.distance,distance,"Produces a DOUBLE image where each pixel is the distance in meters from the pixel center to the nearest Point, LineString, or polygonal boundary in the collection. Note distance is also measured within interiors of polygons. Pixels that are not within 'searchRadius' meters of a geometry will be masked out.",Image
+783,ee.Image.distance,distance,"Computes the distance to the nearest non-zero pixel in each band, using the specified distance kernel.",Image
+784,ee.Date.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+785,ee.Dictionary.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+786,ee.Feature.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+787,ee.FeatureCollection.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+797,ee.Geometry.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+798,ee.Image.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+799,ee.ImageCollection.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+800,ee.List.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+801,ee.Number.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+802,ee.String.evaluate,evaluate,Asynchronously retrieves the value of this object from the server and passes it to the provided callback function.,EMPTY
+803,ee.Feature.intersection,intersection,"Returns a feature containing the intersection of the geometries of two features, with the properties of the left feature.",Feature
+813,ee.Geometry.intersection,intersection,Returns the intersection of the two geometries.,Geometry
+814,ee.DateRange.intersection,intersection,Returns a DateRange that contains all points in the intersection of this DateRange and another.,DateRange
+815,ee.Feature.intersects,intersects,Returns true iff the feature geometries intersect.,Boolean
+825,ee.Geometry.intersects,intersects,Returns true iff the geometries intersect.,Boolean
+826,ee.DateRange.intersects,intersects,Returns true if the given DateRange has at least one point in common with this DateRange.,Boolean
+836,ee.Geometry.isUnbounded,isUnbounded,Returns whether the geometry is unbounded.,Boolean
+837,ee.DateRange.isUnbounded,isUnbounded,Returns true if this DateRange contains all dates.,Boolean
+838,ee.Feature.length,length,Returns the length of the linear parts of the geometry of a given feature. Polygonal parts are ignored. The length of multi geometries is the sum of the lengths of their components.,Float
+848,ee.Geometry.length,length,Returns the length of the linear parts of the geometry. Polygonal parts are ignored. The length of multi geometries is the sum of the lengths of their components.,Float
+849,ee.Array.length,length,Returns a 1-D ee.Array containing the length of each dimension of the given ee.Array.,Array
+850,ee.List.length,length,Returns the number of elements in list.,Integer
+851,ee.String.length,length,Returns the length of a string.,Integer
+861,ee.Geometry.projection,projection,Returns the projection of the geometry.,Projection
+862,ee.Image.projection,projection,Returns the default projection of an Image.  Throws an error if the bands of the image don't all have the same projection.,Projection
+863,ee.Feature.simplify,simplify,"Simplifies the geometry of a feature to within a given error margin. Note that this does not respect the error margin requested by the consumer of this algorithm, unless maxError is explicitly specified to be null.",Feature
+873,ee.Geometry.simplify,simplify,"Simplifies the geometry to within a given error margin. Note that this does not respect the error margin requested by the consumer of this algorithm, unless maxError is explicitly specified to be null.",Geometry
+874,ee.Feature.transform,transform,Transforms the geometry of a feature to a specific projection.,Feature
+884,ee.Geometry.transform,transform,Transforms the geometry to a specific projection.,Geometry
+885,ee.Projection.transform,transform,Returns a WKT representation of the transform of this Projection. This is the transform that converts from projected coordinates to the base coordinate system.,String
+886,ee.Feature.union,union,Returns a feature containing the union of the geometries of two features.,Feature
+896,ee.Geometry.union,union,Returns the union of the two geometries.,Geometry
+897,ee.DateRange.union,union,Returns a DateRange that contains all points in the union of this DateRange and another.,DateRange
+898,ee.FeatureCollection.union,union,Merges all geometries in a given collection into one and returns a collection containing a single feature with only an ID of 'union_result' and a geometry.,FeatureCollection
+899,ee.ImageCollection.union,union,Merges all geometries in a given collection into one and returns a collection containing a single feature with only an ID of 'union_result' and a geometry.,ImageCollection
+900,ee.Array.abs,abs,"On an element-wise basis, computes the absolute value of the input.",Array
+901,ee.Image.abs,abs,Computes the absolute value of the input.,Image
+902,ee.Number.abs,abs,Computes the absolute value of the input.,Number
+903,ee.Array.acos,acos,"On an element-wise basis, computes the arc cosine in radians of the input.",Array
+904,ee.Image.acos,acos,Computes the arc cosine in radians of the input.,Image
+905,ee.Number.acos,acos,Computes the arc cosine in radians of the input.,Number
+906,ee.Array.add,add,"On an element-wise basis, adds the first value to the second.",Array
+907,ee.Image.add,add,"Adds the first value to the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+908,ee.Kernel.add,add,"Adds two kernels (pointwise), after aligning their centers.",Kernel
+909,ee.List.add,add,Appends the element to the end of list.,List
+910,ee.Number.add,add,Adds the first value to the second.,Number
+911,ee.FeatureCollection.aggregate_array,aggregate_array,"Aggregates over a given property of the objects in a collection, calculating a list of all the values of the selected property.",List
+912,ee.ImageCollection.aggregate_array,aggregate_array,"Aggregates over a given property of the objects in a collection, calculating a list of all the values of the selected property.",List
+913,ee.FeatureCollection.aggregate_count,aggregate_count,"Aggregates over a given property of the objects in a collection, calculating the number of non-null values of the property.",Number
+914,ee.ImageCollection.aggregate_count,aggregate_count,"Aggregates over a given property of the objects in a collection, calculating the number of non-null values of the property.",Number
+915,ee.FeatureCollection.aggregate_count_distinct,aggregate_count_distinct,"Aggregates over a given property of the objects in a collection, calculating the number of distinct values for the selected property.",Number
+916,ee.ImageCollection.aggregate_count_distinct,aggregate_count_distinct,"Aggregates over a given property of the objects in a collection, calculating the number of distinct values for the selected property.",Number
+917,ee.FeatureCollection.aggregate_first,aggregate_first,"Aggregates over a given property of the objects in a collection, calculating the property value of the first object in the collection.",EMPTY
+918,ee.ImageCollection.aggregate_first,aggregate_first,"Aggregates over a given property of the objects in a collection, calculating the property value of the first object in the collection.",EMPTY
+919,ee.FeatureCollection.aggregate_histogram,aggregate_histogram,"Aggregates over a given property of the objects in a collection, calculating a histogram of the selected property.",Dictionary
+920,ee.ImageCollection.aggregate_histogram,aggregate_histogram,"Aggregates over a given property of the objects in a collection, calculating a histogram of the selected property.",Dictionary
+921,ee.FeatureCollection.aggregate_max,aggregate_max,"Aggregates over a given property of the objects in a collection, calculating the maximum of the values of the selected property.",EMPTY
+922,ee.ImageCollection.aggregate_max,aggregate_max,"Aggregates over a given property of the objects in a collection, calculating the maximum of the values of the selected property.",EMPTY
+923,ee.FeatureCollection.aggregate_mean,aggregate_mean,"Aggregates over a given property of the objects in a collection, calculating the mean of the selected property.",Number
+924,ee.ImageCollection.aggregate_mean,aggregate_mean,"Aggregates over a given property of the objects in a collection, calculating the mean of the selected property.",Number
+925,ee.FeatureCollection.aggregate_min,aggregate_min,"Aggregates over a given property of the objects in a collection, calculating the minimum of the values of the selected property.",EMPTY
+926,ee.ImageCollection.aggregate_min,aggregate_min,"Aggregates over a given property of the objects in a collection, calculating the minimum of the values of the selected property.",EMPTY
+927,ee.FeatureCollection.aggregate_product,aggregate_product,"Aggregates over a given property of the objects in a collection, calculating the product of the values of the selected property.",Number
+928,ee.ImageCollection.aggregate_product,aggregate_product,"Aggregates over a given property of the objects in a collection, calculating the product of the values of the selected property.",Number
+929,ee.FeatureCollection.aggregate_sample_sd,aggregate_sample_sd,"Aggregates over a given property of the objects in a collection, calculating the sample std. deviation of the values of the selected property.",Number
+930,ee.ImageCollection.aggregate_sample_sd,aggregate_sample_sd,"Aggregates over a given property of the objects in a collection, calculating the sample std. deviation of the values of the selected property.",Number
+931,ee.FeatureCollection.aggregate_sample_var,aggregate_sample_var,"Aggregates over a given property of the objects in a collection, calculating the sample variance of the values of the selected property.",Number
+932,ee.ImageCollection.aggregate_sample_var,aggregate_sample_var,"Aggregates over a given property of the objects in a collection, calculating the sample variance of the values of the selected property.",Number
+933,ee.FeatureCollection.aggregate_stats,aggregate_stats,"Aggregates over a given property of the objects in a collection, calculating the sum, min, max, mean, sample standard deviation, sample variance, total standard deviation and total variance of the selected property.",Dictionary
+934,ee.ImageCollection.aggregate_stats,aggregate_stats,"Aggregates over a given property of the objects in a collection, calculating the sum, min, max, mean, sample standard deviation, sample variance, total standard deviation and total variance of the selected property.",Dictionary
+935,ee.FeatureCollection.aggregate_sum,aggregate_sum,"Aggregates over a given property of the objects in a collection, calculating the sum of the values of the selected property.",Number
+936,ee.ImageCollection.aggregate_sum,aggregate_sum,"Aggregates over a given property of the objects in a collection, calculating the sum of the values of the selected property.",Number
+937,ee.FeatureCollection.aggregate_total_sd,aggregate_total_sd,"Aggregates over a given property of the objects in a collection, calculating the total std. deviation of the values of the selected property.",Number
+938,ee.ImageCollection.aggregate_total_sd,aggregate_total_sd,"Aggregates over a given property of the objects in a collection, calculating the total std. deviation of the values of the selected property.",Number
+939,ee.FeatureCollection.aggregate_total_var,aggregate_total_var,"Aggregates over a given property of the objects in a collection, calculating the total variance of the values of the selected property.",Number
+940,ee.ImageCollection.aggregate_total_var,aggregate_total_var,"Aggregates over a given property of the objects in a collection, calculating the total variance of the values of the selected property.",Number
+941,ee.Array.and,and,"On an element-wise basis, returns 1 iff both values are non-zero.",Array
+942,ee.Image.and,and,"Returns 1 iff both values are non-zero for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+943,ee.ImageCollection.and,and,Reduces an image collection by setting each pixel to 1 iff all the non-masked values at that pixel are non-zero across the stack of all matching bands. Bands are matched by name.,Image
+944,ee.Number.and,and,Returns 1 iff both values are non-zero.,Number
+945,ee.Array.asin,asin,"On an element-wise basis, computes the arc sine in radians of the input.",Array
+946,ee.Image.asin,asin,Computes the arc sine in radians of the input.,Image
+947,ee.Number.asin,asin,Computes the arc sine in radians of the input.,Number
+948,ee.Array.atan,atan,"On an element-wise basis, computes the arc tangent in radians of the input.",Array
+949,ee.Image.atan,atan,Computes the arc tangent in radians of the input.,Image
+950,ee.Number.atan,atan,Computes the arc tangent in radians of the input.,Number
+951,ee.Array.atan2,atan2,"On an element-wise basis, calculates the angle formed by the 2D vector [x, y].",Array
+952,ee.Image.atan2,atan2,"Calculates the angle formed by the 2D vector [x, y] for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is float.",Image
+953,ee.Number.atan2,atan2,"Calculates the angle formed by the 2D vector [x, y].",Number
+954,ee.Array.bitCount,bitCount,"On an element-wise basis, calculates the number of one-bits in the 64-bit two's complement binary representation of the input.",Array
+955,ee.Image.bitCount,bitCount,Calculates the number of one-bits in the 64-bit two's complement binary representation of the input.,Image
+956,ee.Number.bitCount,bitCount,Calculates the number of one-bits in the 64-bit two's complement binary representation of the input.,Number
+957,ee.Array.bitwiseAnd,bitwiseAnd,"On an element-wise basis, calculates the bitwise AND of the input values.",Array
+958,ee.Image.bitwiseAnd,bitwiseAnd,"Calculates the bitwise AND of the input values for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+959,ee.Number.bitwiseAnd,bitwiseAnd,Calculates the bitwise AND of the input values.,Number
+960,ee.Array.bitwiseNot,bitwiseNot,"On an element-wise basis, calculates the bitwise NOT of the input, in the smallest signed integer type that can hold the input.",Array
+961,ee.Image.bitwiseNot,bitwiseNot,"Calculates the bitwise NOT of the input, in the smallest signed integer type that can hold the input.",Image
+962,ee.Number.bitwiseNot,bitwiseNot,"Calculates the bitwise NOT of the input, in the smallest signed integer type that can hold the input.",Number
+963,ee.Array.bitwiseOr,bitwiseOr,"On an element-wise basis, calculates the bitwise OR of the input values.",Array
+964,ee.Image.bitwiseOr,bitwiseOr,"Calculates the bitwise OR of the input values for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+965,ee.Number.bitwiseOr,bitwiseOr,Calculates the bitwise OR of the input values.,Number
+966,ee.Array.bitwiseXor,bitwiseXor,"On an element-wise basis, calculates the bitwise XOR of the input values.",Array
+967,ee.Image.bitwiseXor,bitwiseXor,"Calculates the bitwise XOR of the input values for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+968,ee.Number.bitwiseXor,bitwiseXor,Calculates the bitwise XOR of the input values.,Number
+969,ee.Array.byte,byte,"On an element-wise basis, casts the input value to an unsigned 8-bit integer.",Array
+970,ee.Image.byte,byte,Casts the input value to an unsigned 8-bit integer.,Image
+971,ee.Number.byte,byte,Casts the input value to an unsigned 8-bit integer.,Number
+972,ee.Image.cast,cast,Casts some or all bands of an image to the specified types.,Image
+973,ee.ImageCollection.cast,cast,Casts some or all bands of each image in an ImageCollection to the specified types.,ImageCollection
+974,ee.Array.cbrt,cbrt,"On an element-wise basis, computes the cubic root of the input.",Array
+975,ee.Image.cbrt,cbrt,Computes the cubic root of the input.,Image
+976,ee.Number.cbrt,cbrt,Computes the cubic root of the input.,Number
+977,ee.Array.ceil,ceil,"On an element-wise basis, computes the smallest integer greater than or equal to the input.",Array
+978,ee.Image.ceil,ceil,Computes the smallest integer greater than or equal to the input.,Image
+979,ee.Number.ceil,ceil,Computes the smallest integer greater than or equal to the input.,Number
+980,ee.Image.clamp,clamp,Clamps the values in all bands of an image to all lie within the specified range.,Image
+981,ee.Number.clamp,clamp,Clamps the value to lie within the range of min to max.,Number
+982,ee.Dictionary.combine,combine,"Combines two dictionaries.  In the case of duplicate names, the output will contain the value of the second dictionary unless overwrite is false.  Null values in both dictionaries are ignored / removed.",Dictionary
+983,ee.ImageCollection.combine,combine,"Makes a new collection that is a copy of the images in primary, adding all the bands from the image in secondary with a matching ID. If there are no matching IDs, the resulting collection will be empty. This is equivalent to an inner join on ID with merging of the bands of the result.",ImageCollection
+984,ee.Array.cos,cos,"On an element-wise basis, computes the cosine of the input in radians.",Array
+985,ee.Image.cos,cos,Computes the cosine of the input in radians.,Image
+986,ee.Number.cos,cos,Computes the cosine of the input in radians.,Number
+987,ee.Array.cosh,cosh,"On an element-wise basis, computes the hyperbolic cosine of the input.",Array
+988,ee.Image.cosh,cosh,Computes the hyperbolic cosine of the input.,Image
+989,ee.Number.cosh,cosh,Computes the hyperbolic cosine of the input.,Number
+990,ee.Array.digamma,digamma,"On an element-wise basis, computes the digamma function of the input.",Array
+991,ee.Image.digamma,digamma,Computes the digamma function of the input.,Image
+992,ee.Number.digamma,digamma,Computes the digamma function of the input.,Number
+993,ee.Array.divide,divide,"On an element-wise basis, divides the first value by the second, returning 0 for division by 0.",Array
+994,ee.Image.divide,divide,"Divides the first value by the second, returning 0 for division by 0 for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+995,ee.Number.divide,divide,"Divides the first value by the second, returning 0 for division by 0.",Number
+996,ee.Array.double,double,"On an element-wise basis, casts the input value to a 64-bit float.",Array
+997,ee.Image.double,double,Casts the input value to a 64-bit float.,Image
+998,ee.Number.double,double,Casts the input value to a 64-bit float.,Number
+999,ee.Array.eq,eq,"On an element-wise basis, returns 1 iff the first value is equal to the second.",Array
+1000,ee.Image.eq,eq,"Returns 1 iff the first value is equal to the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1001,ee.Number.eq,eq,Returns 1 iff the first value is equal to the second.,Number
+1002,ee.List.equals,equals,"Returns true if list contains the same elements as other, in the same order.",Boolean
+1003,ee.String.equals,equals,"Checks for string equality with a given object. Returns true if the target is a string and is lexicographically equal to the reference, or false otherwise.",Boolean
+1004,ee.Array.erf,erf,"On an element-wise basis, computes the error function of the input.",Array
+1005,ee.Image.erf,erf,Computes the error function of the input.,Image
+1006,ee.Number.erf,erf,Computes the error function of the input.,Number
+1007,ee.Array.erfInv,erfInv,"On an element-wise basis, computes the inverse error function of the input.",Array
+1008,ee.Image.erfInv,erfInv,Computes the inverse error function of the input.,Image
+1009,ee.Number.erfInv,erfInv,Computes the inverse error function of the input.,Number
+1010,ee.Array.exp,exp,"On an element-wise basis, computes the Euler's number e raised to the power of the input.",Array
+1011,ee.Image.exp,exp,Computes the Euler's number e raised to the power of the input.,Image
+1012,ee.Number.exp,exp,Computes the Euler's number e raised to the power of the input.,Number
+1013,ee.Array.first,first,"On an element-wise basis, selects the value of the first value.",Array
+1014,ee.FeatureCollection.first,first,Returns the first entry from a given collection.,Feature
+1015,ee.Image.first,first,"Selects the value of the first value for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1016,ee.ImageCollection.first,first,Returns the first entry from a given collection.,Image
+1017,ee.Number.first,first,Selects the value of the first value.,Number
+1018,ee.Array.float,float,"On an element-wise basis, casts the input value to a 32-bit float.",Array
+1019,ee.Image.float,float,Casts the input value to a 32-bit float.,Image
+1020,ee.Number.float,float,Casts the input value to a 32-bit float.,Number
+1021,ee.Array.floor,floor,"On an element-wise basis, computes the largest integer less than or equal to the input.",Array
+1022,ee.Image.floor,floor,Computes the largest integer less than or equal to the input.,Image
+1023,ee.Number.floor,floor,Computes the largest integer less than or equal to the input.,Number
+1024,ee.Date.format,format,Convert a date to string.,String
+1025,ee.Number.format,format,Convert a number to a string using printf-style formatting.,String
+1026,ee.Array.gamma,gamma,"On an element-wise basis, computes the gamma function of the input.",Array
+1027,ee.Image.gamma,gamma,Computes the gamma function of the input.,Image
+1028,ee.Number.gamma,gamma,Computes the gamma function of the input.,Number
+1029,ee.Array.gammainc,gammainc,"On an element-wise basis, calculates the regularized lower incomplete Gamma function γ(x,a).",Array
+1030,ee.Image.gammainc,gammainc,"Calculates the regularized lower incomplete Gamma function γ(x,a) for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is float.",Image
+1031,ee.Number.gammainc,gammainc,"Calculates the regularized lower incomplete Gamma function γ(x,a).",Number
+1032,ee.FeatureCollection.getDownloadURL,getDownloadURL,"Gets a download URL. When the URL is accessed, the FeatureCollection is downloaded in one of several formats.",Object
+1033,ee.Image.getDownloadURL,getDownloadURL,"Get a download URL for small chunks of image data in GeoTIFF or NumPy format. Maximum request size is 32 MB, maximum grid dimension is 10000.",Object
+1034,ee.Dictionary.getGeometry,getGeometry,Extracts a named geometry value from a dictionary.,Geometry
+1035,ee.List.getGeometry,getGeometry,"Returns the geometry at the specified position in list.  A negative index counts backwards from the end of the list. If the value is not a geometry, an error will occur.",Geometry
+1036,ee.data.getThumbId,getThumbId,Get a Thumbnail Id for a given asset.,ThumbnailId
+1037,ee.Image.getThumbId,getThumbId,Applies transformations and returns the thumbId.,ThumbnailId
+1038,ee.Array.gt,gt,"On an element-wise basis, returns 1 iff the first value is greater than the second.",Array
+1039,ee.Image.gt,gt,"Returns 1 iff the first value is greater than the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1040,ee.Number.gt,gt,Returns 1 iff the first value is greater than the second.,Number
+1041,ee.Array.gte,gte,"On an element-wise basis, returns 1 iff the first value is greater than or equal to the second.",Array
+1042,ee.Image.gte,gte,"Returns 1 iff the first value is greater than or equal to the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1043,ee.Number.gte,gte,Returns 1 iff the first value is greater than or equal to the second.,Number
+1044,ee.Array.hypot,hypot,"On an element-wise basis, calculates the magnitude of the 2D vector [x, y].",Array
+1045,ee.Image.hypot,hypot,"Calculates the magnitude of the 2D vector [x, y] for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is float.",Image
+1046,ee.Number.hypot,hypot,"Calculates the magnitude of the 2D vector [x, y].",Number
+1047,ee.Array.int,int,"On an element-wise basis, casts the input value to a signed 32-bit integer.",Array
+1048,ee.Image.int,int,Casts the input value to a signed 32-bit integer.,Image
+1049,ee.Number.int,int,Casts the input value to a signed 32-bit integer.,Number
+1050,ee.Array.int16,int16,"On an element-wise basis, casts the input value to a signed 16-bit integer.",Array
+1051,ee.Image.int16,int16,Casts the input value to a signed 16-bit integer.,Image
+1052,ee.Number.int16,int16,Casts the input value to a signed 16-bit integer.,Number
+1053,ee.Array.int32,int32,"On an element-wise basis, casts the input value to a signed 32-bit integer.",Array
+1054,ee.Image.int32,int32,Casts the input value to a signed 32-bit integer.,Image
+1055,ee.Number.int32,int32,Casts the input value to a signed 32-bit integer.,Number
+1056,ee.Array.int64,int64,"On an element-wise basis, casts the input value to a signed 64-bit integer.",Array
+1057,ee.Image.int64,int64,Casts the input value to a signed 64-bit integer.,Image
+1058,ee.Number.int64,int64,Casts the input value to a signed 64-bit integer.,Number
+1059,ee.Array.int8,int8,"On an element-wise basis, casts the input value to a signed 8-bit integer.",Array
+1060,ee.Image.int8,int8,Casts the input value to a signed 8-bit integer.,Image
+1061,ee.Number.int8,int8,Casts the input value to a signed 8-bit integer.,Number
+1062,ee.Array.lanczos,lanczos,"On an element-wise basis, computes the Lanczos approximation of the input.",Array
+1063,ee.Image.lanczos,lanczos,Computes the Lanczos approximation of the input.,Image
+1064,ee.Number.lanczos,lanczos,Computes the Lanczos approximation of the input.,Number
+1065,ee.Array.leftShift,leftShift,"On an element-wise basis, calculates the left shift of v1 by v2 bits.",Array
+1066,ee.Image.leftShift,leftShift,"Calculates the left shift of v1 by v2 bits for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1067,ee.Number.leftShift,leftShift,Calculates the left shift of v1 by v2 bits.,Number
+1068,ee.Array.log,log,"On an element-wise basis, computes the natural logarithm of the input.",Array
+1069,ee.Image.log,log,Computes the natural logarithm of the input.,Image
+1070,ee.Number.log,log,Computes the natural logarithm of the input.,Number
+1071,ee.Array.log10,log10,"On an element-wise basis, computes the base-10 logarithm of the input.",Array
+1072,ee.Image.log10,log10,Computes the base-10 logarithm of the input.,Image
+1073,ee.Number.log10,log10,Computes the base-10 logarithm of the input.,Number
+1074,ee.Array.long,long,"On an element-wise basis, casts the input value to a signed 64-bit integer.",Array
+1075,ee.Image.long,long,Casts the input value to a signed 64-bit integer.,Image
+1076,ee.Number.long,long,Casts the input value to a signed 64-bit integer.,Number
+1077,ee.Array.lt,lt,"On an element-wise basis, returns 1 iff the first value is less than the second.",Array
+1078,ee.Image.lt,lt,"Returns 1 iff the first value is less than the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1079,ee.Number.lt,lt,Returns 1 iff the first value is less than the second.,Number
+1080,ee.Array.lte,lte,"On an element-wise basis, returns 1 iff the first value is less than or equal to the second.",Array
+1081,ee.Image.lte,lte,"Returns 1 iff the first value is less than or equal to the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1082,ee.Number.lte,lte,Returns 1 iff the first value is less than or equal to the second.,Number
+1083,ee.Array.mask,mask,Creates a subarray by slicing out each position in an input array that is parallel to a non-zero element of the given mask array.,Array
+1084,ee.Image.mask,mask,"Gets or sets an image's mask. The output image retains the metadata and footprint of the input image. Pixels where the mask changes from zero to another value will be filled with zeros, or the values closest to zero within the range of the pixel type.",Image
+1085,ee.Array.matrixCholeskyDecomposition,matrixCholeskyDecomposition,Calculates the Cholesky decomposition of a matrix. The Cholesky decomposition is a decomposition into the form L * L' where L is a lower triangular matrix. The input must be a symmetric positive-definite matrix. Returns a dictionary with 1 entry named 'L'.,Dictionary
+1086,ee.Image.matrixCholeskyDecomposition,matrixCholeskyDecomposition,Calculates the Cholesky decomposition of a matrix. The Cholesky decomposition is a decomposition into the form L * L' where L is a lower triangular matrix. The input must be a symmetric positive-definite matrix. Returns an image with 1 band named 'L'.,Image
+1087,ee.Array.matrixDeterminant,matrixDeterminant,Computes the determinant of the matrix.,Number
+1088,ee.Image.matrixDeterminant,matrixDeterminant,Computes the determinant of the matrix.,Image
+1089,ee.Array.matrixDiagonal,matrixDiagonal,Computes the diagonal of the matrix in a single column.,Array
+1090,ee.Image.matrixDiagonal,matrixDiagonal,Computes the diagonal of the matrix in a single column.,Image
+1091,ee.Array.matrixFnorm,matrixFnorm,Computes the Frobenius norm of the matrix.,Number
+1092,ee.Image.matrixFnorm,matrixFnorm,Computes the Frobenius norm of the matrix.,Image
+1093,ee.Array.matrixInverse,matrixInverse,Computes the inverse of the matrix.,Array
+1094,ee.Image.matrixInverse,matrixInverse,Computes the inverse of the matrix.,Image
+1095,ee.Array.matrixLUDecomposition,matrixLUDecomposition,"Calculates the LU matrix decomposition such that P×input=L×U, where L is lower triangular (with unit diagonal terms), U is upper triangular and P is a partial pivot permutation matrix. The input matrix must be square. Returns a dictionary with entries named 'L', 'U' and 'P'.",Dictionary
+1096,ee.Image.matrixLUDecomposition,matrixLUDecomposition,"Calculates the LU matrix decomposition such that P×input=L×U, where L is lower triangular (with unit diagonal terms), U is upper triangular and P is a partial pivot permutation matrix. The input matrix must be square. Returns an image with bands named 'L', 'U' and 'P'.",Image
+1097,ee.Array.matrixMultiply,matrixMultiply,Returns the matrix multiplication A * B.,Array
+1098,ee.Image.matrixMultiply,matrixMultiply,"Returns the matrix multiplication A * B for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1099,ee.Array.matrixPseudoInverse,matrixPseudoInverse,Computes the Moore-Penrose pseudoinverse of the matrix.,Array
+1100,ee.Image.matrixPseudoInverse,matrixPseudoInverse,Computes the Moore-Penrose pseudoinverse of the matrix.,Image
+1101,ee.Array.matrixQRDecomposition,matrixQRDecomposition,"Calculates the QR-decomposition of a matrix into two matrices Q and R such that input = QR, where Q is orthogonal, and R is upper triangular. Returns a dictionary with entries named 'Q' and 'R'.",Dictionary
+1102,ee.Image.matrixQRDecomposition,matrixQRDecomposition,"Calculates the QR-decomposition of a matrix into two matrices Q and R such that input = QR, where Q is orthogonal, and R is upper triangular. Returns an image with bands named 'Q' and 'R'.",Image
+1103,ee.Array.matrixSingularValueDecomposition,matrixSingularValueDecomposition,"Calculates the Singular Value Decomposition of the input matrix into U×S×V', such that U and V are orthogonal and S is diagonal. Returns a dictionary with entries named 'U', 'S' and 'V'.",Dictionary
+1104,ee.Image.matrixSingularValueDecomposition,matrixSingularValueDecomposition,"Calculates the Singular Value Decomposition of the input matrix into U×S×V', such that U and V are orthogonal and S is diagonal. Returns an image with bands named 'U', 'S' and 'V'.",Image
+1105,ee.Array.matrixSolve,matrixSolve,"Solves for x in the matrix equation A * x = B, finding a least-squares solution if A is overdetermined.",Array
+1106,ee.Image.matrixSolve,matrixSolve,"Solves for x in the matrix equation A * x = B, finding a least-squares solution if A is overdetermined for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1107,ee.Array.matrixToDiag,matrixToDiag,Computes a square diagonal matrix from a single column matrix.,Array
+1108,ee.Image.matrixToDiag,matrixToDiag,Computes a square diagonal matrix from a single column matrix.,Image
+1109,ee.Array.matrixTranspose,matrixTranspose,Transposes two dimensions of an array.,Array
+1110,ee.Image.matrixTranspose,matrixTranspose,Transposes two dimensions of each array pixel.,Image
+1111,ee.Array.max,max,"On an element-wise basis, selects the maximum of the first and second values.",Array
+1112,ee.Image.max,max,"Selects the maximum of the first and second values for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1113,ee.ImageCollection.max,max,Reduces an image collection by calculating the maximum value of each pixel across the stack of all matching bands. Bands are matched by name.,Image
+1114,ee.Number.max,max,Selects the maximum of the first and second values.,Number
+1115,ee.FeatureCollection.merge,merge,Merges two collections into one. The result has all the elements that were in either collection.,FeatureCollection
+1116,ee.ImageCollection.merge,merge,Merges two image collections into one. The result has all the images that were in either collection.,ImageCollection
+1117,ee.Array.min,min,"On an element-wise basis, selects the minimum of the first and second values.",Array
+1118,ee.Image.min,min,"Selects the minimum of the first and second values for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1119,ee.ImageCollection.min,min,Reduces an image collection by calculating the minimum value of each pixel across the stack of all matching bands. Bands are matched by name.,Image
+1120,ee.Number.min,min,Selects the minimum of the first and second values.,Number
+1121,ee.Array.mod,mod,"On an element-wise basis, calculates the remainder of the first value divided by the second.",Array
+1122,ee.Image.mod,mod,"Calculates the remainder of the first value divided by the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1123,ee.Number.mod,mod,Calculates the remainder of the first value divided by the second.,Number
+1124,ee.Array.multiply,multiply,"On an element-wise basis, multiplies the first value by the second.",Array
+1125,ee.Image.multiply,multiply,"Multiplies the first value by the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1126,ee.Number.multiply,multiply,Multiplies the first value by the second.,Number
+1127,ee.Array.neq,neq,"On an element-wise basis, returns 1 iff the first value is not equal to the second.",Array
+1128,ee.Image.neq,neq,"Returns 1 iff the first value is not equal to the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1129,ee.Number.neq,neq,Returns 1 iff the first value is not equal to the second.,Number
+1130,ee.Array.not,not,"On an element-wise basis, returns 0 if the input is non-zero, and 1 otherwise.",Array
+1131,ee.Image.not,not,"Returns 0 if the input is non-zero, and 1 otherwise.",Image
+1132,ee.Number.not,not,"Returns 0 if the input is non-zero, and 1 otherwise.",Number
+1133,ee.Array.or,or,"On an element-wise basis, returns 1 iff either input value is non-zero.",Array
+1134,ee.Image.or,or,"Returns 1 iff either input value is non-zero for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is boolean.",Image
+1135,ee.ImageCollection.or,or,Reduces an image collection by setting each pixel to 1 iff any of the non-masked values at that pixel are non-zero across the stack of all matching bands. Bands are matched by name.,Image
+1136,ee.Number.or,or,Returns 1 iff either input value is non-zero.,Number
+1137,ee.Array.pow,pow,"On an element-wise basis, raises the first value to the power of the second.",Array
+1138,ee.Image.pow,pow,"Raises the first value to the power of the second for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is float.",Image
+1139,ee.Number.pow,pow,Raises the first value to the power of the second.,Number
+1140,ee.List.replace,replace,Replaces the first occurrence of oldVal in list with newVal.,List
+1141,ee.String.replace,replace,Returns a new string with some or all matches of a pattern replaced.,String
+1142,ee.Array.rightShift,rightShift,"On an element-wise basis, calculates the signed right shift of v1 by v2 bits.",Array
+1143,ee.Image.rightShift,rightShift,"Calculates the signed right shift of v1 by v2 bits for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1144,ee.Number.rightShift,rightShift,Calculates the signed right shift of v1 by v2 bits.,Number
+1145,ee.Array.round,round,"On an element-wise basis, computes the integer nearest to the input.",Array
+1146,ee.Image.round,round,Computes the integer nearest to the input.,Image
+1147,ee.Number.round,round,Computes the integer nearest to the input.,Number
+1148,ee.Array.short,short,"On an element-wise basis, casts the input value to a signed 16-bit integer.",Array
+1149,ee.Image.short,short,Casts the input value to a signed 16-bit integer.,Image
+1150,ee.Number.short,short,Casts the input value to a signed 16-bit integer.,Number
+1151,ee.Array.signum,signum,"On an element-wise basis, computes the signum function (sign) of the input; zero if the input is zero, 1 if the input is greater than zero, -1 if the input is less than zero.",Array
+1152,ee.Image.signum,signum,"Computes the signum function (sign) of the input; zero if the input is zero, 1 if the input is greater than zero, -1 if the input is less than zero.",Image
+1153,ee.Number.signum,signum,"Computes the signum function (sign) of the input; zero if the input is zero, 1 if the input is greater than zero, -1 if the input is less than zero.",Number
+1154,ee.Array.sin,sin,"On an element-wise basis, computes the sine of the input in radians.",Array
+1155,ee.Image.sin,sin,Computes the sine of the input in radians.,Image
+1156,ee.Number.sin,sin,Computes the sine of the input in radians.,Number
+1157,ee.Array.sinh,sinh,"On an element-wise basis, computes the hyperbolic sine of the input.",Array
+1158,ee.Image.sinh,sinh,Computes the hyperbolic sine of the input.,Image
+1159,ee.Number.sinh,sinh,Computes the hyperbolic sine of the input.,Number
+1160,ee.Array.slice,slice,"Creates a subarray by slicing out each position along the given axis from the 'start' (inclusive) to 'end' (exclusive) by increments of 'step'. The result will have as many dimensions as the input, and the same length in all directions except the slicing axis, where the length will be the number of positions from 'start' to 'end' by 'step' that are in range of the input array's length along 'axis'. This means the result can be length 0 along the given axis if start=end, or if the start or end values are entirely out of range.",Array
+1161,ee.Image.slice,slice,Selects a contiguous group of bands from an image by position.,Image
+1162,ee.List.slice,slice,"Returns a portion of list between the start index, inclusive, and end index, exclusive.  Negative values for start or end count backwards from the end of the list.  Values greater than the size of the list are legal but are truncated to the size of list.",List
+1163,ee.String.slice,slice,"Returns a substring of the given string. If the specified range exceeds the length of the string, returns a shorter substring.",String
+1164,ee.Array.sort,sort,Sorts elements of the array along one axis.,Array
+1165,ee.FeatureCollection.sort,sort,Sort a collection by the specified property.,FeatureCollection
+1166,ee.ImageCollection.sort,sort,Sort a collection by the specified property.,ImageCollection
+1167,ee.List.sort,sort,"Sorts the list into ascending order.  If the 'keys' argument is provided, then it is sorted first, and the elements of 'list' are placed in the same order.",List
+1168,ee.Array.sqrt,sqrt,"On an element-wise basis, computes the square root of the input.",Array
+1169,ee.Image.sqrt,sqrt,Computes the square root of the input.,Image
+1170,ee.Number.sqrt,sqrt,Computes the square root of the input.,Number
+1171,ee.Array.subtract,subtract,"On an element-wise basis, subtracts the second value from the first.",Array
+1172,ee.Image.subtract,subtract,"Subtracts the second value from the first for each matched pair of bands in image1 and image2. If either image1 or image2 has only 1 band, then it is used against all the bands in the other image. If the images have the same number of bands, but not the same names, they're used pairwise in the natural order. The output bands are named for the longer of the two inputs, or if they're equal in length, in image1's order. The type of the output pixels is the union of the input types.",Image
+1173,ee.Number.subtract,subtract,Subtracts the second value from the first.,Number
+1174,ee.Array.tan,tan,"On an element-wise basis, computes the tangent of the input in radians.",Array
+1175,ee.Image.tan,tan,Computes the tangent of the input in radians.,Image
+1176,ee.Number.tan,tan,Computes the tangent of the input in radians.,Number
+1177,ee.Array.tanh,tanh,"On an element-wise basis, computes the hyperbolic tangent of the input.",Array
+1178,ee.Image.tanh,tanh,Computes the hyperbolic tangent of the input.,Image
+1179,ee.Number.tanh,tanh,Computes the hyperbolic tangent of the input.,Number
+1180,ee.Array.toByte,toByte,"On an element-wise basis, casts the input value to an unsigned 8-bit integer.",Array
+1181,ee.Image.toByte,toByte,Casts the input value to an unsigned 8-bit integer.,Image
+1182,ee.Number.toByte,toByte,Casts the input value to an unsigned 8-bit integer.,Number
+1183,ee.Feature.toDictionary,toDictionary,Extract properties from a feature as a dictionary.,Dictionary
+1184,ee.FeatureCollection.toDictionary,toDictionary,Extract properties from a feature as a dictionary.,Dictionary
+1185,ee.Image.toDictionary,toDictionary,Extract properties from a feature as a dictionary.,Dictionary
+1186,ee.ImageCollection.toDictionary,toDictionary,Extract properties from a feature as a dictionary.,Dictionary
+1187,ee.Array.toDouble,toDouble,"On an element-wise basis, casts the input value to a 64-bit float.",Array
+1188,ee.Image.toDouble,toDouble,Casts the input value to a 64-bit float.,Image
+1189,ee.Number.toDouble,toDouble,Casts the input value to a 64-bit float.,Number
+1190,ee.Array.toFloat,toFloat,"On an element-wise basis, casts the input value to a 32-bit float.",Array
+1191,ee.Image.toFloat,toFloat,Casts the input value to a 32-bit float.,Image
+1192,ee.Number.toFloat,toFloat,Casts the input value to a 32-bit float.,Number
+1193,ee.Array.toInt,toInt,"On an element-wise basis, casts the input value to a signed 32-bit integer.",Array
+1194,ee.Image.toInt,toInt,Casts the input value to a signed 32-bit integer.,Image
+1195,ee.Number.toInt,toInt,Casts the input value to a signed 32-bit integer.,Number
+1196,ee.Array.toInt16,toInt16,"On an element-wise basis, casts the input value to a signed 16-bit integer.",Array
+1197,ee.Image.toInt16,toInt16,Casts the input value to a signed 16-bit integer.,Image
+1198,ee.Number.toInt16,toInt16,Casts the input value to a signed 16-bit integer.,Number
+1199,ee.Array.toInt32,toInt32,"On an element-wise basis, casts the input value to a signed 32-bit integer.",Array
+1200,ee.Image.toInt32,toInt32,Casts the input value to a signed 32-bit integer.,Image
+1201,ee.Number.toInt32,toInt32,Casts the input value to a signed 32-bit integer.,Number
+1202,ee.Array.toInt64,toInt64,"On an element-wise basis, casts the input value to a signed 64-bit integer.",Array
+1203,ee.Image.toInt64,toInt64,Casts the input value to a signed 64-bit integer.,Image
+1204,ee.Number.toInt64,toInt64,Casts the input value to a signed 64-bit integer.,Number
+1205,ee.Array.toInt8,toInt8,"On an element-wise basis, casts the input value to a signed 8-bit integer.",Array
+1206,ee.Image.toInt8,toInt8,Casts the input value to a signed 8-bit integer.,Image
+1207,ee.Number.toInt8,toInt8,Casts the input value to a signed 8-bit integer.,Number
+1208,ee.Array.toList,toList,Turns an Array into a list of lists of numbers.,List
+1209,ee.FeatureCollection.toList,toList,Returns the elements of a collection as a list.,List
+1210,ee.ImageCollection.toList,toList,Returns the elements of a collection as a list.,List
+1211,ee.Array.toLong,toLong,"On an element-wise basis, casts the input value to a signed 64-bit integer.",Array
+1212,ee.Image.toLong,toLong,Casts the input value to a signed 64-bit integer.,Image
+1213,ee.Number.toLong,toLong,Casts the input value to a signed 64-bit integer.,Number
+1214,ee.Array.toShort,toShort,"On an element-wise basis, casts the input value to a signed 16-bit integer.",Array
+1215,ee.Image.toShort,toShort,Casts the input value to a signed 16-bit integer.,Image
+1216,ee.Number.toShort,toShort,Casts the input value to a signed 16-bit integer.,Number
+1217,ee.Array.toUint16,toUint16,"On an element-wise basis, casts the input value to an unsigned 16-bit integer.",Array
+1218,ee.Image.toUint16,toUint16,Casts the input value to an unsigned 16-bit integer.,Image
+1219,ee.Number.toUint16,toUint16,Casts the input value to an unsigned 16-bit integer.,Number
+1220,ee.Array.toUint32,toUint32,"On an element-wise basis, casts the input value to an unsigned 32-bit integer.",Array
+1221,ee.Image.toUint32,toUint32,Casts the input value to an unsigned 32-bit integer.,Image
+1222,ee.Number.toUint32,toUint32,Casts the input value to an unsigned 32-bit integer.,Number
+1223,ee.Array.toUint8,toUint8,"On an element-wise basis, casts the input value to an unsigned 8-bit integer.",Array
+1224,ee.Image.toUint8,toUint8,Casts the input value to an unsigned 8-bit integer.,Image
+1225,ee.Number.toUint8,toUint8,Casts the input value to an unsigned 8-bit integer.,Number
+1226,ee.Array.trigamma,trigamma,"On an element-wise basis, computes the trigamma function of the input.",Array
+1227,ee.Image.trigamma,trigamma,Computes the trigamma function of the input.,Image
+1228,ee.Number.trigamma,trigamma,Computes the trigamma function of the input.,Number
+1229,ee.Array.uint16,uint16,"On an element-wise basis, casts the input value to an unsigned 16-bit integer.",Array
+1230,ee.Image.uint16,uint16,Casts the input value to an unsigned 16-bit integer.,Image
+1231,ee.Number.uint16,uint16,Casts the input value to an unsigned 16-bit integer.,Number
+1232,ee.Array.uint32,uint32,"On an element-wise basis, casts the input value to an unsigned 32-bit integer.",Array
+1233,ee.Image.uint32,uint32,Casts the input value to an unsigned 32-bit integer.,Image
+1234,ee.Number.uint32,uint32,Casts the input value to an unsigned 32-bit integer.,Number
+1235,ee.Array.uint8,uint8,"On an element-wise basis, casts the input value to an unsigned 8-bit integer.",Array
+1236,ee.Image.uint8,uint8,Casts the input value to an unsigned 8-bit integer.,Image
+1237,ee.Number.uint8,uint8,Casts the input value to an unsigned 8-bit integer.,Number
+1238,ee.Image.unitScale,unitScale,"Scales the input so that the range of input values [low, high] becomes [0, 1]. Values outside the range are NOT clamped. This algorithm always produces floating point pixels.",Image
+1239,ee.Number.unitScale,unitScale,"Scales the input so that the range of input values [min, max] becomes [0, 1]. Values outside the range are NOT clamped.  If min == max, 0 is returned.",Number
+1240,ee.FeatureCollection.filterBounds,filterBounds,Shortcut to filter a collection by intersection with geometry. Items in the collection with a footprint that fails to intersect the given geometry will be excluded.,FeatureCollection
+1241,ee.FeatureCollection.filterDate,filterDate,"Shortcut to filter a collection by a date range. The start and end may be Dates, numbers (interpreted as milliseconds since 1970-01-01T00:00:00Z), or strings (such as '1996-01-01T08:00'). Based on 'system:time_start'.",FeatureCollection
+1242,ee.ImageCollection.filterBounds,filterBounds,Shortcut to filter a collection by intersection with geometry. Items in the collection with a footprint that fails to intersect the given geometry will be excluded.,ImageCollection
+1243,ee.ImageCollection.filterDate,filterDate,"Shortcut to filter a collection by a date range. The start and end may be Dates, numbers (interpreted as milliseconds since 1970-01-01T00:00:00Z), or strings (such as '1996-01-01T08:00'). Based on 'system:time_start'.",ImageCollection
+1244,ee.FeatureCollection.limit,limit,"Limit a collection to the specified number of elements, optionally sorting them by a specified property first.",FeatureCollection
+1245,ee.ImageCollection.limit,limit,"Limit a collection to the specified number of elements, optionally sorting them by a specified property first.",ImageCollection
+1246,ee.Dictionary.size,size,Returns the number of entries in a dictionary.,Integer
+1247,ee.FeatureCollection.size,size,Returns the number of elements in the collection.,Integer
+1248,ee.ImageCollection.size,size,Returns the number of elements in the collection.,Integer
+1249,ee.List.size,size,Returns the number of elements in list.,Integer
+1250,ee.FeatureCollection.style,style,Draw a vector collection for visualization using a simple style language.,Image
+1251,ee.ImageCollection.style,style,Draw a vector collection for visualization using a simple style language.,Image
+1252,ee.String.cat,cat,Concatenates two strings.,String
+1253,ee.Array.cat,cat,Concatenates multiple arrays into a single array along the given axis.  Each array must have the same dimensionality and the same length on all axes except the concatenation axis.,Array
+1254,ee.Image.cat,cat,Combines the given images into a single image which contains all bands from all of the images.,Image
+1255,ee.List.cat,cat,Concatenates the contents of other onto list.,List
+1256,ee.FeatureCollection.distinct,distinct,Removes duplicates from a collection. Note that duplicates are determined using a strong hash over the serialized form of the selected properties.,FeatureCollection
+1257,ee.ImageCollection.distinct,distinct,Removes duplicates from a collection. Note that duplicates are determined using a strong hash over the serialized form of the selected properties.,ImageCollection
+1258,ee.List.distinct,distinct,Returns a copy of list without duplicate elements.,List
+1259,ee.FeatureCollection.flatten,flatten,Flattens collections of collections.,FeatureCollection
+1260,ee.ImageCollection.flatten,flatten,Flattens collections of collections.,ImageCollection
+1261,ee.List.flatten,flatten,Flattens any sublists into a single list.,List
+1262,ee.Array.get,get,Extracts the value at the given position from the input array.,Number
+1263,ee.Date.get,get,Returns the specified unit of this date.,Long
+1264,ee.Dictionary.get,get,"Extracts a named value from a dictionary.  If the dictionary does not contain the given key, then defaultValue is returned, unless it is null.",Object
+1265,ee.Feature.get,get,Extract a property from a feature.,EMPTY
+1266,ee.FeatureCollection.get,get,Extract a property from a feature.,EMPTY
+1267,ee.Image.get,get,Extract a property from a feature.,EMPTY
+1268,ee.ImageCollection.get,get,Extract a property from a feature.,EMPTY
+1269,ee.List.get,get,Returns the element at the specified position in list.  A negative index counts backwards from the end of the list.,Object
+1270,ee.Dictionary.getNumber,getNumber,Extracts a named number value from a dictionary.,Number
+1271,ee.Feature.getNumber,getNumber,Extract a property from a feature.,Number
+1272,ee.FeatureCollection.getNumber,getNumber,Extract a property from a feature.,Number
+1273,ee.Image.getNumber,getNumber,Extract a property from a feature.,Number
+1274,ee.ImageCollection.getNumber,getNumber,Extract a property from a feature.,Number
+1275,ee.List.getNumber,getNumber,"Returns the number at the specified position in list.  A negative index counts backwards from the end of the list. If the value is not a number, an error will occur.",Number
+1276,ee.Dictionary.getArray,getArray,Extracts a named array value from a dictionary.,Array
+1277,ee.Feature.getArray,getArray,Extract a property from a feature.,Array
+1278,ee.FeatureCollection.getArray,getArray,Extract a property from a feature.,Array
+1279,ee.Image.getArray,getArray,Extract a property from a feature.,Array
+1280,ee.ImageCollection.getArray,getArray,Extract a property from a feature.,Array
+1281,ee.List.getArray,getArray,"Returns the array at the specified position in list.  A negative index counts backwards from the end of the list. If the value is not a array, an error will occur.",Array
+1282,ee.Dictionary.getString,getString,Extracts a named string value from a dictionary.,String
+1283,ee.Feature.getString,getString,Extract a property from a feature.,String
+1284,ee.FeatureCollection.getString,getString,Extract a property from a feature.,String
+1285,ee.Image.getString,getString,Extract a property from a feature.,String
+1286,ee.ImageCollection.getString,getString,Extract a property from a feature.,String
+1287,ee.List.getString,getString,"Returns the string at the specified position in list.  A negative index counts backwards from the end of the list. If the value is not a string, an error will occur.",String
+1288,ee.Dictionary.set,set,Set a value in a dictionary.,Dictionary
+1289,ee.Feature.set,set,Overrides one or more metadata properties of an Element.,Feature
+1290,ee.FeatureCollection.set,set,Overrides one or more metadata properties of an Element.,FeatureCollection
+1291,ee.Image.set,set,Overrides one or more metadata properties of an Element.,Image
+1292,ee.ImageCollection.set,set,Overrides one or more metadata properties of an Element.,ImageCollection
+1293,ee.List.set,set,Replaces the value at the specified position in list with element.  A negative index counts backwards from the end of the list.,List
+1294,ee.Feature.geometry,geometry,Returns the geometry of a given feature in a given projection.,Geometry
+1295,ee.FeatureCollection.geometry,geometry,Extracts and merges the geometries of a collection. Requires that all the geometries in the collection share the projection and edge interpretation.,Geometry
+1296,ee.Image.geometry,geometry,Returns the geometry of a given feature in a given projection.,Geometry
+1297,ee.ImageCollection.geometry,geometry,Extracts and merges the geometries of a collection. Requires that all the geometries in the collection share the projection and edge interpretation.,Geometry
+1298,ee.FeatureCollection.remap,remap,Remaps the value of a specific property in a collection. Takes two parallel lists and maps values found in one to values in the other. Any element with a value that is not specified in the first list is dropped from the output collection.,FeatureCollection
+1299,ee.Image.remap,remap,"Maps from input values to output values, represented by two parallel lists. Any input values not included in the input list are either set to defaultValue if it is given, or masked if it isn't.  Note that inputs containing floating point values might sometimes fail to match due to  floating point precision errors.",Image
+1300,ee.ImageCollection.remap,remap,Remaps the value of a specific property in a collection. Takes two parallel lists and maps values found in one to values in the other. Any element with a value that is not specified in the first list is dropped from the output collection.,ImageCollection
+1301,ee.Dictionary.select,select,Returns a dictionary with only the specified keys.,Dictionary
+1302,ee.Feature.select,select,Selects properties from a feature by name or RE2-compatible regex and optionally renames them.,Feature
+1303,ee.FeatureCollection.select,select,Select properties from each Feature in a collection.  It is also possible to call this function with only string arguments; they will be all be interpreted as propertySelectors (varargs).,FeatureCollection
+1304,ee.Image.select,select,Selects bands from an image.,Image
+1305,ee.ImageCollection.select,select,Select bands from each image in a collection.,ImageCollection
+1306,ee.FeatureCollection.classify,classify,Classifies each feature in a collection.,FeatureCollection
+1307,ee.Image.classify,classify,Classifies an image.,Image
+1308,ee.FeatureCollection.cluster,cluster,"Clusters each feature in a collection, adding a new column to each feature containing the cluster number to which it has been assigned.",FeatureCollection
+1309,ee.Image.cluster,cluster,"Applies a clusterer to an image.  Returns a new image with a single band containing values from 0 to N, indicating the cluster each pixel is assigned to.",Image
+1310,ee.Image.expression,expression,"Evaluates an arithmetic expression on an image, possibly involving additional images.",Image
+1311,ee.Number.expression,expression,Computes a numeric expression.,Number
+1312,ee.FeatureCollection.filter,filter,Apply a filter to this collection.,FeatureCollection
+1313,ee.ImageCollection.filter,filter,Apply a filter to this collection.,ImageCollection
+1314,ee.List.filter,filter,"Filters a list to only the elements that match the given filter. To filter list items that aren't images or features, test a property named 'item', e.g.: ee.Filter.gt('item', 3)",List
+1315,ee.ImageCollection.linkCollection,linkCollection,Links images in this collection to matching images from .,ImageCollection
+1316,ee.Dictionary.remove,remove,Returns a dictionary with the specified keys removed.,Dictionary
+1317,ee.List.remove,remove,"Removes the first occurrence of the specified element from list, if it is present.",List
+1318,ee.Dictionary.rename,rename,Rename elements in a dictionary.,Dictionary
+1319,ee.Image.rename,rename,Rename the bands of an image.,Image
+1320,ee.Dictionary.toArray,toArray,"Returns numeric values of a dictionary as an array. If no keys are specified, all values are returned in the natural ordering of the dictionary's keys. The default 'axis' is 0.",Array
+1321,ee.Feature.toArray,toArray,"Creates an array from the given properties of an object, which must all be numbers.",Array
+1322,ee.Image.toArray,toArray,Concatenates pixels from each band into a single array per pixel. The result will be masked if any input bands are masked.,Image
+1323,ee.ImageCollection.toArray,toArray,"Converts an image collection into an image of 2D arrays.  At each pixel, the images that have valid (unmasked) values in all bands are laid out along the first axis of the array in the order they appear in the image collection.  The bands of each image are laid out along the second axis of the array, in the order the bands appear in that image.  The array element type will be the union of the types of each band.",Image
+1324,ee.Image.translate,translate,Translate the input image.,Image
+1325,ee.Projection.translate,translate,Returns the projection translated by the given amount in each axis.,Projection
+1326,ee.data.getWorkloadTag,getWorkloadTag,Returns the currently set workload tag.,String
+1327,ee.DateRange.unbounded,unbounded,Returns a DateRange that includes all possible dates.,DateRange
+1328,ee.Image.pixelArea,pixelArea,"Generate an image in which the value of each pixel is the area of that pixel in square meters. The returned image has a single band called ""area.""",Image
+1329,ee.Image.pixelLonLat,pixelLonLat,"Creates an image with two bands named 'longitude' and 'latitude', containing the longitude and latitude at each pixel, in degrees.",Image
+1330,ee.Join.inverted,ee.Join.inverted,Returns a join that produces the elements of the primary collection that match no elements of the secondary collection. No properties are added to the results.,Join
+1331,ee.Join.simple,ee.Join.simple,Returns a join that produces the elements of the primary collection that match any element of the secondary collection. No properties are added to the results.,Join
+1332,ee.PixelType.double,double,Returns the 64-bit floating point pixel type.,PixelType
+1333,ee.PixelType.float,float,Returns the 32-bit floating point pixel type.,PixelType
+1334,ee.PixelType.int16,int16,Returns the 16-bit signed integer pixel type.,PixelType
+1335,ee.PixelType.int32,int32,Returns the 32-bit signed integer pixel type.,PixelType
+1336,ee.PixelType.int64,int64,Returns the 64-bit signed integer pixel type.,PixelType
+1337,ee.PixelType.int8,int8,Returns the 8-bit signed integer pixel type.,PixelType
+1338,ee.PixelType.uint16,uint16,Returns the 16-bit unsigned integer pixel type.,PixelType
+1339,ee.PixelType.uint32,uint32,Returns the 32-bit unsigned integer pixel type.,PixelType
+1340,ee.PixelType.uint8,uint8,Returns the 8-bit unsigned integer pixel type.,PixelType
+1341,ee.Reducer.allNonZero,ee.Reducer.allNonZero,"Returns a Reducer that returns 1 if all of its inputs are non-zero, 0 otherwise.",Reducer
+1342,ee.Reducer.anyNonZero,ee.Reducer.anyNonZero,"Returns a Reducer that returns 1 if any of its inputs are non-zero, 0 otherwise.",Reducer
+1343,ee.Reducer.bitwiseAnd,ee.Reducer.bitwiseAnd,Returns a Reducer that computes the bitwise-and summation of its inputs.,Reducer
+1344,ee.Reducer.bitwiseOr,ee.Reducer.bitwiseOr,Returns a Reducer that computes the bitwise-or summation of its inputs.,Reducer
+1345,ee.Reducer.centeredCovariance,ee.Reducer.centeredCovariance,Creates a reducer that reduces some number of 1-D arrays of the same length N to a covariance matrix of shape NxN.  WARNING: this reducer requires that the data has been mean centered.,Reducer
+1346,ee.Reducer.circularMean,ee.Reducer.circularMean,"Returns a Reducer that computes the (weighted) circular mean of its inputs, which are expected to be in radians.  Output will be in the range (-π to π).",Reducer
+1347,ee.Reducer.circularStddev,ee.Reducer.circularStddev,"Returns a Reducer that computes the (weighted) circular standard deviation of its inputs, which are expected to be in radians, using the sqrt(-2 * ln(R)) formula.",Reducer
+1348,ee.Reducer.circularVariance,ee.Reducer.circularVariance,"Returns a Reducer that computes the (weighted) circular variance of its inputs, which are expected to be in radians.",Reducer
+1349,ee.Reducer.count,ee.Reducer.count,Returns a Reducer that computes the number of non-null inputs.,Reducer
+1350,ee.Reducer.countDistinct,ee.Reducer.countDistinct,Returns a Reducer that computes the number of distinct inputs.,Reducer
+1351,ee.Reducer.countDistinctNonNull,ee.Reducer.countDistinctNonNull,"Returns a Reducer that computes the number of distinct inputs, ignoring nulls.",Reducer
+1352,ee.Reducer.countEvery,ee.Reducer.countEvery,Returns a Reducer that computes the number of inputs.,Reducer
+1353,ee.Reducer.countRuns,ee.Reducer.countRuns,"Returns a Reducer that computes the number of runs of distinct, non-null inputs.",Reducer
+1354,ee.Reducer.covariance,ee.Reducer.covariance,"Creates a reducer that reduces some number of 1-D arrays of the same length N to a covariance matrix of shape NxN.  This reducer uses the one-pass covariance formula from Sandia National Laboratories Technical Report SAND2008-6212, which can lose accuracy if the values span a large range.",Reducer
+1355,ee.Reducer.first,ee.Reducer.first,Returns a Reducer that returns the first of its inputs.,Reducer
+1356,ee.Reducer.firstNonNull,ee.Reducer.firstNonNull,Returns a Reducer that returns the first of its non-null inputs.,Reducer
+1357,ee.Reducer.frequencyHistogram,ee.Reducer.frequencyHistogram,Returns a Reducer that returns a (weighted) frequency table of its inputs.,Reducer
+1358,ee.Reducer.kurtosis,ee.Reducer.kurtosis,Returns a Reducer that Computes the kurtosis of its inputs.,Reducer
+1359,ee.Reducer.last,ee.Reducer.last,Returns a Reducer that returns the last of its inputs.,Reducer
+1360,ee.Reducer.lastNonNull,ee.Reducer.lastNonNull,Returns a Reducer that returns the last of its non-null inputs.,Reducer
+1361,ee.Reducer.linearFit,ee.Reducer.linearFit,Returns a Reducer that computes the slope and offset for a (weighted) linear regression of 2 inputs.  The inputs are expected to be x data followed by y data..,Reducer
+1362,ee.Reducer.mean,ee.Reducer.mean,Returns a Reducer that computes the (weighted) arithmetic mean of its inputs.,Reducer
+1363,ee.Reducer.minMax,ee.Reducer.minMax,Returns a Reducer that computes the minimum and maximum of its inputs.,Reducer
+1364,ee.Reducer.pearsonsCorrelation,ee.Reducer.pearsonsCorrelation,Creates a two-input reducer that computes Pearson's product-moment correlation coefficient and the 2-sided p-value test for correlation = 0.,Reducer
+1365,ee.Reducer.product,ee.Reducer.product,Returns a Reducer that computes the product of its inputs.,Reducer
+1366,ee.Reducer.sampleStdDev,ee.Reducer.sampleStdDev,Returns a Reducer that computes the sample standard deviation of its inputs.,Reducer
+1367,ee.Reducer.sampleVariance,ee.Reducer.sampleVariance,Returns a Reducer that computes the sample variance of its inputs.,Reducer
+1368,ee.Reducer.sensSlope,ee.Reducer.sensSlope,Creates a two-input reducer that computes the Sen's slope estimator.  The inputs are expected to be x data followed by y data.  It returns two double values; the estimated slope and the offset.,Reducer
+1369,ee.Reducer.skew,ee.Reducer.skew,Returns a Reducer that Computes the skewness of its inputs.,Reducer
+1370,ee.Reducer.spearmansCorrelation,ee.Reducer.spearmansCorrelation,Creates a two-input reducer that computes the Spearman's rank-moment correlation.  See https://commons.apache.org/proper/commons-math/javadocs/api-3.6/org/apache/commons/math3/stat/correlation/SpearmansCorrelation.html for details.,Reducer
+1371,ee.Reducer.stdDev,ee.Reducer.stdDev,Returns a Reducer that computes the standard deviation of its inputs.,Reducer
+1372,ee.Reducer.sum,ee.Reducer.sum,Returns a Reducer that computes the (weighted) sum of its inputs.,Reducer
+1373,ee.Reducer.variance,ee.Reducer.variance,Returns a Reducer that computes the variance of its inputs.,Reducer
+1374,ee.reset,reset,Reset the library to its base state. Useful for re-initializing to a different server.,EMPTY

@@ -1,0 +1,341 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<!-- This file is open-source and can be shared. -->
+<GEEModelingKnowledgeTemplate name="script_320021" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2000-01-01</StartTime>
+        <EndTime>2001-01-01</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>None(geonameId=3172215)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 7 Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LE07/C02/T1</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Ecosystems</Value>
+        <Description>This script aims to create a quality mosaic of Landsat images from the year 2000, highlighting the greenest pixels. The output is a visualization of the greenest areas.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">16.38339</Node>
+   <Node id="2" type="eeFunction">Map.setCenter</Node>
+   <Node id="3" type="literal">11</Node>
+   <Node id="4" type="complex">[1.4, 1.4, 1.1]</Node>
+   <Node id="5" type="complex">{gain: [1.4, 1.4, 1.1]}</Node>
+   <Node id="6" type="literal">B3</Node>
+   <Node id="7" type="eeFunction">ee.List</Node>
+   <Node id="8" type="literal">B2</Node>
+   <Node id="9" type="literal">B1</Node>
+   <Node id="10" type="literal">LANDSAT/LE07/C02/T1</Node>
+   <Node id="11" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="12" type="eeFunction">filterDate</Node>
+   <Node id="13" type="literal">2000-01-01</Node>
+   <Node id="14" type="literal">2001-01-01</Node>
+   <Node id="15" type="userDefinedFunction">{
+
+  return image.normalizedDifference(['B4', 'B3']).addBands(image);
+
+}</Node>
+   <Node id="16" type="eeFunction">map</Node>
+   <Node id="17" type="userDefinedFunction">qualityMosaic</Node>
+   <Node id="18" type="userDefinedFunction">qualityMosaic</Node>
+   <Node id="19" type="eeFunction">select</Node>
+   <Node id="20" type="eeFunction">Map.addLayer</Node>
+   <Node id="21" type="literal">Greenest</Node>
+   <Node id="22" type="identifier">bands</Node>
+   <Node id="23" type="eeFunction">min</Node>
+   <Node id="24" type="eeFunction">bandNames</Node>
+   <Node id="25" type="eeFunction">slice</Node>
+   <Node id="26" type="literal">1</Node>
+   <Node id="27" type="eeFunction">ee.List</Node>
+   <Node id="28" type="literal">1</Node>
+   <Node id="29" type="eeFunction">ee.List</Node>
+   <Node id="30" type="identifier">bands</Node>
+   <Node id="31" type="eeFunction">toArray</Node>
+   <Node id="32" type="eeFunction">arraySlice</Node>
+   <Node id="33" type="literal">1</Node>
+   <Node id="34" type="eeFunction">arraySlice</Node>
+   <Node id="35" type="literal">0</Node>
+   <Node id="36" type="eeFunction">multiply</Node>
+   <Node id="37" type="eeFunction">arraySort</Node>
+   <Node id="38" type="literal">0</Node>
+   <Node id="39" type="eeFunction">arraySlice</Node>
+   <Node id="40" type="literal">1</Node>
+   <Node id="41" type="literal">0</Node>
+   <Node id="42" type="eeFunction">arrayProject</Node>
+   <Node id="43" type="eeFunction">arrayFlatten</Node>
+   <Node id="44" type="literal">B4</Node>
+   <Node id="45" type="eeFunction">ee.List</Node>
+   <Node id="46" type="literal">B3</Node>
+   <Node id="47" type="identifier">image</Node>
+   <Node id="48" type="eeFunction">normalizedDifference</Node>
+   <Node id="49" type="eeFunction">addBands</Node>
+   <Node id="50" type="identifier">image</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="5" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="7"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="12"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="12"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="12" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="18" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="7" targetNodeId="19"></Relation>
+   <Relation id="16" sourceNodeId="17" targetNodeId="19"></Relation>
+   <Relation id="17" sourceNodeId="5" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="20" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="22" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="24" sourceNodeId="25" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="26" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="27" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="28" sourceNodeId="28" targetNodeId="32"></Relation>
+   <Relation id="29" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="31" targetNodeId="34"></Relation>
+   <Relation id="31" sourceNodeId="28" targetNodeId="34"></Relation>
+   <Relation id="32" sourceNodeId="35" targetNodeId="34"></Relation>
+   <Relation id="33" sourceNodeId="34" targetNodeId="36"></Relation>
+   <Relation id="34" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="35" sourceNodeId="32" targetNodeId="37"></Relation>
+   <Relation id="36" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="37" sourceNodeId="40" targetNodeId="39"></Relation>
+   <Relation id="38" sourceNodeId="37" targetNodeId="39"></Relation>
+   <Relation id="39" sourceNodeId="41" targetNodeId="39"></Relation>
+   <Relation id="40" sourceNodeId="29" targetNodeId="42"></Relation>
+   <Relation id="41" sourceNodeId="39" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="43" sourceNodeId="27" targetNodeId="43"></Relation>
+   <Relation id="44" sourceNodeId="44" targetNodeId="45"></Relation>
+   <Relation id="45" sourceNodeId="46" targetNodeId="45"></Relation>
+   <Relation id="46" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="47" sourceNodeId="45" targetNodeId="48"></Relation>
+   <Relation id="48" sourceNodeId="48" targetNodeId="49"></Relation>
+   <Relation id="49" sourceNodeId="50" targetNodeId="49"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="30">
+        <Content type="comment">// Array-based quality mosaic.</Content>
+    </Script>
+    <Script line="3" startPosition="34" endPosition="109">
+        <Content type="comment">// Returns a mosaic built by sorting each stack of pixels by the first band</Content>
+    </Script>
+    <Script line="4" startPosition="111" endPosition="172">
+        <Content type="comment">// in descending order, and taking the highest quality pixel.</Content>
+    </Script>
+    <Script line="5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33" startPosition="174" endPosition="1547">
+        <Content type="code">function qualityMosaic(bands) {
+
+  // Convert to an array, and declare names for the axes and indices along the
+
+  // band axis.
+
+  var array = bands.toArray();
+
+  var imageAxis = 0;
+
+  var bandAxis = 1;
+
+  var qualityIndex = 0;
+
+  var valuesIndex = 1;
+
+
+
+  // Slice the quality and values off the main array, and sort the values by the
+
+  // quality in descending order.
+
+  var quality = array.arraySlice(bandAxis, qualityIndex, qualityIndex + 1);
+
+  var values = array.arraySlice(bandAxis, valuesIndex);
+
+  var valuesByQuality = values.arraySort(quality.multiply(-1));
+
+
+
+  // Get an image where each pixel is the array of band values where the quality
+
+  // band is greatest. Note that while the array is 2-D, the first axis is
+
+  // length one.
+
+  var best = valuesByQuality.arraySlice(imageAxis, 0, 1);
+
+
+
+  // Project the best 2D array down to a single dimension, and convert it back
+
+  // to a regular scalar image by naming each position along the axis. Note we
+
+  // provide the original band names, but slice off the first band since the
+
+  // quality band is not part of the result. Also note to get at the band names,
+
+  // we have to do some kind of reduction, but it won't really calculate pixels
+
+  // if we only access the band names.
+
+  var bandNames = bands.min().bandNames().slice(1);
+
+  return best.arrayProject([bandAxis]).arrayFlatten([bandNames]);
+
+}</Content>
+    </Script>
+    <Script line="6" startPosition="209" endPosition="285">
+        <Content type="comment">// Convert to an array, and declare names for the axes and indices along the</Content>
+    </Script>
+    <Script line="7" startPosition="289" endPosition="302">
+        <Content type="comment">// band axis.</Content>
+    </Script>
+    <Script line="14" startPosition="432" endPosition="510">
+        <Content type="comment">// Slice the quality and values off the main array, and sort the values by the</Content>
+    </Script>
+    <Script line="15" startPosition="514" endPosition="545">
+        <Content type="comment">// quality in descending order.</Content>
+    </Script>
+    <Script line="20" startPosition="750" endPosition="828">
+        <Content type="comment">// Get an image where each pixel is the array of band values where the quality</Content>
+    </Script>
+    <Script line="21" startPosition="832" endPosition="904">
+        <Content type="comment">// band is greatest. Note that while the array is 2-D, the first axis is</Content>
+    </Script>
+    <Script line="22" startPosition="908" endPosition="922">
+        <Content type="comment">// length one.</Content>
+    </Script>
+    <Script line="25" startPosition="987" endPosition="1063">
+        <Content type="comment">// Project the best 2D array down to a single dimension, and convert it back</Content>
+    </Script>
+    <Script line="26" startPosition="1067" endPosition="1143">
+        <Content type="comment">// to a regular scalar image by naming each position along the axis. Note we</Content>
+    </Script>
+    <Script line="27" startPosition="1147" endPosition="1221">
+        <Content type="comment">// provide the original band names, but slice off the first band since the</Content>
+    </Script>
+    <Script line="28" startPosition="1225" endPosition="1303">
+        <Content type="comment">// quality band is not part of the result. Also note to get at the band names,</Content>
+    </Script>
+    <Script line="29" startPosition="1307" endPosition="1384">
+        <Content type="comment">// we have to do some kind of reduction, but it won't really calculate pixels</Content>
+    </Script>
+    <Script line="30" startPosition="1388" endPosition="1424">
+        <Content type="comment">// if we only access the band names.</Content>
+    </Script>
+    <Script line="35" startPosition="1551" endPosition="1628">
+        <Content type="comment">// Load the l7_l1t collection for the year 2000, and make sure the first band</Content>
+    </Script>
+    <Script line="36" startPosition="1630" endPosition="1703">
+        <Content type="comment">// is our quality measure, in this case the normalized difference values.</Content>
+    </Script>
+    <Script line="37,38" startPosition="1705" endPosition="1801">
+        <Content type="code">var l7 = ee.ImageCollection('LANDSAT/LE07/C02/T1')
+
+    .filterDate('2000-01-01', '2001-01-01');</Content>
+    </Script>
+    <Script line="39,40,41" startPosition="1803" endPosition="1913">
+        <Content type="code">var withNd = l7.map(function(image) {
+
+  return image.normalizedDifference(['B4', 'B3']).addBands(image);
+
+});</Content>
+    </Script>
+    <Script line="43" startPosition="1917" endPosition="1991">
+        <Content type="comment">// Build a mosaic using the NDVI of bands 4 and 3, essentially showing the</Content>
+    </Script>
+    <Script line="44" startPosition="1993" endPosition="2030">
+        <Content type="comment">// greenest pixels from the year 2000</Content>
+    </Script>
+    <Script line="45" startPosition="2032" endPosition="2069">
+        <Content type="code">var greenest = qualityMosaic(withNd);</Content>
+    </Script>
+    <Script line="47" startPosition="2073" endPosition="2148">
+        <Content type="comment">// Select out the color bands to visualize. An interesting artifact of this</Content>
+    </Script>
+    <Script line="48" startPosition="2150" endPosition="2227">
+        <Content type="comment">// approach is that clouds are greener than water. So all the water is white.</Content>
+    </Script>
+    <Script line="49" startPosition="2229" endPosition="2275">
+        <Content type="code">var rgb = greenest.select(['B3', 'B2', 'B1']);</Content>
+    </Script>
+    <Script line="51" startPosition="2279" endPosition="2334">
+        <Content type="code">Map.addLayer(rgb, {gain: [1.4, 1.4, 1.1]}, 'Greenest');</Content>
+    </Script>
+    <Script line="52" startPosition="2336" endPosition="2375">
+        <Content type="code">Map.setCenter(-90.08789, 16.38339, 11);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>6</ServiceNodeId>
+        <GEEScriptPart startPosition="1886" endPosition="1888">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>6</ServiceNodeId>
+        <GEEScriptPart startPosition="2257" endPosition="2259">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="2263" endPosition="2265">B2</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="2269" endPosition="2271">B1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="1734" endPosition="1753">LANDSAT/LE07/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="1774" endPosition="1784">2000-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="1788" endPosition="1798">2001-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="2323" endPosition="2331">Greenest</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>44</ServiceNodeId>
+        <GEEScriptPart startPosition="1880" endPosition="1882">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>46</ServiceNodeId>
+        <GEEScriptPart startPosition="1886" endPosition="1888">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>46</ServiceNodeId>
+        <GEEScriptPart startPosition="2257" endPosition="2259">B3</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

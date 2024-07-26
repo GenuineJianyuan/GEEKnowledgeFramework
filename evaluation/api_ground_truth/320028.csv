@@ -1,0 +1,11 @@
+API1,API2
+ee.Geometry.Rectangle,clip
+Image.eq,Image.multiply
+Image.clip,Image.eq
+first,Image.select
+filter,first
+Image.select,Image.clip
+Reducer.sum,Image.reduceRegion
+Image.pixelArea,Image.multiply
+ee.ImageCollection,filter
+Image.multiply,Image.reduceRegion

@@ -1,0 +1,250 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320022" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2007-06-01</StartTime>
+        <EndTime>2007-09-30</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>[-98.4, 19]</Value>
+        <Reference>None</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 5 TM Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LT05/C02/T1</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>SRTM Digital Elevation Data Version 4</SourceName>
+            <Value>CGIAR/SRTM90_V4</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>This script performs spectral unmixing on a mosaic of Landsat 5 images to classify urban, vegetation, and water areas. The output is a colored image showing the fractions of these land cover types.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="literal">CGIAR/SRTM90_V4</Node>
+   <Node id="5" type="eeFunction">ee.Image</Node>
+   <Node id="6" type="eeFunction">ee.Algorithms.Terrain</Node>
+   <Node id="7" type="eeFunction">select</Node>
+   <Node id="8" type="literal">hillshade</Node>
+   <Node id="9" type="eeFunction">Map.addLayer</Node>
+   <Node id="10" type="literal">19</Node>
+   <Node id="11" type="eeFunction">Map.setCenter</Node>
+   <Node id="12" type="literal">11</Node>
+   <Node id="13" type="literal">0</Node>
+   <Node id="14" type="eeFunction">ee.List</Node>
+   <Node id="15" type="complex">['urban', 'veg', 'water']</Node>
+   <Node id="16" type="eeFunction">ee.List</Node>
+   <Node id="17" type="complex">[88, 42, 48, 38, 86, 115, 59]</Node>
+   <Node id="18" type="eeFunction">ee.List</Node>
+   <Node id="19" type="complex">[50, 21, 20, 35, 50, 110, 23]</Node>
+   <Node id="20" type="complex">[51, 20, 14, 9, 7, 116, 4]</Node>
+   <Node id="21" type="eeFunction">ee.Array</Node>
+   <Node id="22" type="eeFunction">matrixPseudoInverse</Node>
+   <Node id="23" type="eeFunction">transpose</Node>
+   <Node id="24" type="eeFunction">ee.Image</Node>
+   <Node id="25" type="literal">LANDSAT/LT05/C02/T1</Node>
+   <Node id="26" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="27" type="eeFunction">filterDate</Node>
+   <Node id="28" type="literal">2007-06-01</Node>
+   <Node id="29" type="literal">2007-09-30</Node>
+   <Node id="30" type="eeFunction">select</Node>
+   <Node id="31" type="literal">B[0-7]</Node>
+   <Node id="32" type="eeFunction">median</Node>
+   <Node id="33" type="eeFunction">toArray</Node>
+   <Node id="34" type="eeFunction">toArray</Node>
+   <Node id="35" type="literal">1</Node>
+   <Node id="36" type="eeFunction">matrixMultiply</Node>
+   <Node id="37" type="eeFunction">arrayProject</Node>
+   <Node id="38" type="eeFunction">arrayFlatten</Node>
+   <Node id="39" type="eeFunction">Map.addLayer</Node>
+   <Node id="40" type="literal">Unmixed (red=urban, green=veg, blue=water)</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="7" sourceNodeId="7" targetNodeId="9"></Relation>
+   <Relation id="8" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="13" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="20" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="18" targetNodeId="21"></Relation>
+   <Relation id="16" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="17" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="18" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="19" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="20" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="21" sourceNodeId="28" targetNodeId="27"></Relation>
+   <Relation id="22" sourceNodeId="29" targetNodeId="27"></Relation>
+   <Relation id="23" sourceNodeId="27" targetNodeId="30"></Relation>
+   <Relation id="24" sourceNodeId="31" targetNodeId="30"></Relation>
+   <Relation id="25" sourceNodeId="30" targetNodeId="32"></Relation>
+   <Relation id="26" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="27" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="28" sourceNodeId="35" targetNodeId="34"></Relation>
+   <Relation id="29" sourceNodeId="24" targetNodeId="36"></Relation>
+   <Relation id="30" sourceNodeId="34" targetNodeId="36"></Relation>
+   <Relation id="31" sourceNodeId="14" targetNodeId="37"></Relation>
+   <Relation id="32" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="33" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="34" sourceNodeId="16" targetNodeId="38"></Relation>
+   <Relation id="35" sourceNodeId="2" targetNodeId="39"></Relation>
+   <Relation id="36" sourceNodeId="40" targetNodeId="39"></Relation>
+   <Relation id="37" sourceNodeId="38" targetNodeId="39"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="33">
+        <Content type="comment">// Array-based spectral unmixing.</Content>
+    </Script>
+    <Script line="3" startPosition="37" endPosition="110">
+        <Content type="comment">// Create a mosaic of Landsat 5 images from June through September, 2007.</Content>
+    </Script>
+    <Script line="4,5,6,7" startPosition="112" endPosition="251">
+        <Content type="code">var allBandMosaic = ee.ImageCollection('LANDSAT/LT05/C02/T1')
+
+  .filterDate('2007-06-01', '2007-09-30')
+
+  .select('B[0-7]')
+
+  .median();</Content>
+    </Script>
+    <Script line="9" startPosition="255" endPosition="327">
+        <Content type="comment">// Create some representative endmembers computed previously by sampling</Content>
+    </Script>
+    <Script line="10" startPosition="329" endPosition="353">
+        <Content type="comment">// the Landsat 5 mosaic.</Content>
+    </Script>
+    <Script line="11" startPosition="355" endPosition="406">
+        <Content type="code">var urbanEndmember = [88, 42, 48, 38, 86, 115, 59];</Content>
+    </Script>
+    <Script line="12" startPosition="408" endPosition="457">
+        <Content type="code">var vegEndmember = [50, 21, 20, 35, 50, 110, 23];</Content>
+    </Script>
+    <Script line="13" startPosition="459" endPosition="507">
+        <Content type="code">var waterEndmember = [51, 20, 14, 9, 7, 116, 4];</Content>
+    </Script>
+    <Script line="15" startPosition="511" endPosition="545">
+        <Content type="comment">// Compute the 3x7 pseudo inverse.</Content>
+    </Script>
+    <Script line="16" startPosition="547" endPosition="621">
+        <Content type="code">var endmembers = ee.Array([urbanEndmember, vegEndmember, waterEndmember]);</Content>
+    </Script>
+    <Script line="17" startPosition="623" endPosition="692">
+        <Content type="code">var inverse = ee.Image(endmembers.matrixPseudoInverse().transpose());</Content>
+    </Script>
+    <Script line="19" startPosition="696" endPosition="767">
+        <Content type="comment">// Convert the bands to a 2D 7x1 array. The toArray() call concatenates</Content>
+    </Script>
+    <Script line="20" startPosition="769" endPosition="839">
+        <Content type="comment">// pixels from each band along the default axis 0 into a 1D vector per</Content>
+    </Script>
+    <Script line="21" startPosition="841" endPosition="911">
+        <Content type="comment">// pixel, and the toArray(1) call concatenates each band (in this case</Content>
+    </Script>
+    <Script line="22" startPosition="913" endPosition="982">
+        <Content type="comment">// just the one band of 1D vectors) along axis 1, forming a 2D array.</Content>
+    </Script>
+    <Script line="23" startPosition="984" endPosition="1037">
+        <Content type="code">var inputValues = allBandMosaic.toArray().toArray(1);</Content>
+    </Script>
+    <Script line="25" startPosition="1041" endPosition="1113">
+        <Content type="comment">// Matrix multiply the pseudo inverse of the endmembers by the pixels to</Content>
+    </Script>
+    <Script line="26" startPosition="1115" endPosition="1168">
+        <Content type="comment">// get a 3x1 set of endmembers fractions from 0 to 1.</Content>
+    </Script>
+    <Script line="27" startPosition="1170" endPosition="1220">
+        <Content type="code">var unmixed = inverse.matrixMultiply(inputValues);</Content>
+    </Script>
+    <Script line="29" startPosition="1224" endPosition="1300">
+        <Content type="comment">// Create and show a colored image of the endmember fractions. Since we know</Content>
+    </Script>
+    <Script line="30" startPosition="1302" endPosition="1381">
+        <Content type="comment">// the result has size 3x1, project down to 1D vectors at each pixel (since the</Content>
+    </Script>
+    <Script line="31" startPosition="1383" endPosition="1458">
+        <Content type="comment">// second axis is pointless now), and then flatten back to a regular scalar</Content>
+    </Script>
+    <Script line="32" startPosition="1460" endPosition="1468">
+        <Content type="comment">// image</Content>
+    </Script>
+    <Script line="33,34,35" startPosition="1470" endPosition="1560">
+        <Content type="code">var colored = unmixed
+
+  .arrayProject([0])
+
+  .arrayFlatten([['urban', 'veg', 'water']]);</Content>
+    </Script>
+    <Script line="36" startPosition="1562" endPosition="1591">
+        <Content type="code">Map.setCenter(-98.4, 19, 11);</Content>
+    </Script>
+    <Script line="38" startPosition="1595" endPosition="1636">
+        <Content type="comment">// Load a hillshade to use as a backdrop.</Content>
+    </Script>
+    <Script line="39" startPosition="1638" endPosition="1723">
+        <Content type="code">Map.addLayer(ee.Algorithms.Terrain(ee.Image('CGIAR/SRTM90_V4')).select('hillshade'));</Content>
+    </Script>
+    <Script line="40,41" startPosition="1725" endPosition="1814">
+        <Content type="code">Map.addLayer(colored, {min: 0, max: 1},
+
+  'Unmixed (red=urban, green=veg, blue=water)');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>4</ServiceNodeId>
+        <GEEScriptPart startPosition="1683" endPosition="1698">CGIAR/SRTM90_V4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="1710" endPosition="1719">hillshade</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>25</ServiceNodeId>
+        <GEEScriptPart startPosition="152" endPosition="171">LANDSAT/LT05/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>28</ServiceNodeId>
+        <GEEScriptPart startPosition="190" endPosition="200">2007-06-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>29</ServiceNodeId>
+        <GEEScriptPart startPosition="204" endPosition="214">2007-09-30</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>31</ServiceNodeId>
+        <GEEScriptPart startPosition="229" endPosition="235">B[0-7]</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>40</ServiceNodeId>
+        <GEEScriptPart startPosition="1769" endPosition="1811">Unmixed (red=urban, green=veg, blue=water)</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

@@ -1,0 +1,17 @@
+API1,API2
+Image.cos,Image.multiply
+Image.subtract,Image.cos
+Image.divide,Image.subtract
+ee.Image,Image.toFloat
+Image.toFloat,Image.multiply
+Image.sin,Image.multiply
+Image.divide,Image.sin
+ee.Image,Image.multiply
+ee.Image,Image.divide
+Image.divide,Image.cos
+Terrain,Image.select
+Image.multiply,Image.multiply
+Image.multiply,Image.add
+ee.Image,Terrain
+Image.multiply,Image.divide
+Image.select,Image.toFloat

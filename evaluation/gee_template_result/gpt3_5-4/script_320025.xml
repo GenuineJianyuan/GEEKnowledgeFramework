@@ -1,0 +1,182 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320025" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[32.5, 31.7]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LE7_TOA_1YEAR/2001</SourceName>
+            <Value>LANDSAT/LE7_TOA_1YEAR/2001</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>The script performs unsupervised classification on Landsat data to identify clusters within a specified region.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">15</Node>
+   <Node id="2" type="eeFunction">ee.Clusterer.wekaKMeans</Node>
+   <Node id="3" type="literal">31.5</Node>
+   <Node id="4" type="eeFunction">Map.setCenter</Node>
+   <Node id="5" type="literal">31</Node>
+   <Node id="6" type="literal">8</Node>
+   <Node id="7" type="literal">29.7</Node>
+   <Node id="8" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="9" type="literal">30</Node>
+   <Node id="10" type="literal">32.5</Node>
+   <Node id="11" type="literal">31.7</Node>
+   <Node id="12" type="literal">30</Node>
+   <Node id="13" type="complex">{
+
+  region: region,
+
+  scale: 30,
+
+  numPixels: 5000
+
+}</Node>
+   <Node id="14" type="literal">5000</Node>
+   <Node id="15" type="eeFunction">ee.Image</Node>
+   <Node id="16" type="eeFunction">paint</Node>
+   <Node id="17" type="literal">0</Node>
+   <Node id="18" type="literal">2</Node>
+   <Node id="19" type="eeFunction">Map.addLayer</Node>
+   <Node id="20" type="complex">{}</Node>
+   <Node id="21" type="literal">region</Node>
+   <Node id="22" type="literal">LANDSAT/LE7_TOA_1YEAR/2001</Node>
+   <Node id="23" type="eeFunction">ee.Image</Node>
+   <Node id="24" type="eeFunction">sample</Node>
+   <Node id="25" type="eeFunction">train</Node>
+   <Node id="26" type="eeFunction">cluster</Node>
+   <Node id="27" type="eeFunction">clip</Node>
+   <Node id="28" type="eeFunction">randomVisualizer</Node>
+   <Node id="29" type="eeFunction">Map.addLayer</Node>
+   <Node id="30" type="complex">{}</Node>
+   <Node id="31" type="literal">clusters</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="5" targetNodeId="4"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="4"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="8"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="8"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="8"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="8" targetNodeId="13"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="14" sourceNodeId="18" targetNodeId="16"></Relation>
+   <Relation id="15" sourceNodeId="8" targetNodeId="16"></Relation>
+   <Relation id="16" sourceNodeId="16" targetNodeId="19"></Relation>
+   <Relation id="17" sourceNodeId="20" targetNodeId="19"></Relation>
+   <Relation id="18" sourceNodeId="21" targetNodeId="19"></Relation>
+   <Relation id="19" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="13" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="22" sourceNodeId="2" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="24" sourceNodeId="23" targetNodeId="26"></Relation>
+   <Relation id="25" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="26" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="27" sourceNodeId="8" targetNodeId="27"></Relation>
+   <Relation id="28" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="29" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="30" sourceNodeId="30" targetNodeId="29"></Relation>
+   <Relation id="31" sourceNodeId="31" targetNodeId="29"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="29">
+        <Content type="comment">//unsupervised classification</Content>
+    </Script>
+    <Script line="3" startPosition="33" endPosition="84">
+        <Content type="comment">// Load a pre-computed Landsat composite for input.</Content>
+    </Script>
+    <Script line="4" startPosition="86" endPosition="137">
+        <Content type="code">var input = ee.Image('LANDSAT/LE7_TOA_1YEAR/2001');</Content>
+    </Script>
+    <Script line="6" startPosition="141" endPosition="203">
+        <Content type="comment">// Define a region in which to generate a sample of the input.</Content>
+    </Script>
+    <Script line="7" startPosition="205" endPosition="262">
+        <Content type="code">var region = ee.Geometry.Rectangle(29.7, 30, 32.5, 31.7);</Content>
+    </Script>
+    <Script line="9" startPosition="266" endPosition="295">
+        <Content type="comment">// Display the sample region.</Content>
+    </Script>
+    <Script line="10" startPosition="297" endPosition="326">
+        <Content type="code">Map.setCenter(31.5, 31.0, 8);</Content>
+    </Script>
+    <Script line="11" startPosition="328" endPosition="387">
+        <Content type="code">Map.addLayer(ee.Image().paint(region, 0, 2), {}, 'region');</Content>
+    </Script>
+    <Script line="13" startPosition="391" endPosition="420">
+        <Content type="comment">// Make the training dataset.</Content>
+    </Script>
+    <Script line="14,15,16,17,18" startPosition="422" endPosition="508">
+        <Content type="code">var training = input.sample({
+
+  region: region,
+
+  scale: 30,
+
+  numPixels: 5000
+
+});</Content>
+    </Script>
+    <Script line="20" startPosition="512" endPosition="554">
+        <Content type="comment">// Instantiate the clusterer and train it.</Content>
+    </Script>
+    <Script line="21" startPosition="556" endPosition="616">
+        <Content type="code">var clusterer = ee.Clusterer.wekaKMeans(15).train(training);</Content>
+    </Script>
+    <Script line="23" startPosition="620" endPosition="669">
+        <Content type="comment">// Cluster the input using the trained clusterer.</Content>
+    </Script>
+    <Script line="24" startPosition="671" endPosition="722">
+        <Content type="code">var result = input.cluster(clusterer).clip(region);</Content>
+    </Script>
+    <Script line="26" startPosition="726" endPosition="769">
+        <Content type="comment">// Display the clusters with random colors.</Content>
+    </Script>
+    <Script line="27" startPosition="771" endPosition="827">
+        <Content type="code">Map.addLayer(result.randomVisualizer(), {}, 'clusters');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="378" endPosition="384">region</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>22</ServiceNodeId>
+        <GEEScriptPart startPosition="108" endPosition="134">LANDSAT/LE7_TOA_1YEAR/2001</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>31</ServiceNodeId>
+        <GEEScriptPart startPosition="816" endPosition="824">clusters</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

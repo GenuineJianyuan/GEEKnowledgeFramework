@@ -1,0 +1,234 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320017" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2018-01-01</StartTime>
+        <EndTime>2018-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>Xunwu Xian(geonameId=1787876)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/region/XunwuCounty/Xunwu</SourceName>
+            <Value>users/region/XunwuCounty/Xunwu</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/region/XunwuCounty/XunwuBoundary</SourceName>
+            <Value>users/region/XunwuCounty/XunwuBoundary</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/region/XunwuCounty/Landsat_2018</SourceName>
+            <Value>users/region/XunwuCounty/Landsat_2018</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>NASA SRTM Digital Elevation 30m</SourceName>
+            <Value>USGS/SRTMGL1_003</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Sustainability</Value>
+        <Description>This script evaluates landslide sustainability by calculating NDVI, slope, and land use/land cover, and combines these factors into a final result.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">USGS/SRTMGL1_003</Node>
+   <Node id="2" type="eeFunction">ee.Image</Node>
+   <Node id="3" type="eeFunction">ee.Terrain.slope</Node>
+   <Node id="4" type="eeFunction">expression</Node>
+   <Node id="5" type="literal">B5</Node>
+   <Node id="6" type="eeFunction">ee.List</Node>
+   <Node id="7" type="literal">B4</Node>
+   <Node id="8" type="literal">users/region/XunwuCounty/Landsat_2018</Node>
+   <Node id="9" type="eeFunction">ee.Image</Node>
+   <Node id="10" type="literal">0.33</Node>
+   <Node id="11" type="eeFunction">ee.List</Node>
+   <Node id="12" type="literal">0.6</Node>
+   <Node id="13" type="literal">0.02</Node>
+   <Node id="14" type="literal">0</Node>
+   <Node id="15" type="literal">0.04</Node>
+   <Node id="16" type="literal">0.01</Node>
+   <Node id="17" type="literal">1</Node>
+   <Node id="18" type="eeFunction">ee.List</Node>
+   <Node id="19" type="literal">2</Node>
+   <Node id="20" type="literal">3</Node>
+   <Node id="21" type="literal">6</Node>
+   <Node id="22" type="literal">8</Node>
+   <Node id="23" type="literal">9</Node>
+   <Node id="24" type="literal">users/region/XunwuCounty/XunwuBoundary</Node>
+   <Node id="25" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="26" type="eeFunction">clip</Node>
+   <Node id="27" type="literal">6.2</Node>
+   <Node id="28" type="eeFunction">multiply</Node>
+   <Node id="29" type="eeFunction">clip</Node>
+   <Node id="30" type="eeFunction">normalizedDifference</Node>
+   <Node id="31" type="literal">1.5</Node>
+   <Node id="32" type="eeFunction">multiply</Node>
+   <Node id="33" type="eeFunction">add</Node>
+   <Node id="34" type="literal">users/region/XunwuCounty/Xunwu</Node>
+   <Node id="35" type="eeFunction">ee.Image</Node>
+   <Node id="36" type="eeFunction">remap</Node>
+   <Node id="37" type="literal">0</Node>
+   <Node id="38" type="literal">2.3</Node>
+   <Node id="39" type="eeFunction">multiply</Node>
+   <Node id="40" type="eeFunction">add</Node>
+   <Node id="41" type="literal">exported_result</Node>
+   <Node id="42" type="eeFunction">Export.image.toDrive</Node>
+   <Node id="43" type="literal">30</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="2" targetNodeId="3"></Relation>
+   <Relation id="3" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="11"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="11"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="11"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="20" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="21" targetNodeId="18"></Relation>
+   <Relation id="17" sourceNodeId="22" targetNodeId="18"></Relation>
+   <Relation id="18" sourceNodeId="23" targetNodeId="18"></Relation>
+   <Relation id="19" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="20" sourceNodeId="4" targetNodeId="26"></Relation>
+   <Relation id="21" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="22" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="23" sourceNodeId="26" targetNodeId="28"></Relation>
+   <Relation id="24" sourceNodeId="9" targetNodeId="29"></Relation>
+   <Relation id="25" sourceNodeId="25" targetNodeId="29"></Relation>
+   <Relation id="26" sourceNodeId="6" targetNodeId="30"></Relation>
+   <Relation id="27" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="28" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="29" sourceNodeId="30" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="31" sourceNodeId="28" targetNodeId="33"></Relation>
+   <Relation id="32" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="33" sourceNodeId="18" targetNodeId="36"></Relation>
+   <Relation id="34" sourceNodeId="11" targetNodeId="36"></Relation>
+   <Relation id="35" sourceNodeId="37" targetNodeId="36"></Relation>
+   <Relation id="36" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="37" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="38" sourceNodeId="36" targetNodeId="39"></Relation>
+   <Relation id="39" sourceNodeId="33" targetNodeId="40"></Relation>
+   <Relation id="40" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="41" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="43" targetNodeId="42"></Relation>
+   <Relation id="43" sourceNodeId="40" targetNodeId="42"></Relation>
+   <Relation id="44" sourceNodeId="25" targetNodeId="42"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="44">
+        <Content type="comment">// landslide sustainability evaluation model</Content>
+    </Script>
+    <Script line="3" startPosition="48" endPosition="102">
+        <Content type="code">var LULC = ee.Image("users/region/XunwuCounty/Xunwu");</Content>
+    </Script>
+    <Script line="4" startPosition="104" endPosition="182">
+        <Content type="code">var boundary = ee.FeatureCollection("users/region/XunwuCounty/XunwuBoundary");</Content>
+    </Script>
+    <Script line="6" startPosition="186" endPosition="257">
+        <Content type="comment">// Use the remap() method to replace original values with target values</Content>
+    </Script>
+    <Script line="7" startPosition="259" endPosition="348">
+        <Content type="code">var remappedImage = LULC.remap([1, 2, 3, 6, 8, 9], [0.33, 0.60, 0.02, 0, 0.04, 0.01], 0);</Content>
+    </Script>
+    <Script line="9" startPosition="352" endPosition="430">
+        <Content type="code">var landsat = ee.Image("users/region/XunwuCounty/Landsat_2018").clip(boundary)</Content>
+    </Script>
+    <Script line="11" startPosition="434" endPosition="451">
+        <Content type="comment">// Calculate NDVI</Content>
+    </Script>
+    <Script line="12" startPosition="453" endPosition="507">
+        <Content type="code">var ndvi = landsat.normalizedDifference(['B5', 'B4']);</Content>
+    </Script>
+    <Script line="14" startPosition="511" endPosition="552">
+        <Content type="comment">// Load SRTM Digital Elevation Model data</Content>
+    </Script>
+    <Script line="15" startPosition="554" endPosition="593">
+        <Content type="code">var dem = ee.Image('USGS/SRTMGL1_003');</Content>
+    </Script>
+    <Script line="17" startPosition="597" endPosition="615">
+        <Content type="comment">// Calculate slope</Content>
+    </Script>
+    <Script line="18" startPosition="617" endPosition="651">
+        <Content type="code">var slope = ee.Terrain.slope(dem);</Content>
+    </Script>
+    <Script line="20" startPosition="655" endPosition="684">
+        <Content type="comment">// Create a conditional image</Content>
+    </Script>
+    <Script line="21,22,23,24,25,26,27" startPosition="686" endPosition="890">
+        <Content type="code">var slope_categories = slope.expression(
+
+    "b('slope') &lt; 20 ? 0.65 :" +
+
+    "b('slope') &lt; 30 ? 0.31 :" +
+
+    "b('slope') &lt; 40 ? 0.02 :" +
+
+    "b('slope') &lt; 50 ? 0.01 :" +
+
+    "0"
+
+).clip(boundary);</Content>
+    </Script>
+    <Script line="29" startPosition="894" endPosition="994">
+        <Content type="code">var result = ndvi.multiply(1.5).add(slope_categories.multiply(6.2)).add(remappedImage.multiply(2.3))</Content>
+    </Script>
+    <Script line="31" startPosition="998" endPosition="1058">
+        <Content type="code">Export.image.toDrive(result,'exported_result',30, boundary);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>1</ServiceNodeId>
+        <GEEScriptPart startPosition="574" endPosition="590">USGS/SRTMGL1_003</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="495" endPosition="497">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="501" endPosition="503">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="376" endPosition="413">users/region/XunwuCounty/Landsat_2018</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="141" endPosition="179">users/region/XunwuCounty/XunwuBoundary</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="69" endPosition="99">users/region/XunwuCounty/Xunwu</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="1027" endPosition="1042">exported_result</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

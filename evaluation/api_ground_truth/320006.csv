@@ -1,0 +1,8 @@
+API1,API2
+geometry,Image.reduceRegion
+ee.FeatureCollection,filter
+filter,geometry
+Image.select,Image.reduceRegion
+Reducer.sum,Image.reduceRegion
+ee.Image,Image.select
+eq,filter

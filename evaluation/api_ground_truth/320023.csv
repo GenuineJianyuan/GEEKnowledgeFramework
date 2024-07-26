@@ -1,0 +1,12 @@
+API1,API2
+filterBounds,map
+ee.Geometry.Rectangle,filterBounds
+map,mean
+ee.Geometry.Rectangle,clip
+normalizedDifference,rename
+rename,addBands
+filterBounds,mean
+Image.clip,Image.select
+ee.ImageCollection,filter
+mean,Image.clip
+filterDate,filterBounds

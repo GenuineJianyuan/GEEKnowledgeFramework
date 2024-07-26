@@ -1,0 +1,33 @@
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>Xunwu Xian(geonameId=1787876)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>NASA SRTM Digital Elevation 30m</SourceName>
+            <Value>USGS/SRTMGL1_003</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/region/XunwuCounty/Xunwu</SourceName>
+            <Value>users/region/XunwuCounty/Xunwu</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/region/XunwuCounty/Landsat_2018</SourceName>
+            <Value>users/region/XunwuCounty/Landsat_2018</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land surface</Value>
+        <Description>This script aims to evaluate landslide sustainability by combining NDVI, slope, and land cover data. The output is a model result that combines these factors to assess the potential for landslides in the study area.</Description>
+    </Task>
+</Fact>

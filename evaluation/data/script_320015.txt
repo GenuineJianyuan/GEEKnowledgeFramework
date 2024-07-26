@@ -1,0 +1,40 @@
+// Land Use Cover Change
+
+// Define the latitude and longitude boundaries of the Beijing region
+var beijingRegion = ee.Geometry.Rectangle([115.25, 39.26, 117.30, 41.03]);
+
+// Set time ranges
+var start2020 = '2020-01-01';
+var end2020 = '2020-12-31';
+var start2021 = '2021-01-01';
+var end2021 = '2021-12-31';
+
+// Load the Landsat 8 image collection
+var landsat = ee.ImageCollection('LANDSAT/LC08/C01/T1');
+
+// Define a function to calculate NDVI
+function getNDVI(image) {
+  return image.normalizedDifference(['B5', 'B4']).rename('NDVI');
+}
+
+// Filter, compose 2020 images, and calculate NDVI
+var ndvi2020 = landsat.filterBounds(beijingRegion)
+                     .filterDate(start2020, end2020)
+                     .map(getNDVI)
+                     .median();
+
+// Filter, compose 2021 images, and calculate NDVI
+var ndvi2021 = landsat.filterBounds(beijingRegion)
+                     .filterDate(start2021, end2021)
+                     .map(getNDVI)
+                     .median();
+
+// Calculate NDVI difference
+var ndviDiff = ndvi2021.subtract(ndvi2020).rename('NDVI_Diff');
+
+// Visualization parameters
+var ndviParams = {min: -0.5, max: 0.5, palette: ['blue', 'white', 'green']};
+
+// Add NDVI difference layer to the map
+Map.addLayer(ndviDiff.clip(beijingRegion), ndviParams, 'NDVI Difference');
+

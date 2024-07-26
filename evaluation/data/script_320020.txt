@@ -1,0 +1,90 @@
+// PCA Analysis
+var LeZhiXian = 
+    /* color: #98ff00 */
+    /* shown: false */
+    ee.Geometry.Polygon(
+        [[[116.02116319983233, 29.095141315194134],
+          [116.03352281897295, 29.05073173840886],
+          [116.09394762366045, 29.04953121401721],
+          [116.12004015295733, 29.10954031020994]]], null, false);
+
+// 1. Data filtering and mosaicking
+var sentinelCollection = ee.ImageCollection("COPERNICUS/S2")
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10))
+  .filterDate('2021-08-01', '2021-08-08')
+  // .filterBounds(LeZhiXian); // Please replace with the actual coordinates of LeZhiXian
+
+var mosaicImage = sentinelCollection.mosaic()
+   .clip(LeZhiXian); // Please replace with the actual coordinates of LeZhiXian
+
+// 2. Band selection
+var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12'];
+var selectedImage = mosaicImage.select(bands);
+
+// 3. Input parameters for PCA function
+var region = LeZhiXian;
+var scale = 10;
+var bandNames = selectedImage.bandNames();
+
+// 4. Calculating averages
+var means = selectedImage.reduceRegion({
+  reducer: ee.Reducer.mean(),
+  geometry: region,
+  scale: scale,
+  maxPixels: 1e9
+});
+
+// 5. Principal Component Analysis function
+// Principal Component Analysis function
+function getPrincipalComponents(image, scale, region) {
+  // Center the image
+  var centered = image.subtract(means);
+
+  // Convert the centered image to an array
+  var centeredArray = centered.toArray();
+
+  // Calculate covariance matrix
+  var covar = centeredArray.reduceRegion({
+    reducer: ee.Reducer.centeredCovariance(),
+    geometry: region,
+    scale: scale,
+    maxPixels: 1e9
+  });
+
+  // Retrieve the covariance array
+  var covarArray = ee.Array(covar.get('array'));
+
+  // Perform eigenvalue decomposition
+  var eigens = covarArray.eigen();
+
+  // Extract eigenvalues and eigenvectors from the decomposition result
+  var eigenValues = eigens.slice(1, 0, 1);
+  var eigenVectors = eigens.slice(1, 1);
+
+  // Convert the centered array to a 2D array
+  var arrayImage = centeredArray.toArray(1);
+
+  // Multiply the eigenvector matrix with the image array to obtain the principal component image
+ var principalComponents = ee.Image(eigenVectors)
+    .matrixMultiply(arrayImage)
+    .arrayProject([0])
+    .arrayFlatten([['pc1', 'pc2', 'pc3', 'pc4', 'pc5', 'pc6', 'pc7', 'pc8', 'pc9', 'pc10', 'pc11', 'pc12', 'pc13']]);
+
+
+  return principalComponents;
+}
+
+// Calculate the mean values for each band
+var means = selectedImage.reduceRegion({
+  reducer: ee.Reducer.mean(),
+  geometry: region,
+  scale: scale,
+  maxPixels: 1e9
+}).toImage();
+
+// Create an image centered on the means
+var centeredImage = selectedImage.subtract(means);
+
+// Then, you can pass the centeredImage as an argument to the getPrincipalComponents function
+var pcImage = getPrincipalComponents(centeredImage, scale, region);
+Map.addLayer(pcImage, {bands: ['pc1', 'pc2', 'pc3'], min: -2, max: 2}, 'PCA');

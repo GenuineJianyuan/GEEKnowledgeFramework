@@ -1,0 +1,301 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320029" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>France(geonameId=3017382)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>LSIB 2017: Large Scale International Boundary Polygons, Simplified</SourceName>
+            <Value>USDOS/LSIB_SIMPLE/2017</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>MCD15A3H.061 MODIS Leaf Area Index/FPAR 4-Day Global 500m</SourceName>
+            <Value>MODIS/061/MCD15A3H</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>ERA5-Land Hourly - ECMWF Climate Reanalysis</SourceName>
+            <Value>ECMWF/ERA5_LAND/HOURLY</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>CHIRPS Pentad: Climate Hazards Group InfraRed Precipitation With Station Data (Version 2.0 Final)</SourceName>
+            <Value>UCSB-CHG/CHIRPS/PENTAD</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land surface/agriculture indicators</Value>
+        <Description>This script detects crop growth in France by analyzing LAI, temperature, and precipitation data from 2020. The output is a combined index representing crop growth.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 10, palette: ['blue', 'green', 'yellow', 'orange', 'red']}</Node>
+   <Node id="3" type="literal">10</Node>
+   <Node id="4" type="complex">['blue', 'green', 'yellow', 'orange', 'red']</Node>
+   <Node id="5" type="literal">UCSB-CHG/CHIRPS/PENTAD</Node>
+   <Node id="6" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="7" type="literal">ECMWF/ERA5_LAND/HOURLY</Node>
+   <Node id="8" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="9" type="literal">MODIS/061/MCD15A3H</Node>
+   <Node id="10" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="11" type="eeFunction">filterDate</Node>
+   <Node id="12" type="literal">2020-01-01</Node>
+   <Node id="13" type="literal">2020-12-31</Node>
+   <Node id="14" type="eeFunction">filterDate</Node>
+   <Node id="15" type="eeFunction">filterDate</Node>
+   <Node id="16" type="literal">country_na</Node>
+   <Node id="17" type="eeFunction">ee.Filter.eq</Node>
+   <Node id="18" type="literal">France</Node>
+   <Node id="19" type="literal">USDOS/LSIB_SIMPLE/2017</Node>
+   <Node id="20" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="21" type="eeFunction">filter</Node>
+   <Node id="22" type="literal">6</Node>
+   <Node id="23" type="eeFunction">Map.centerObject</Node>
+   <Node id="24" type="eeFunction">filterBounds</Node>
+   <Node id="25" type="eeFunction">select</Node>
+   <Node id="26" type="literal">precipitation</Node>
+   <Node id="27" type="eeFunction">mean</Node>
+   <Node id="28" type="literal">0.2</Node>
+   <Node id="29" type="eeFunction">multiply</Node>
+   <Node id="30" type="eeFunction">filterBounds</Node>
+   <Node id="31" type="eeFunction">select</Node>
+   <Node id="32" type="literal">temperature_2m</Node>
+   <Node id="33" type="eeFunction">mean</Node>
+   <Node id="34" type="literal">273</Node>
+   <Node id="35" type="eeFunction">subtract</Node>
+   <Node id="36" type="eeFunction">multiply</Node>
+   <Node id="37" type="literal">0.3</Node>
+   <Node id="38" type="eeFunction">filterBounds</Node>
+   <Node id="39" type="eeFunction">select</Node>
+   <Node id="40" type="literal">Lai</Node>
+   <Node id="41" type="eeFunction">mean</Node>
+   <Node id="42" type="literal">0.5</Node>
+   <Node id="43" type="eeFunction">multiply</Node>
+   <Node id="44" type="eeFunction">add</Node>
+   <Node id="45" type="eeFunction">add</Node>
+   <Node id="46" type="literal">Combined Index</Node>
+   <Node id="47" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="6" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="8" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="12" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="10" targetNodeId="15"></Relation>
+   <Relation id="14" sourceNodeId="12" targetNodeId="15"></Relation>
+   <Relation id="15" sourceNodeId="13" targetNodeId="15"></Relation>
+   <Relation id="16" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="17" sourceNodeId="18" targetNodeId="17"></Relation>
+   <Relation id="18" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="20" sourceNodeId="17" targetNodeId="21"></Relation>
+   <Relation id="21" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="21" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="11" targetNodeId="24"></Relation>
+   <Relation id="24" sourceNodeId="21" targetNodeId="24"></Relation>
+   <Relation id="25" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="26" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="27" sourceNodeId="25" targetNodeId="27"></Relation>
+   <Relation id="28" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="29" sourceNodeId="27" targetNodeId="29"></Relation>
+   <Relation id="30" sourceNodeId="14" targetNodeId="30"></Relation>
+   <Relation id="31" sourceNodeId="21" targetNodeId="30"></Relation>
+   <Relation id="32" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="33" sourceNodeId="32" targetNodeId="31"></Relation>
+   <Relation id="34" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="35" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="36" sourceNodeId="33" targetNodeId="35"></Relation>
+   <Relation id="37" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="38" sourceNodeId="37" targetNodeId="36"></Relation>
+   <Relation id="39" sourceNodeId="15" targetNodeId="38"></Relation>
+   <Relation id="40" sourceNodeId="21" targetNodeId="38"></Relation>
+   <Relation id="41" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="42" sourceNodeId="40" targetNodeId="39"></Relation>
+   <Relation id="43" sourceNodeId="39" targetNodeId="41"></Relation>
+   <Relation id="44" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="45" sourceNodeId="41" targetNodeId="43"></Relation>
+   <Relation id="46" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="47" sourceNodeId="36" targetNodeId="44"></Relation>
+   <Relation id="48" sourceNodeId="44" targetNodeId="45"></Relation>
+   <Relation id="49" sourceNodeId="29" targetNodeId="45"></Relation>
+   <Relation id="50" sourceNodeId="46" targetNodeId="47"></Relation>
+   <Relation id="51" sourceNodeId="45" targetNodeId="47"></Relation>
+   <Relation id="52" sourceNodeId="2" targetNodeId="47"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Crop Growth Detection</Content>
+    </Script>
+    <Script line="3" startPosition="28" endPosition="56">
+        <Content type="comment">// Define the area of France</Content>
+    </Script>
+    <Script line="4,5" startPosition="58" endPosition="167">
+        <Content type="code">var france = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
+
+  .filter(ee.Filter.eq('country_na', 'France'));</Content>
+    </Script>
+    <Script line="7" startPosition="171" endPosition="192">
+        <Content type="comment">// Set the time range</Content>
+    </Script>
+    <Script line="8" startPosition="194" endPosition="219">
+        <Content type="code">var start = '2020-01-01';</Content>
+    </Script>
+    <Script line="9" startPosition="221" endPosition="244">
+        <Content type="code">var end = '2020-12-31';</Content>
+    </Script>
+    <Script line="11" startPosition="248" endPosition="279">
+        <Content type="comment">// Load the LAI dataset (MODIS)</Content>
+    </Script>
+    <Script line="12,13,14,15" startPosition="281" endPosition="416">
+        <Content type="code">var laiDataset = ee.ImageCollection('MODIS/061/MCD15A3H')
+
+  .filterDate(start, end)
+
+  .filterBounds(france)
+
+  .select('Lai').mean();</Content>
+    </Script>
+    <Script line="17" startPosition="420" endPosition="458">
+        <Content type="comment">// Load the temperature dataset (ERA5)</Content>
+    </Script>
+    <Script line="18,19,20,21" startPosition="460" endPosition="611">
+        <Content type="code">var tempDataset = ee.ImageCollection("ECMWF/ERA5_LAND/HOURLY")
+
+  .filterDate(start, end)
+
+  .filterBounds(france)
+
+  .select('temperature_2m').mean();</Content>
+    </Script>
+    <Script line="23" startPosition="615" endPosition="657">
+        <Content type="comment">// Load the precipitation dataset (CHIRPS)</Content>
+    </Script>
+    <Script line="24,25,26,27" startPosition="659" endPosition="811">
+        <Content type="code">var precipDataset = ee.ImageCollection("UCSB-CHG/CHIRPS/PENTAD")
+
+  .filterDate(start, end)
+
+  .filterBounds(france)
+
+  .select('precipitation').mean();</Content>
+    </Script>
+    <Script line="29" startPosition="815" endPosition="847">
+        <Content type="comment">// Reclassify and assign weights</Content>
+    </Script>
+    <Script line="30" startPosition="849" endPosition="892">
+        <Content type="code">var laiWeighted = laiDataset.multiply(0.5);</Content>
+    </Script>
+    <Script line="30" startPosition="893" endPosition="917">
+        <Content type="comment">// Example weight of 0.5</Content>
+    </Script>
+    <Script line="31" startPosition="919" endPosition="978">
+        <Content type="code">var tempWeighted = tempDataset.subtract(273).multiply(0.3);</Content>
+    </Script>
+    <Script line="31" startPosition="979" endPosition="1027">
+        <Content type="comment">// Convert to Celsius and assign a weight of 0.3</Content>
+    </Script>
+    <Script line="32" startPosition="1029" endPosition="1078">
+        <Content type="code">var precipWeighted = precipDataset.multiply(0.2);</Content>
+    </Script>
+    <Script line="32" startPosition="1079" endPosition="1103">
+        <Content type="comment">// Example weight of 0.2</Content>
+    </Script>
+    <Script line="34" startPosition="1107" endPosition="1126">
+        <Content type="comment">// Overlay analysis</Content>
+    </Script>
+    <Script line="35" startPosition="1128" endPosition="1198">
+        <Content type="code">var combinedIndex = laiWeighted.add(tempWeighted).add(precipWeighted);</Content>
+    </Script>
+    <Script line="37" startPosition="1202" endPosition="1218">
+        <Content type="comment">// Visualization</Content>
+    </Script>
+    <Script line="38" startPosition="1220" endPosition="1309">
+        <Content type="code">var visParams = {min: 0, max: 10, palette: ['blue', 'green', 'yellow', 'orange', 'red']};</Content>
+    </Script>
+    <Script line="39" startPosition="1311" endPosition="1339">
+        <Content type="code">Map.centerObject(france, 6);</Content>
+    </Script>
+    <Script line="40" startPosition="1341" endPosition="1398">
+        <Content type="code">Map.addLayer(combinedIndex, visParams, 'Combined Index');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="699" endPosition="721">UCSB-CHG/CHIRPS/PENTAD</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="498" endPosition="520">ECMWF/ERA5_LAND/HOURLY</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="318" endPosition="336">MODIS/061/MCD15A3H</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="207" endPosition="217">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="232" endPosition="242">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="143" endPosition="153">country_na</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="157" endPosition="163">France</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="93" endPosition="115">USDOS/LSIB_SIMPLE/2017</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="788" endPosition="801">precipitation</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="587" endPosition="601">temperature_2m</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>40</ServiceNodeId>
+        <GEEScriptPart startPosition="403" endPosition="406">Lai</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>46</ServiceNodeId>
+        <GEEScriptPart startPosition="1381" endPosition="1395">Combined Index</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

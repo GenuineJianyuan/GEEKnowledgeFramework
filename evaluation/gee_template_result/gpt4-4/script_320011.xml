@@ -1,0 +1,432 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320011" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2019-08-01</StartTime>
+        <EndTime>2019-08-15</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[37.39358590079781, 43.09844605027055, -95.68487605978851, -87.96148738791351]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>Sentinel-5P OFFL CH4: Offline Methane</SourceName>
+            <Value>COPERNICUS/S5P/OFFL/L3_CH4</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Air quality</Value>
+        <Description>This script performs inverse distance weighting (IDW) interpolation on methane (CH4) data from the Sentinel-5P satellite over a specified area and time period, producing an interpolated CH4 concentration map.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">1800</Node>
+   <Node id="2" type="complex">{
+
+  min: 1800,
+
+  max: 1900,
+
+  palette: ['0D0887', '5B02A3', '9A179B', 'CB4678',
+
+            'EB7852', 'FBB32F', 'F0F921']}</Node>
+   <Node id="3" type="literal">1900</Node>
+   <Node id="4" type="complex">['0D0887', '5B02A3', '9A179B', 'CB4678',
+
+            'EB7852', 'FBB32F', 'F0F921']</Node>
+   <Node id="5" type="eeFunction">ee.Reducer.stdDev</Node>
+   <Node id="6" type="complex">{
+
+  reducer2: ee.Reducer.stdDev(),
+
+  sharedInputs: true}</Node>
+   <Node id="7" type="literal">True</Node>
+   <Node id="8" type="eeFunction">ee.Reducer.mean</Node>
+   <Node id="9" type="eeFunction">combine</Node>
+   <Node id="10" type="complex">['ch4']</Node>
+   <Node id="11" type="complex">{
+
+  reducer: combinedReducer,
+
+  selectors: ['ch4']}</Node>
+   <Node id="12" type="complex">[[-95.68487605978851, 43.09844605027055],
+
+       [-95.68487605978851, 37.39358590079781],
+
+       [-87.96148738791351, 37.39358590079781],
+
+       [-87.96148738791351, 43.09844605027055]]</Node>
+   <Node id="13" type="eeFunction">ee.List</Node>
+   <Node id="14" type="eeFunction">ee.Geometry.Polygon</Node>
+   <Node id="15" type="literal">None</Node>
+   <Node id="16" type="literal">False</Node>
+   <Node id="17" type="literal">7</Node>
+   <Node id="18" type="eeFunction">Map.centerObject</Node>
+   <Node id="19" type="literal">1500</Node>
+   <Node id="20" type="complex">{region: aoi, numPixels: 1500,
+
+    scale:1000, projection: 'EPSG:4326'}</Node>
+   <Node id="21" type="literal">1000</Node>
+   <Node id="22" type="literal">EPSG:4326</Node>
+   <Node id="23" type="literal">COPERNICUS/S5P/OFFL/L3_CH4</Node>
+   <Node id="24" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="25" type="eeFunction">select</Node>
+   <Node id="26" type="literal">CH4_column_volume_mixing_ratio_dry_air</Node>
+   <Node id="27" type="eeFunction">filterDate</Node>
+   <Node id="28" type="literal">2019-08-01</Node>
+   <Node id="29" type="literal">2019-08-15</Node>
+   <Node id="30" type="eeFunction">mean</Node>
+   <Node id="31" type="eeFunction">rename</Node>
+   <Node id="32" type="literal">ch4</Node>
+   <Node id="33" type="literal">CH4</Node>
+   <Node id="34" type="eeFunction">Map.addLayer</Node>
+   <Node id="35" type="eeFunction">ee.Image.pixelLonLat</Node>
+   <Node id="36" type="eeFunction">addBands</Node>
+   <Node id="37" type="eeFunction">sample</Node>
+   <Node id="38" type="eeFunction">map</Node>
+   <Node id="39" type="userDefinedFunction">{
+
+    var lat = sample.get('latitude');
+
+    var lon = sample.get('longitude');
+
+    var ch4 = sample.get('ch4');
+
+    return ee.Feature(ee.Geometry.Point([lon, lat]), {ch4: ch4});
+
+  }</Node>
+   <Node id="40" type="eeFunction">reduceColumns</Node>
+   <Node id="41" type="literal">stdDev</Node>
+   <Node id="42" type="eeFunction">get</Node>
+   <Node id="43" type="literal">mean</Node>
+   <Node id="44" type="eeFunction">get</Node>
+   <Node id="45" type="literal">70000</Node>
+   <Node id="46" type="complex">{
+
+  range: 7e4,
+
+  propertyName: 'ch4',
+
+  mean: stats.get('mean'),
+
+  stdDev: stats.get('stdDev'),
+
+  gamma: 0.3}</Node>
+   <Node id="47" type="literal">ch4</Node>
+   <Node id="48" type="literal">0.3</Node>
+   <Node id="49" type="eeFunction">inverseDistance</Node>
+   <Node id="50" type="literal">CH4 Interpolated</Node>
+   <Node id="51" type="eeFunction">Map.addLayer</Node>
+   <Node id="52" type="identifier">sample</Node>
+   <Node id="53" type="eeFunction">get</Node>
+   <Node id="54" type="literal">ch4</Node>
+   <Node id="55" type="complex">{ch4: ch4}</Node>
+   <Node id="56" type="identifier">sample</Node>
+   <Node id="57" type="eeFunction">get</Node>
+   <Node id="58" type="literal">longitude</Node>
+   <Node id="59" type="identifier">sample</Node>
+   <Node id="60" type="eeFunction">get</Node>
+   <Node id="61" type="literal">latitude</Node>
+   <Node id="62" type="eeFunction">ee.List</Node>
+   <Node id="63" type="eeFunction">ee.Geometry.Point</Node>
+   <Node id="64" type="eeFunction">ee.Feature</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="6" targetNodeId="9"></Relation>
+   <Relation id="8" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="9" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="14"></Relation>
+   <Relation id="14" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="14" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="22" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="14" targetNodeId="20"></Relation>
+   <Relation id="20" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="22" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="25" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="28" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="29" targetNodeId="27"></Relation>
+   <Relation id="26" sourceNodeId="27" targetNodeId="30"></Relation>
+   <Relation id="27" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="28" sourceNodeId="32" targetNodeId="31"></Relation>
+   <Relation id="29" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="30" sourceNodeId="31" targetNodeId="34"></Relation>
+   <Relation id="31" sourceNodeId="2" targetNodeId="34"></Relation>
+   <Relation id="32" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="33" sourceNodeId="31" targetNodeId="36"></Relation>
+   <Relation id="34" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="35" sourceNodeId="20" targetNodeId="37"></Relation>
+   <Relation id="36" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="37" sourceNodeId="39" targetNodeId="38"></Relation>
+   <Relation id="38" sourceNodeId="11" targetNodeId="40"></Relation>
+   <Relation id="39" sourceNodeId="38" targetNodeId="40"></Relation>
+   <Relation id="40" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="41" sourceNodeId="40" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="43" sourceNodeId="40" targetNodeId="44"></Relation>
+   <Relation id="44" sourceNodeId="45" targetNodeId="46"></Relation>
+   <Relation id="45" sourceNodeId="47" targetNodeId="46"></Relation>
+   <Relation id="46" sourceNodeId="44" targetNodeId="46"></Relation>
+   <Relation id="47" sourceNodeId="42" targetNodeId="46"></Relation>
+   <Relation id="48" sourceNodeId="48" targetNodeId="46"></Relation>
+   <Relation id="49" sourceNodeId="46" targetNodeId="49"></Relation>
+   <Relation id="50" sourceNodeId="38" targetNodeId="49"></Relation>
+   <Relation id="51" sourceNodeId="50" targetNodeId="51"></Relation>
+   <Relation id="52" sourceNodeId="49" targetNodeId="51"></Relation>
+   <Relation id="53" sourceNodeId="2" targetNodeId="51"></Relation>
+   <Relation id="54" sourceNodeId="52" targetNodeId="53"></Relation>
+   <Relation id="55" sourceNodeId="54" targetNodeId="53"></Relation>
+   <Relation id="56" sourceNodeId="53" targetNodeId="55"></Relation>
+   <Relation id="57" sourceNodeId="56" targetNodeId="57"></Relation>
+   <Relation id="58" sourceNodeId="58" targetNodeId="57"></Relation>
+   <Relation id="59" sourceNodeId="59" targetNodeId="60"></Relation>
+   <Relation id="60" sourceNodeId="61" targetNodeId="60"></Relation>
+   <Relation id="61" sourceNodeId="57" targetNodeId="62"></Relation>
+   <Relation id="62" sourceNodeId="60" targetNodeId="62"></Relation>
+   <Relation id="63" sourceNodeId="62" targetNodeId="63"></Relation>
+   <Relation id="64" sourceNodeId="63" targetNodeId="64"></Relation>
+   <Relation id="65" sourceNodeId="55" targetNodeId="64"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="6">
+        <Content type="comment">// IDW</Content>
+    </Script>
+    <Script line="3" startPosition="10" endPosition="67">
+        <Content type="comment">// Import two weeks of S5P methane and composite by mean.</Content>
+    </Script>
+    <Script line="4,5,6,7,8" startPosition="69" endPosition="253">
+        <Content type="code">var ch4 = ee.ImageCollection('COPERNICUS/S5P/OFFL/L3_CH4')
+
+  .select('CH4_column_volume_mixing_ratio_dry_air')
+
+  .filterDate('2019-08-01', '2019-08-15')
+
+  .mean()
+
+  .rename('ch4');</Content>
+    </Script>
+    <Script line="10" startPosition="257" endPosition="305">
+        <Content type="comment">// Define an area to perform interpolation over.</Content>
+    </Script>
+    <Script line="11,12,13,14,15,16" startPosition="307" endPosition="551">
+        <Content type="code">var aoi =
+
+  ee.Geometry.Polygon(
+
+    [[[-95.68487605978851, 43.09844605027055],
+
+       [-95.68487605978851, 37.39358590079781],
+
+       [-87.96148738791351, 37.39358590079781],
+
+       [-87.96148738791351, 43.09844605027055]]], null, false);</Content>
+    </Script>
+    <Script line="18" startPosition="555" endPosition="619">
+        <Content type="comment">// Sample the methane composite to generate a FeatureCollection.</Content>
+    </Script>
+    <Script line="19,20,21,22,23,24,25,26,27" startPosition="621" endPosition="970">
+        <Content type="code">var samples = ch4.addBands(ee.Image.pixelLonLat())
+
+  .sample({region: aoi, numPixels: 1500,
+
+    scale:1000, projection: 'EPSG:4326'})
+
+  .map(function(sample) {
+
+    var lat = sample.get('latitude');
+
+    var lon = sample.get('longitude');
+
+    var ch4 = sample.get('ch4');
+
+    return ee.Feature(ee.Geometry.Point([lon, lat]), {ch4: ch4});
+
+  });</Content>
+    </Script>
+    <Script line="29" startPosition="974" endPosition="1037">
+        <Content type="comment">// Combine mean and standard deviation reducers for efficiency.</Content>
+    </Script>
+    <Script line="30,31,32" startPosition="1039" endPosition="1147">
+        <Content type="code">var combinedReducer = ee.Reducer.mean().combine({
+
+  reducer2: ee.Reducer.stdDev(),
+
+  sharedInputs: true});</Content>
+    </Script>
+    <Script line="34" startPosition="1151" endPosition="1214">
+        <Content type="comment">// Estimate global mean and standard deviation from the points.</Content>
+    </Script>
+    <Script line="35,36,37" startPosition="1216" endPosition="1305">
+        <Content type="code">var stats = samples.reduceColumns({
+
+  reducer: combinedReducer,
+
+  selectors: ['ch4']});</Content>
+    </Script>
+    <Script line="39" startPosition="1309" endPosition="1357">
+        <Content type="comment">// Do the interpolation, valid to 70 kilometers.</Content>
+    </Script>
+    <Script line="40,41,42,43,44,45" startPosition="1359" endPosition="1519">
+        <Content type="code">var interpolated = samples.inverseDistance({
+
+  range: 7e4,
+
+  propertyName: 'ch4',
+
+  mean: stats.get('mean'),
+
+  stdDev: stats.get('stdDev'),
+
+  gamma: 0.3});</Content>
+    </Script>
+    <Script line="47" startPosition="1523" endPosition="1557">
+        <Content type="comment">// Define visualization arguments.</Content>
+    </Script>
+    <Script line="48,49,50,51,52" startPosition="1559" endPosition="1701">
+        <Content type="code">var band_viz = {
+
+  min: 1800,
+
+  max: 1900,
+
+  palette: ['0D0887', '5B02A3', '9A179B', 'CB4678',
+
+            'EB7852', 'FBB32F', 'F0F921']};</Content>
+    </Script>
+    <Script line="54" startPosition="1705" endPosition="1723">
+        <Content type="comment">// Display to map.</Content>
+    </Script>
+    <Script line="55" startPosition="1725" endPosition="1750">
+        <Content type="code">Map.centerObject(aoi, 7);</Content>
+    </Script>
+    <Script line="56" startPosition="1752" endPosition="1787">
+        <Content type="code">Map.addLayer(ch4, band_viz, 'CH4');</Content>
+    </Script>
+    <Script line="57" startPosition="1789" endPosition="1846">
+        <Content type="code">Map.addLayer(interpolated, band_viz, 'CH4 Interpolated');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>22</ServiceNodeId>
+        <GEEScriptPart startPosition="744" endPosition="753">EPSG:4326</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="99" endPosition="125">COPERNICUS/S5P/OFFL/L3_CH4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="140" endPosition="178">CH4_column_volume_mixing_ratio_dry_air</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>28</ServiceNodeId>
+        <GEEScriptPart startPosition="197" endPosition="207">2019-08-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>29</ServiceNodeId>
+        <GEEScriptPart startPosition="211" endPosition="221">2019-08-15</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="247" endPosition="250">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="890" endPosition="893">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="1297" endPosition="1300">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="1437" endPosition="1440">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>33</ServiceNodeId>
+        <GEEScriptPart startPosition="122" endPosition="125">CH4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>33</ServiceNodeId>
+        <GEEScriptPart startPosition="1781" endPosition="1784">CH4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="1493" endPosition="1499">stdDev</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>43</ServiceNodeId>
+        <GEEScriptPart startPosition="1463" endPosition="1467">mean</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>47</ServiceNodeId>
+        <GEEScriptPart startPosition="247" endPosition="250">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>47</ServiceNodeId>
+        <GEEScriptPart startPosition="890" endPosition="893">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>47</ServiceNodeId>
+        <GEEScriptPart startPosition="1297" endPosition="1300">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>47</ServiceNodeId>
+        <GEEScriptPart startPosition="1437" endPosition="1440">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>50</ServiceNodeId>
+        <GEEScriptPart startPosition="1827" endPosition="1843">CH4 Interpolated</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>54</ServiceNodeId>
+        <GEEScriptPart startPosition="247" endPosition="250">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>54</ServiceNodeId>
+        <GEEScriptPart startPosition="890" endPosition="893">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>54</ServiceNodeId>
+        <GEEScriptPart startPosition="1297" endPosition="1300">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>54</ServiceNodeId>
+        <GEEScriptPart startPosition="1437" endPosition="1440">ch4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>58</ServiceNodeId>
+        <GEEScriptPart startPosition="850" endPosition="859">longitude</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>61</ServiceNodeId>
+        <GEEScriptPart startPosition="811" endPosition="819">latitude</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

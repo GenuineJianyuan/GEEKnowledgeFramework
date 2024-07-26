@@ -1,0 +1,227 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320010" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2017-07-19</StartTime>
+        <EndTime>2017-07-19</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>None(geonameId=3172215)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 TOA Reflectance</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_TOA</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Ecosystems</Value>
+        <Description>The script aims to find linear features using the HoughTransform. Outputs include NDVI, Canny edge detection, and Hough transform results.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: 'red'}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="literal">red</Node>
+   <Node id="5" type="literal">0</Node>
+   <Node id="6" type="complex">{min: 0, max: 1, palette: 'blue'}</Node>
+   <Node id="7" type="literal">1</Node>
+   <Node id="8" type="literal">blue</Node>
+   <Node id="9" type="complex">['B4', 'B3', 'B2']</Node>
+   <Node id="10" type="complex">{bands: ['B4', 'B3', 'B2'], max: 0.3}</Node>
+   <Node id="11" type="literal">0.3</Node>
+   <Node id="12" type="literal">40.21729</Node>
+   <Node id="13" type="eeFunction">Map.setCenter</Node>
+   <Node id="14" type="literal">13</Node>
+   <Node id="15" type="literal">B5</Node>
+   <Node id="16" type="eeFunction">ee.List</Node>
+   <Node id="17" type="literal">B4</Node>
+   <Node id="18" type="literal">LANDSAT/LC08/C02/T1_TOA/LC08_033032_20170719</Node>
+   <Node id="19" type="eeFunction">ee.Image</Node>
+   <Node id="20" type="eeFunction">Map.addLayer</Node>
+   <Node id="21" type="literal">source_image</Node>
+   <Node id="22" type="eeFunction">normalizedDifference</Node>
+   <Node id="23" type="literal">0.4</Node>
+   <Node id="24" type="complex">{
+
+  image: ndvi,
+
+  threshold: 0.4
+
+}</Node>
+   <Node id="25" type="eeFunction">ee.Algorithms.CannyEdgeDetector</Node>
+   <Node id="26" type="eeFunction">multiply</Node>
+   <Node id="27" type="literal">255</Node>
+   <Node id="28" type="eeFunction">updateMask</Node>
+   <Node id="29" type="eeFunction">Map.addLayer</Node>
+   <Node id="30" type="literal">canny</Node>
+   <Node id="31" type="literal">256</Node>
+   <Node id="32" type="complex">{
+
+  image: canny,
+
+  gridSize: 256,
+
+  inputThreshold: 50,
+
+  lineThreshold: 100
+
+}</Node>
+   <Node id="33" type="literal">50</Node>
+   <Node id="34" type="literal">100</Node>
+   <Node id="35" type="eeFunction">ee.Algorithms.HoughTransform</Node>
+   <Node id="36" type="eeFunction">updateMask</Node>
+   <Node id="37" type="eeFunction">Map.addLayer</Node>
+   <Node id="38" type="literal">hough</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="14" sourceNodeId="10" targetNodeId="20"></Relation>
+   <Relation id="15" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="16" targetNodeId="22"></Relation>
+   <Relation id="18" sourceNodeId="19" targetNodeId="22"></Relation>
+   <Relation id="19" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="20" sourceNodeId="22" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="23" sourceNodeId="27" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="26" targetNodeId="28"></Relation>
+   <Relation id="25" sourceNodeId="26" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="27" sourceNodeId="6" targetNodeId="29"></Relation>
+   <Relation id="28" sourceNodeId="30" targetNodeId="29"></Relation>
+   <Relation id="29" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="34" targetNodeId="32"></Relation>
+   <Relation id="32" sourceNodeId="26" targetNodeId="32"></Relation>
+   <Relation id="33" sourceNodeId="32" targetNodeId="35"></Relation>
+   <Relation id="34" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="35" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="36" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="37" sourceNodeId="2" targetNodeId="37"></Relation>
+   <Relation id="38" sourceNodeId="38" targetNodeId="37"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="63">
+        <Content type="comment">// An example finding linear features using the HoughTransform.</Content>
+    </Script>
+    <Script line="3" startPosition="67" endPosition="101">
+        <Content type="comment">// Load an image and compute NDVI.</Content>
+    </Script>
+    <Script line="4" startPosition="103" endPosition="172">
+        <Content type="code">var image = ee.Image('LANDSAT/LC08/C02/T1_TOA/LC08_033032_20170719');</Content>
+    </Script>
+    <Script line="5" startPosition="174" endPosition="226">
+        <Content type="code">var ndvi = image.normalizedDifference(['B5', 'B4']);</Content>
+    </Script>
+    <Script line="7" startPosition="230" endPosition="260">
+        <Content type="comment">// Apply a Canny edge detector</Content>
+    </Script>
+    <Script line="8,9,10,11" startPosition="262" endPosition="360">
+        <Content type="code">var canny = ee.Algorithms.CannyEdgeDetector({
+
+  image: ndvi,
+
+  threshold: 0.4
+
+}).multiply(255);</Content>
+    </Script>
+    <Script line="13" startPosition="364" endPosition="393">
+        <Content type="comment">// Apply the Hough transform.</Content>
+    </Script>
+    <Script line="14,15,16,17,18,19" startPosition="395" endPosition="518">
+        <Content type="code">var h = ee.Algorithms.HoughTransform({
+
+  image: canny,
+
+  gridSize: 256,
+
+  inputThreshold: 50,
+
+  lineThreshold: 100
+
+});</Content>
+    </Script>
+    <Script line="21" startPosition="522" endPosition="533">
+        <Content type="comment">// Display.</Content>
+    </Script>
+    <Script line="22" startPosition="535" endPosition="575">
+        <Content type="code">Map.setCenter(-103.80140, 40.21729, 13);</Content>
+    </Script>
+    <Script line="23" startPosition="577" endPosition="652">
+        <Content type="code">Map.addLayer(image, {bands: ['B4', 'B3', 'B2'], max: 0.3}, 'source_image');</Content>
+    </Script>
+    <Script line="24" startPosition="654" endPosition="736">
+        <Content type="code">Map.addLayer(canny.updateMask(canny), {min: 0, max: 1, palette: 'blue'}, 'canny');</Content>
+    </Script>
+    <Script line="25" startPosition="738" endPosition="811">
+        <Content type="code">Map.addLayer(h.updateMask(h), {min: 0, max: 1, palette: 'red'}, 'hough');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>4</ServiceNodeId>
+        <GEEScriptPart startPosition="795" endPosition="798">red</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="719" endPosition="723">blue</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="214" endPosition="216">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="220" endPosition="222">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="607" endPosition="609">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="125" endPosition="169">LANDSAT/LC08/C02/T1_TOA/LC08_033032_20170719</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="637" endPosition="649">source_image</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>30</ServiceNodeId>
+        <GEEScriptPart startPosition="728" endPosition="733">canny</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="803" endPosition="808">hough</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

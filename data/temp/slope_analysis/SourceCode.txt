@@ -1,0 +1,38 @@
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="28">
+        <Content type="comment">// Create an elevation image</Content>
+    </Script>
+    <Script line="2" startPosition="30" endPosition="69">
+        <Content type="code">var dem = ee.Image('USGS/SRTMGL1_003');</Content>
+    </Script>
+    <Script line="3" startPosition="71" endPosition="139">
+        <Content type="comment">// Define a geometry of the area of interest as a rectangular region</Content>
+    </Script>
+    <Script line="4" startPosition="141" endPosition="219">
+        <Content type="code">var studyArea = ee.Geometry.Rectangle([113.7700, 29.9700, 115.0500, 31.2200]);</Content>
+    </Script>
+    <Script line="5" startPosition="221" endPosition="282">
+        <Content type="comment">// Clip the elevation image to the specified area of interest</Content>
+    </Script>
+    <Script line="6" startPosition="284" endPosition="320">
+        <Content type="code">var targetDem = dem.clip(studyArea);</Content>
+    </Script>
+    <Script line="7" startPosition="322" endPosition="375">
+        <Content type="comment">// Calculate the slope of the clipped elevation image</Content>
+    </Script>
+    <Script line="8" startPosition="377" endPosition="423">
+        <Content type="code">var targetSlope = ee.Terrain.slope(targetDem);</Content>
+    </Script>
+    <Script line="9" startPosition="425" endPosition="468">
+        <Content type="comment">// Add the elevation image layer to the map</Content>
+    </Script>
+    <Script line="10" startPosition="470" endPosition="521">
+        <Content type="code">Map.addLayer(targetDem, {min: 0, max: 200}, 'DEM');</Content>
+    </Script>
+    <Script line="11" startPosition="523" endPosition="556">
+        <Content type="comment">// Add the slope layer to the map</Content>
+    </Script>
+    <Script line="12" startPosition="558" endPosition="634">
+        <Content type="code">Map.addLayer(targetSlope, {min: 0, max: 60, palette: ['00ff00', 'ff0000']});</Content>
+    </Script>
+</SourceCode>

@@ -1,0 +1,305 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320023" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2022-06-01</StartTime>
+        <EndTime>2022-09-30</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[121.5, 38.5]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LC08/C02/T1</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>NASA-USDA Enhanced SMAP Global Soil Moisture Data</SourceName>
+            <Value>NASA_USDA/HSL/SMAP10KM_soil_moisture</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land surface/agriculture indicators</Value>
+        <Description>This script calculates and visualizes NDVI and soil moisture for the three northeastern provinces of China using Landsat 8 and SMAP data for the period from June 1, 2022, to September 30, 2022.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">-5</Node>
+   <Node id="2" type="complex">{min: -5, max: 25, palette: ['blue', 'limegreen', 'yellow', 'orange', 'red']}</Node>
+   <Node id="3" type="literal">25</Node>
+   <Node id="4" type="complex">['blue', 'limegreen', 'yellow', 'orange', 'red']</Node>
+   <Node id="5" type="literal">0</Node>
+   <Node id="6" type="complex">{min: 0, max: 1, palette: ['white', 'green']}</Node>
+   <Node id="7" type="literal">1</Node>
+   <Node id="8" type="complex">['white', 'green']</Node>
+   <Node id="9" type="literal">NASA_USDA/HSL/SMAP10KM_soil_moisture</Node>
+   <Node id="10" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="11" type="userDefinedFunction">calcNDVI</Node>
+   <Node id="12" type="identifier">calcNDVI</Node>
+   <Node id="13" type="literal">LANDSAT/LC08/C02/T1</Node>
+   <Node id="14" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="15" type="eeFunction">filterDate</Node>
+   <Node id="16" type="literal">2022-06-01</Node>
+   <Node id="17" type="literal">2022-09-30</Node>
+   <Node id="18" type="eeFunction">filterDate</Node>
+   <Node id="19" type="literal">121.5</Node>
+   <Node id="20" type="eeFunction">ee.List</Node>
+   <Node id="21" type="literal">38.5</Node>
+   <Node id="22" type="literal">135</Node>
+   <Node id="23" type="literal">53.5</Node>
+   <Node id="24" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="25" type="literal">6</Node>
+   <Node id="26" type="eeFunction">Map.centerObject</Node>
+   <Node id="27" type="eeFunction">filterBounds</Node>
+   <Node id="28" type="eeFunction">mean</Node>
+   <Node id="29" type="eeFunction">clip</Node>
+   <Node id="30" type="literal">ssm</Node>
+   <Node id="31" type="eeFunction">select</Node>
+   <Node id="32" type="eeFunction">Map.addLayer</Node>
+   <Node id="33" type="literal">Soil Moisture</Node>
+   <Node id="34" type="eeFunction">filterBounds</Node>
+   <Node id="35" type="eeFunction">map</Node>
+   <Node id="36" type="eeFunction">mean</Node>
+   <Node id="37" type="eeFunction">clip</Node>
+   <Node id="38" type="literal">NDVI</Node>
+   <Node id="39" type="eeFunction">select</Node>
+   <Node id="40" type="eeFunction">Map.addLayer</Node>
+   <Node id="41" type="literal">NDVI</Node>
+   <Node id="42" type="literal">B5</Node>
+   <Node id="43" type="eeFunction">ee.List</Node>
+   <Node id="44" type="literal">B4</Node>
+   <Node id="45" type="identifier">image</Node>
+   <Node id="46" type="eeFunction">normalizedDifference</Node>
+   <Node id="47" type="eeFunction">rename</Node>
+   <Node id="48" type="literal">NDVI</Node>
+   <Node id="49" type="identifier">image</Node>
+   <Node id="50" type="eeFunction">addBands</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="10" sourceNodeId="10" targetNodeId="15"></Relation>
+   <Relation id="11" sourceNodeId="16" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="17" targetNodeId="15"></Relation>
+   <Relation id="13" sourceNodeId="14" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="16" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="22" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="23" targetNodeId="20"></Relation>
+   <Relation id="20" sourceNodeId="20" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="22" sourceNodeId="24" targetNodeId="26"></Relation>
+   <Relation id="23" sourceNodeId="15" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="24" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="27" sourceNodeId="24" targetNodeId="29"></Relation>
+   <Relation id="28" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="29" sourceNodeId="29" targetNodeId="31"></Relation>
+   <Relation id="30" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="32" sourceNodeId="2" targetNodeId="32"></Relation>
+   <Relation id="33" sourceNodeId="18" targetNodeId="34"></Relation>
+   <Relation id="34" sourceNodeId="24" targetNodeId="34"></Relation>
+   <Relation id="35" sourceNodeId="12" targetNodeId="35"></Relation>
+   <Relation id="36" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="37" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="38" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="39" sourceNodeId="24" targetNodeId="37"></Relation>
+   <Relation id="40" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="41" sourceNodeId="37" targetNodeId="39"></Relation>
+   <Relation id="42" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="43" sourceNodeId="41" targetNodeId="40"></Relation>
+   <Relation id="44" sourceNodeId="6" targetNodeId="40"></Relation>
+   <Relation id="45" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="46" sourceNodeId="44" targetNodeId="43"></Relation>
+   <Relation id="47" sourceNodeId="45" targetNodeId="46"></Relation>
+   <Relation id="48" sourceNodeId="43" targetNodeId="46"></Relation>
+   <Relation id="49" sourceNodeId="46" targetNodeId="47"></Relation>
+   <Relation id="50" sourceNodeId="48" targetNodeId="47"></Relation>
+   <Relation id="51" sourceNodeId="49" targetNodeId="50"></Relation>
+   <Relation id="52" sourceNodeId="47" targetNodeId="50"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Surface Soil Moisture</Content>
+    </Script>
+    <Script line="3" startPosition="28" endPosition="97">
+        <Content type="comment">// Define the boundaries of the three northeastern provinces of China</Content>
+    </Script>
+    <Script line="4" startPosition="99" endPosition="161">
+        <Content type="code">var dongbei = ee.Geometry.Rectangle([121.5, 38.5, 135, 53.5]);</Content>
+    </Script>
+    <Script line="6" startPosition="165" endPosition="186">
+        <Content type="comment">// Set the time range</Content>
+    </Script>
+    <Script line="7" startPosition="188" endPosition="213">
+        <Content type="code">var start = '2022-06-01';</Content>
+    </Script>
+    <Script line="8" startPosition="215" endPosition="238">
+        <Content type="code">var end = '2022-09-30';</Content>
+    </Script>
+    <Script line="10" startPosition="242" endPosition="283">
+        <Content type="comment">// Load Landsat 8 data and calculate NDVI</Content>
+    </Script>
+    <Script line="11,12,13" startPosition="285" endPosition="424">
+        <Content type="code">var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+
+                 .filterDate(start, end)
+
+                 .filterBounds(dongbei);</Content>
+    </Script>
+    <Script line="15" startPosition="428" endPosition="457">
+        <Content type="comment">// Function to calculate NDVI</Content>
+    </Script>
+    <Script line="16,17,18,19" startPosition="459" endPosition="591">
+        <Content type="code">function calcNDVI(image) {
+
+  var ndvi = image.normalizedDifference(['B5', 'B4']).rename('NDVI');
+
+  return image.addBands(ndvi);
+
+}</Content>
+    </Script>
+    <Script line="21" startPosition="595" endPosition="620">
+        <Content type="comment">// Apply NDVI calculation</Content>
+    </Script>
+    <Script line="22" startPosition="622" endPosition="659">
+        <Content type="code">var withNDVI = landsat.map(calcNDVI);</Content>
+    </Script>
+    <Script line="24" startPosition="663" endPosition="700">
+        <Content type="comment">// Load and filter soil moisture data</Content>
+    </Script>
+    <Script line="25,26,27" startPosition="702" endPosition="873">
+        <Content type="code">var soilMoisture = ee.ImageCollection('NASA_USDA/HSL/SMAP10KM_soil_moisture')
+
+                      .filterDate(start, end)
+
+                      .filterBounds(dongbei);</Content>
+    </Script>
+    <Script line="29" startPosition="877" endPosition="904">
+        <Content type="comment">// Visualization parameters</Content>
+    </Script>
+    <Script line="30" startPosition="906" endPosition="972">
+        <Content type="code">var visParamsNDVI = {min: 0, max: 1, palette: ['white', 'green']};</Content>
+    </Script>
+    <Script line="31" startPosition="974" endPosition="1076">
+        <Content type="code">var visParamsMoisture = {min: -5, max: 25, palette: ['blue', 'limegreen', 'yellow', 'orange', 'red']};</Content>
+    </Script>
+    <Script line="33" startPosition="1080" endPosition="1169">
+        <Content type="comment">// Clip NDVI and soil moisture data to the boundaries of the three northeastern provinces</Content>
+    </Script>
+    <Script line="34" startPosition="1171" endPosition="1219">
+        <Content type="code">var clippedNDVI = withNDVI.mean().clip(dongbei);</Content>
+    </Script>
+    <Script line="35" startPosition="1221" endPosition="1277">
+        <Content type="code">var clippedMoisture = soilMoisture.mean().clip(dongbei);</Content>
+    </Script>
+    <Script line="37" startPosition="1281" endPosition="1297">
+        <Content type="comment">// Visualization</Content>
+    </Script>
+    <Script line="38" startPosition="1299" endPosition="1328">
+        <Content type="code">Map.centerObject(dongbei, 6);</Content>
+    </Script>
+    <Script line="39" startPosition="1330" endPosition="1394">
+        <Content type="code">Map.addLayer(clippedNDVI.select('NDVI'), visParamsNDVI, 'NDVI');</Content>
+    </Script>
+    <Script line="40" startPosition="1396" endPosition="1476">
+        <Content type="code">Map.addLayer(clippedMoisture.select('ssm'), visParamsMoisture, 'Soil Moisture');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="741" endPosition="777">NASA_USDA/HSL/SMAP10KM_soil_moisture</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="319" endPosition="338">LANDSAT/LC08/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="201" endPosition="211">2022-06-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="226" endPosition="236">2022-09-30</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>30</ServiceNodeId>
+        <GEEScriptPart startPosition="1433" endPosition="1436">ssm</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>33</ServiceNodeId>
+        <GEEScriptPart startPosition="1460" endPosition="1473">Soil Moisture</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="549" endPosition="553">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="1363" endPosition="1367">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="1387" endPosition="1391">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="549" endPosition="553">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="1363" endPosition="1367">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="1387" endPosition="1391">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>42</ServiceNodeId>
+        <GEEScriptPart startPosition="529" endPosition="531">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>44</ServiceNodeId>
+        <GEEScriptPart startPosition="535" endPosition="537">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>48</ServiceNodeId>
+        <GEEScriptPart startPosition="549" endPosition="553">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>48</ServiceNodeId>
+        <GEEScriptPart startPosition="1363" endPosition="1367">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>48</ServiceNodeId>
+        <GEEScriptPart startPosition="1387" endPosition="1391">NDVI</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

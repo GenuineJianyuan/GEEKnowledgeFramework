@@ -1,0 +1,53 @@
+// Flood Analysis
+
+// Select study area (Poyang Lake)
+var studyArea = 
+    /* color: #98ff00 */
+    /* displayProperties: [
+      {
+        "type": "rectangle"
+      }
+    ] */
+    ee.FeatureCollection(
+        [ee.Feature(
+            ee.Geometry.Polygon(
+                [[[115.98888884930852, 29.26911282738686],
+                  [115.98888884930852, 28.73704118280411],
+                  [116.77166472821477, 28.73704118280411],
+                  [116.77166472821477, 29.26911282738686]]], null, false),
+            {
+              "system:index": "0"
+            })]);
+
+// Define the LANDSAT ImageCollection
+var landsatCollection = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2');
+
+// Generate images for two periods (Winter / Summer)
+var winterWater =  landsatCollection
+  .filterDate('2019-01-01', '2019-03-31').min().clip(studyArea)
+  .normalizedDifference(['SR_B5', 'SR_B4']).gt(0.2);
+
+var summerWater = landsatCollection
+  .filterDate('2019-07-01', '2019-09-30')
+  .min().clip(studyArea)
+  .normalizedDifference(['SR_B5', 'SR_B4']).gt(0.2);
+
+// Calculate the difference in water bodies between winter and summer
+var floodExtent = summerWater.subtract(winterWater);
+
+// Visualize the difference as flood extent
+Map.centerObject(studyArea, 10);
+Map.addLayer(floodExtent, {palette: ['0000FF', 'FFFFFF'], min: -1, max: 1}, 'Flooded Areas');
+
+// Calculate the area of the flooded region
+var floodArea = floodExtent.multiply(ee.Image.pixelArea()).divide(10000); // square kilometers
+var statistics = floodArea.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: studyArea.geometry(),
+  scale: 30, // resolution in meters
+  maxPixels: 1e13 // maximum number of pixels
+});
+
+// Print the total area of the flooded region
+var floodAreaSqKm = statistics.get('nd');
+print('Total Flooded Area (square kilometers):', floodAreaSqKm);

@@ -1,0 +1,11 @@
+API1,API2
+ee.Geometry.Rectangle,filterBounds
+ee.Geometry.Rectangle,clip
+map,reduce.median
+filterBounds,filterDate
+reduce.median,Image.subtract
+filterDate,map
+Image.normalizedDifference,Image.rename
+Image.rename,Image.clip
+Image.subtract,Image.rename
+ee.ImageCollection,filterBounds

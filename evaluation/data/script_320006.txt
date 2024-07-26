@@ -1,0 +1,19 @@
+//Forest Change
+
+// Load country features from Large Scale International Boundary (LSIB) dataset.
+var countries = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017');
+
+// Subset the Congo Republic feature from countries.
+var congo = countries.filter(ee.Filter.eq('country_na', 'Rep of the Congo'));
+
+// Get the forest loss image.
+var gfc2014 = ee.Image('UMD/hansen/global_forest_change_2015');
+var lossImage = gfc2014.select(['loss']);
+
+// Sum the values of forest loss pixels in the Congo Republic.
+var stats = lossImage.reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: congo,
+  scale: 30
+});
+print(stats);

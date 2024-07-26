@@ -1,0 +1,40 @@
+// Crop Growth Detection
+
+// Define the area of France
+var france = ee.FeatureCollection('USDOS/LSIB_SIMPLE/2017')
+  .filter(ee.Filter.eq('country_na', 'France'));
+
+// Set the time range
+var start = '2020-01-01';
+var end = '2020-12-31';
+
+// Load the LAI dataset (MODIS)
+var laiDataset = ee.ImageCollection('MODIS/061/MCD15A3H')
+  .filterDate(start, end)
+  .filterBounds(france)
+  .select('Lai').mean();
+
+// Load the temperature dataset (ERA5)
+var tempDataset = ee.ImageCollection("ECMWF/ERA5_LAND/HOURLY")
+  .filterDate(start, end)
+  .filterBounds(france)
+  .select('temperature_2m').mean();
+
+// Load the precipitation dataset (CHIRPS)
+var precipDataset = ee.ImageCollection("UCSB-CHG/CHIRPS/PENTAD")
+  .filterDate(start, end)
+  .filterBounds(france)
+  .select('precipitation').mean();
+
+// Reclassify and assign weights
+var laiWeighted = laiDataset.multiply(0.5); // Example weight of 0.5
+var tempWeighted = tempDataset.subtract(273).multiply(0.3); // Convert to Celsius and assign a weight of 0.3
+var precipWeighted = precipDataset.multiply(0.2); // Example weight of 0.2
+
+// Overlay analysis
+var combinedIndex = laiWeighted.add(tempWeighted).add(precipWeighted);
+
+// Visualization
+var visParams = {min: 0, max: 10, palette: ['blue', 'green', 'yellow', 'orange', 'red']};
+Map.centerObject(france, 6);
+Map.addLayer(combinedIndex, visParams, 'Combined Index');

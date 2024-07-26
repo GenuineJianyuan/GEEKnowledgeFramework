@@ -1,0 +1,435 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<!-- This file is open-source and can be shared. -->
+<GEEModelingKnowledgeTemplate name="script_320001" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>Germany(geonameId=2921044)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>MODIS/006/MOD17A2H</SourceName>
+            <Value>MODIS/006/MOD17A2H</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>MODIS/006/MOD17A3HGF</SourceName>
+            <Value>MODIS/006/MOD17A3HGF</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>GPM: Global Precipitation Measurement (GPM) v6</SourceName>
+            <Value>NASA/GPM_L3/IMERG_V06</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>OpenLandMap Soil Texture Class (USDA System)</SourceName>
+            <Value>OpenLandMap/SOL/SOL_TEXTURE-CLASS_USDA-TT_M</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Carbon flux</Value>
+        <Description>The script aims to analyze the impact of carbon storage by combining GPP, NPP, precipitation, and soil data through a linear regression model. The output includes the coefficients of the linear regression model.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">3</Node>
+   <Node id="2" type="complex">{
+
+    numX: 3,                            
+
+    numY: 1                                                             
+
+  }</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="eeFunction">ee.Reducer.linearRegression</Node>
+   <Node id="5" type="literal">0</Node>
+   <Node id="6" type="complex">{min: 0, max: 300, palette: ['white', 'blue']}</Node>
+   <Node id="7" type="literal">300</Node>
+   <Node id="8" type="complex">['white', 'blue']</Node>
+   <Node id="9" type="literal">0</Node>
+   <Node id="10" type="complex">{min: 0, max: 3000, palette: ['00FF00', '0000FF']}</Node>
+   <Node id="11" type="literal">3000</Node>
+   <Node id="12" type="complex">['00FF00', '0000FF']</Node>
+   <Node id="13" type="literal">0</Node>
+   <Node id="14" type="complex">{min: 0, max: 3000, palette: ['00FF00', '0000FF']}</Node>
+   <Node id="15" type="literal">3000</Node>
+   <Node id="16" type="complex">['00FF00', '0000FF']</Node>
+   <Node id="17" type="literal">country_co</Node>
+   <Node id="18" type="eeFunction">ee.Filter.eq</Node>
+   <Node id="19" type="literal">GM</Node>
+   <Node id="20" type="literal">USDOS/LSIB_SIMPLE/2017</Node>
+   <Node id="21" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="22" type="eeFunction">filter</Node>
+   <Node id="23" type="complex">{
+
+  reducer: ee.Reducer.linearRegression({
+
+    numX: 3,                            
+
+    numY: 1                                                             
+
+  }),
+
+  geometry: germany,
+
+  scale: 500,                                                    
+
+  maxPixels: 1e8
+
+}</Node>
+   <Node id="24" type="literal">500</Node>
+   <Node id="25" type="literal">100000000</Node>
+   <Node id="26" type="literal">4</Node>
+   <Node id="27" type="eeFunction">Map.centerObject</Node>
+   <Node id="28" type="literal">OpenLandMap/SOL/SOL_TEXTURE-CLASS_USDA-TT_M/v02</Node>
+   <Node id="29" type="eeFunction">ee.Image</Node>
+   <Node id="30" type="eeFunction">select</Node>
+   <Node id="31" type="literal">b10</Node>
+   <Node id="32" type="complex">{}</Node>
+   <Node id="33" type="eeFunction">Map.addLayer</Node>
+   <Node id="34" type="literal">Soil Texture</Node>
+   <Node id="35" type="literal">NASA/GPM_L3/IMERG_V06</Node>
+   <Node id="36" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="37" type="eeFunction">filterDate</Node>
+   <Node id="38" type="literal">2020-01-01</Node>
+   <Node id="39" type="literal">2020-12-31</Node>
+   <Node id="40" type="eeFunction">mean</Node>
+   <Node id="41" type="eeFunction">select</Node>
+   <Node id="42" type="literal">precipitationCal</Node>
+   <Node id="43" type="eeFunction">clip</Node>
+   <Node id="44" type="literal">Precipitation</Node>
+   <Node id="45" type="eeFunction">Map.addLayer</Node>
+   <Node id="46" type="literal">MODIS/006/MOD17A3HGF</Node>
+   <Node id="47" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="48" type="eeFunction">select</Node>
+   <Node id="49" type="literal">Npp</Node>
+   <Node id="50" type="eeFunction">filterDate</Node>
+   <Node id="51" type="eeFunction">mean</Node>
+   <Node id="52" type="eeFunction">clip</Node>
+   <Node id="53" type="literal">NPP</Node>
+   <Node id="54" type="eeFunction">Map.addLayer</Node>
+   <Node id="55" type="literal">MODIS/006/MOD17A2H</Node>
+   <Node id="56" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="57" type="eeFunction">select</Node>
+   <Node id="58" type="literal">Gpp</Node>
+   <Node id="59" type="eeFunction">filterDate</Node>
+   <Node id="60" type="eeFunction">mean</Node>
+   <Node id="61" type="eeFunction">clip</Node>
+   <Node id="62" type="eeFunction">addBands</Node>
+   <Node id="63" type="eeFunction">addBands</Node>
+   <Node id="64" type="eeFunction">addBands</Node>
+   <Node id="65" type="eeFunction">reduceRegion</Node>
+   <Node id="66" type="literal">Linear regression coefficients:</Node>
+   <Node id="67" type="eeFunction">print</Node>
+   <Node id="68" type="eeFunction">print</Node>
+   <Node id="69" type="literal">GPP</Node>
+   <Node id="70" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="2" targetNodeId="4"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="10"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="16" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="17" sourceNodeId="18" targetNodeId="22"></Relation>
+   <Relation id="18" sourceNodeId="4" targetNodeId="23"></Relation>
+   <Relation id="19" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="25" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="23" sourceNodeId="22" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="25" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="26" sourceNodeId="31" targetNodeId="30"></Relation>
+   <Relation id="27" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="28" sourceNodeId="34" targetNodeId="33"></Relation>
+   <Relation id="29" sourceNodeId="30" targetNodeId="33"></Relation>
+   <Relation id="30" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="31" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="32" sourceNodeId="38" targetNodeId="37"></Relation>
+   <Relation id="33" sourceNodeId="39" targetNodeId="37"></Relation>
+   <Relation id="34" sourceNodeId="37" targetNodeId="40"></Relation>
+   <Relation id="35" sourceNodeId="40" targetNodeId="41"></Relation>
+   <Relation id="36" sourceNodeId="42" targetNodeId="41"></Relation>
+   <Relation id="37" sourceNodeId="41" targetNodeId="43"></Relation>
+   <Relation id="38" sourceNodeId="22" targetNodeId="43"></Relation>
+   <Relation id="39" sourceNodeId="44" targetNodeId="45"></Relation>
+   <Relation id="40" sourceNodeId="43" targetNodeId="45"></Relation>
+   <Relation id="41" sourceNodeId="6" targetNodeId="45"></Relation>
+   <Relation id="42" sourceNodeId="46" targetNodeId="47"></Relation>
+   <Relation id="43" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="44" sourceNodeId="49" targetNodeId="48"></Relation>
+   <Relation id="45" sourceNodeId="48" targetNodeId="50"></Relation>
+   <Relation id="46" sourceNodeId="38" targetNodeId="50"></Relation>
+   <Relation id="47" sourceNodeId="39" targetNodeId="50"></Relation>
+   <Relation id="48" sourceNodeId="50" targetNodeId="51"></Relation>
+   <Relation id="49" sourceNodeId="51" targetNodeId="52"></Relation>
+   <Relation id="50" sourceNodeId="22" targetNodeId="52"></Relation>
+   <Relation id="51" sourceNodeId="53" targetNodeId="54"></Relation>
+   <Relation id="52" sourceNodeId="52" targetNodeId="54"></Relation>
+   <Relation id="53" sourceNodeId="10" targetNodeId="54"></Relation>
+   <Relation id="54" sourceNodeId="55" targetNodeId="56"></Relation>
+   <Relation id="55" sourceNodeId="56" targetNodeId="57"></Relation>
+   <Relation id="56" sourceNodeId="58" targetNodeId="57"></Relation>
+   <Relation id="57" sourceNodeId="57" targetNodeId="59"></Relation>
+   <Relation id="58" sourceNodeId="38" targetNodeId="59"></Relation>
+   <Relation id="59" sourceNodeId="39" targetNodeId="59"></Relation>
+   <Relation id="60" sourceNodeId="59" targetNodeId="60"></Relation>
+   <Relation id="61" sourceNodeId="60" targetNodeId="61"></Relation>
+   <Relation id="62" sourceNodeId="22" targetNodeId="61"></Relation>
+   <Relation id="63" sourceNodeId="61" targetNodeId="62"></Relation>
+   <Relation id="64" sourceNodeId="52" targetNodeId="62"></Relation>
+   <Relation id="65" sourceNodeId="62" targetNodeId="63"></Relation>
+   <Relation id="66" sourceNodeId="43" targetNodeId="63"></Relation>
+   <Relation id="67" sourceNodeId="63" targetNodeId="64"></Relation>
+   <Relation id="68" sourceNodeId="30" targetNodeId="64"></Relation>
+   <Relation id="69" sourceNodeId="23" targetNodeId="65"></Relation>
+   <Relation id="70" sourceNodeId="64" targetNodeId="65"></Relation>
+   <Relation id="71" sourceNodeId="66" targetNodeId="67"></Relation>
+   <Relation id="72" sourceNodeId="65" targetNodeId="67"></Relation>
+   <Relation id="73" sourceNodeId="64" targetNodeId="68"></Relation>
+   <Relation id="74" sourceNodeId="69" targetNodeId="70"></Relation>
+   <Relation id="75" sourceNodeId="61" targetNodeId="70"></Relation>
+   <Relation id="76" sourceNodeId="14" targetNodeId="70"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="33">
+        <Content type="comment">// Carbon Storage Impact Analysis</Content>
+    </Script>
+    <Script line="3" startPosition="37" endPosition="73">
+        <Content type="comment">// Import MODIS GPP and NPP datasets</Content>
+    </Script>
+    <Script line="4" startPosition="75" endPosition="140">
+        <Content type="code">var gpp = ee.ImageCollection("MODIS/006/MOD17A2H").select('Gpp');</Content>
+    </Script>
+    <Script line="5" startPosition="142" endPosition="209">
+        <Content type="code">var npp = ee.ImageCollection("MODIS/006/MOD17A3HGF").select('Npp');</Content>
+    </Script>
+    <Script line="7" startPosition="213" endPosition="257">
+        <Content type="comment">// Import precipitation dataset (e.g., TRMM)</Content>
+    </Script>
+    <Script line="8" startPosition="259" endPosition="324">
+        <Content type="code">var precipitation =  ee.ImageCollection("NASA/GPM_L3/IMERG_V06");</Content>
+    </Script>
+    <Script line="10" startPosition="328" endPosition="368">
+        <Content type="comment">// Import soil dataset (e.g., SoilGrids)</Content>
+    </Script>
+    <Script line="11" startPosition="370" endPosition="455">
+        <Content type="code">var soil = ee.Image("OpenLandMap/SOL/SOL_TEXTURE-CLASS_USDA-TT_M/v02").select('b10');</Content>
+    </Script>
+    <Script line="13" startPosition="459" endPosition="476">
+        <Content type="comment">// Set time range</Content>
+    </Script>
+    <Script line="14" startPosition="478" endPosition="503">
+        <Content type="code">var start = '2020-01-01';</Content>
+    </Script>
+    <Script line="15" startPosition="505" endPosition="528">
+        <Content type="code">var end = '2020-12-31';</Content>
+    </Script>
+    <Script line="17" startPosition="532" endPosition="562">
+        <Content type="comment">// Define the area of interest</Content>
+    </Script>
+    <Script line="18,19" startPosition="564" endPosition="670">
+        <Content type="code">var germany = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
+
+  .filter(ee.Filter.eq('country_co', 'GM'));</Content>
+    </Script>
+    <Script line="21" startPosition="674" endPosition="700">
+        <Content type="comment">// Aggregate and clip data</Content>
+    </Script>
+    <Script line="22" startPosition="702" endPosition="764">
+        <Content type="code">var meanGpp = gpp.filterDate(start, end).mean().clip(germany);</Content>
+    </Script>
+    <Script line="23" startPosition="766" endPosition="828">
+        <Content type="code">var meanNpp = npp.filterDate(start, end).mean().clip(germany);</Content>
+    </Script>
+    <Script line="24" startPosition="830" endPosition="939">
+        <Content type="code">var meanPrecipitation = precipitation.filterDate(start, end).mean().select('precipitationCal').clip(germany);</Content>
+    </Script>
+    <Script line="26" startPosition="943" endPosition="970">
+        <Content type="comment">// Visualization parameters</Content>
+    </Script>
+    <Script line="27" startPosition="972" endPosition="1036">
+        <Content type="code">var visGpp = {min: 0, max: 3000, palette: ['00FF00', '0000FF']};</Content>
+    </Script>
+    <Script line="28" startPosition="1038" endPosition="1102">
+        <Content type="code">var visNpp = {min: 0, max: 3000, palette: ['00FF00', '0000FF']};</Content>
+    </Script>
+    <Script line="29" startPosition="1104" endPosition="1174">
+        <Content type="code">var visPrecipitation = {min: 0, max: 300, palette: ['white', 'blue']};</Content>
+    </Script>
+    <Script line="31" startPosition="1178" endPosition="1202">
+        <Content type="comment">// Add layers to the map</Content>
+    </Script>
+    <Script line="32" startPosition="1204" endPosition="1233">
+        <Content type="code">Map.centerObject(germany, 4);</Content>
+    </Script>
+    <Script line="33" startPosition="1235" endPosition="1272">
+        <Content type="code">Map.addLayer(meanGpp, visGpp, 'GPP');</Content>
+    </Script>
+    <Script line="34" startPosition="1274" endPosition="1311">
+        <Content type="code">Map.addLayer(meanNpp, visNpp, 'NPP');</Content>
+    </Script>
+    <Script line="35" startPosition="1313" endPosition="1380">
+        <Content type="code">Map.addLayer(meanPrecipitation, visPrecipitation, 'Precipitation');</Content>
+    </Script>
+    <Script line="36" startPosition="1382" endPosition="1421">
+        <Content type="code">Map.addLayer(soil, {}, 'Soil Texture');</Content>
+    </Script>
+    <Script line="38" startPosition="1425" endPosition="1458">
+        <Content type="comment">// Data fusion and analysis model</Content>
+    </Script>
+    <Script line="39" startPosition="1460" endPosition="1549">
+        <Content type="comment">// Example using a linear model: Y = a * GPP + b * NPP + c * Precipitation + d * Soil + e</Content>
+    </Script>
+    <Script line="40" startPosition="1551" endPosition="1642">
+        <Content type="code">var combinedDataset = meanGpp.addBands(meanNpp).addBands(meanPrecipitation).addBands(soil);</Content>
+    </Script>
+    <Script line="41" startPosition="1644" endPosition="1666">
+        <Content type="code">print(combinedDataset)</Content>
+    </Script>
+    <Script line="42" startPosition="1668" endPosition="1733">
+        <Content type="comment">// Assumption: Here we use a simplified model, just as an example</Content>
+    </Script>
+    <Script line="43,44,45,46,47,48,49,50,51" startPosition="1735" endPosition="2059">
+        <Content type="code">var regression = combinedDataset.reduceRegion({
+
+  reducer: ee.Reducer.linearRegression({
+
+    numX: 3,  // GPP, NPP, Precipitation
+
+    numY: 1   // Dependent variable to be analyzed, e.g., carbon storage
+
+  }),
+
+  geometry: germany,
+
+  scale: 500, // Appropriate scale, depends on dataset resolution
+
+  maxPixels: 1e8
+
+});</Content>
+    </Script>
+    <Script line="45" startPosition="1840" endPosition="1866">
+        <Content type="comment">// GPP, NPP, Precipitation</Content>
+    </Script>
+    <Script line="46" startPosition="1882" endPosition="1940">
+        <Content type="comment">// Dependent variable to be analyzed, e.g., carbon storage</Content>
+    </Script>
+    <Script line="49" startPosition="1985" endPosition="2036">
+        <Content type="comment">// Appropriate scale, depends on dataset resolution</Content>
+    </Script>
+    <Script line="53" startPosition="2063" endPosition="2109">
+        <Content type="comment">// Interpretation and visualization of results</Content>
+    </Script>
+    <Script line="54" startPosition="2111" endPosition="2215">
+        <Content type="comment">// Here we just print out the linear regression results, actual visualization might need more complexity</Content>
+    </Script>
+    <Script line="55" startPosition="2217" endPosition="2270">
+        <Content type="code">print('Linear regression coefficients:', regression);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="650" endPosition="660">country_co</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="664" endPosition="666">GM</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="600" endPosition="622">USDOS/LSIB_SIMPLE/2017</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>28</ServiceNodeId>
+        <GEEScriptPart startPosition="391" endPosition="438">OpenLandMap/SOL/SOL_TEXTURE-CLASS_USDA-TT_M/v02</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>31</ServiceNodeId>
+        <GEEScriptPart startPosition="449" endPosition="452">b10</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="1406" endPosition="1418">Soil Texture</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>35</ServiceNodeId>
+        <GEEScriptPart startPosition="300" endPosition="321">NASA/GPM_L3/IMERG_V06</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="491" endPosition="501">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>39</ServiceNodeId>
+        <GEEScriptPart startPosition="516" endPosition="526">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>42</ServiceNodeId>
+        <GEEScriptPart startPosition="906" endPosition="922">precipitationCal</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>44</ServiceNodeId>
+        <GEEScriptPart startPosition="1364" endPosition="1377">Precipitation</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>46</ServiceNodeId>
+        <GEEScriptPart startPosition="172" endPosition="192">MODIS/006/MOD17A3HGF</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>49</ServiceNodeId>
+        <GEEScriptPart startPosition="203" endPosition="206">Npp</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>53</ServiceNodeId>
+        <GEEScriptPart startPosition="1305" endPosition="1308">NPP</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>55</ServiceNodeId>
+        <GEEScriptPart startPosition="105" endPosition="123">MODIS/006/MOD17A2H</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>58</ServiceNodeId>
+        <GEEScriptPart startPosition="134" endPosition="137">Gpp</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>66</ServiceNodeId>
+        <GEEScriptPart startPosition="2224" endPosition="2255">Linear regression coefficients:</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>69</ServiceNodeId>
+        <GEEScriptPart startPosition="1266" endPosition="1269">GPP</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

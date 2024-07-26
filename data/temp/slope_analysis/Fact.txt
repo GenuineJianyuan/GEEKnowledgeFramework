@@ -1,0 +1,23 @@
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[29.97, 31.22, 113.77, 115.05]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>NASA SRTM Digital Elevation 30m</SourceName>
+            <Value>USGS/SRTMGL1_003</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Solid earth</Value>
+        <Description>Create elevation and slope images from USGS data within a specified area of interest.</Description>
+    </Task>
+</Fact>

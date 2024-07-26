@@ -1,0 +1,4 @@
+API1,API2
+CannyEdgeDetector,Image.updateMask
+Image.normalizedDifference,CannyEdgeDetector
+ee.Image,Image.normalizedDifference

@@ -1,0 +1,204 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320012" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[-122.262, 37.871]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LC08/C01/T1_SR</SourceName>
+            <Value>LANDSAT/LC08/C01/T1_SR</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Ecosystems</Value>
+        <Description>The script aims to composite Landsat images within a specified date range and geographic location, visualizing and exporting the composite image.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">37.871</Node>
+   <Node id="2" type="eeFunction">ee.Geometry.Point</Node>
+   <Node id="3" type="eeFunction">buffer</Node>
+   <Node id="4" type="literal">1000</Node>
+   <Node id="5" type="complex">['B4', 'B3', 'B2']</Node>
+   <Node id="6" type="complex">{
+
+  bands: ['B4', 'B3', 'B2'],
+
+  min: 0,
+
+  max: 3000,
+
+  gamma: 1.4
+
+}</Node>
+   <Node id="7" type="literal">0</Node>
+   <Node id="8" type="literal">3000</Node>
+   <Node id="9" type="literal">1.4</Node>
+   <Node id="10" type="literal">37.871</Node>
+   <Node id="11" type="eeFunction">ee.Geometry.Point</Node>
+   <Node id="12" type="literal">LANDSAT/LC08/C01/T1_SR</Node>
+   <Node id="13" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="14" type="eeFunction">filterDate</Node>
+   <Node id="15" type="literal">2020-01-01</Node>
+   <Node id="16" type="literal">2020-12-31</Node>
+   <Node id="17" type="eeFunction">filterBounds</Node>
+   <Node id="18" type="eeFunction">select</Node>
+   <Node id="19" type="complex">['B2', 'B3', 'B4', 'B5', 'B6', 'B7']</Node>
+   <Node id="20" type="eeFunction">mean</Node>
+   <Node id="21" type="literal">landsat_composite</Node>
+   <Node id="22" type="complex">{
+
+  image: compositeImage,
+
+  description: 'landsat_composite',
+
+  scale: 30,
+
+  region: ee.Geometry.Point(-122.262, 37.871).buffer(1000),
+
+  maxPixels: 1e10
+
+}</Node>
+   <Node id="23" type="literal">30</Node>
+   <Node id="24" type="literal">10000000000</Node>
+   <Node id="25" type="eeFunction">Export.image.toDrive</Node>
+   <Node id="26" type="literal">Composite Image</Node>
+   <Node id="27" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="2" targetNodeId="3"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="3"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="6"></Relation>
+   <Relation id="8" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="14" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="11" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="17" sourceNodeId="18" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="19" sourceNodeId="23" targetNodeId="22"></Relation>
+   <Relation id="20" sourceNodeId="3" targetNodeId="22"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="22"></Relation>
+   <Relation id="22" sourceNodeId="20" targetNodeId="22"></Relation>
+   <Relation id="23" sourceNodeId="22" targetNodeId="25"></Relation>
+   <Relation id="24" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="20" targetNodeId="27"></Relation>
+   <Relation id="26" sourceNodeId="6" targetNodeId="27"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="63">
+        <Content type="comment">// Select the Landsat image collection and filter by date range</Content>
+    </Script>
+    <Script line="2" startPosition="65" endPosition="94">
+        <Content type="code">var startDate = '2020-01-01';</Content>
+    </Script>
+    <Script line="3" startPosition="96" endPosition="123">
+        <Content type="code">var endDate = '2020-12-31';</Content>
+    </Script>
+    <Script line="5,6,7" startPosition="127" endPosition="278">
+        <Content type="code">var collection = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
+
+  .filterDate(startDate, endDate)
+
+  .filterBounds(ee.Geometry.Point(-122.262, 37.871));</Content>
+    </Script>
+    <Script line="9" startPosition="282" endPosition="318">
+        <Content type="comment">// Select the bands to be composited</Content>
+    </Script>
+    <Script line="10" startPosition="320" endPosition="369">
+        <Content type="code">var bands = ['B2', 'B3', 'B4', 'B5', 'B6', 'B7'];</Content>
+    </Script>
+    <Script line="12" startPosition="373" endPosition="396">
+        <Content type="comment">// Composite the images</Content>
+    </Script>
+    <Script line="13" startPosition="398" endPosition="451">
+        <Content type="code">var compositeImage = collection.select(bands).mean();</Content>
+    </Script>
+    <Script line="15" startPosition="455" endPosition="487">
+        <Content type="comment">// Visualize the composite image</Content>
+    </Script>
+    <Script line="16,17,18,19,20,21" startPosition="489" endPosition="579">
+        <Content type="code">var visParams = {
+
+  bands: ['B4', 'B3', 'B2'],
+
+  min: 0,
+
+  max: 3000,
+
+  gamma: 1.4
+
+};</Content>
+    </Script>
+    <Script line="23" startPosition="583" endPosition="642">
+        <Content type="code">Map.addLayer(compositeImage, visParams, 'Composite Image');</Content>
+    </Script>
+    <Script line="25" startPosition="646" endPosition="675">
+        <Content type="comment">// Export the composite image</Content>
+    </Script>
+    <Script line="26,27,28,29,30,31,32" startPosition="677" endPosition="861">
+        <Content type="code">Export.image.toDrive({
+
+  image: compositeImage,
+
+  description: 'landsat_composite',
+
+  scale: 30,
+
+  region: ee.Geometry.Point(-122.262, 37.871).buffer(1000),
+
+  maxPixels: 1e10
+
+});</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="164" endPosition="186">LANDSAT/LC08/C01/T1_SR</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="82" endPosition="92">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="111" endPosition="121">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="743" endPosition="760">landsat_composite</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="624" endPosition="639">Composite Image</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

@@ -1,0 +1,153 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320003" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>South America(geonameId=6255150)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>TIGER: US Census Counties 2016</SourceName>
+            <Value>TIGER/2016/Counties</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Boundaries</Value>
+        <Description>The script identifies US counties smaller than 3000 square kilometers by calculating their areas and filtering accordingly.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">38.26</Node>
+   <Node id="2" type="eeFunction">Map.setCenter</Node>
+   <Node id="3" type="literal">7</Node>
+   <Node id="4" type="literal">900000</Node>
+   <Node id="5" type="complex">{color: '900000'}</Node>
+   <Node id="6" type="literal">area</Node>
+   <Node id="7" type="eeFunction">ee.Filter.lt</Node>
+   <Node id="8" type="literal">300000</Node>
+   <Node id="9" type="literal">TIGER/2016/Counties</Node>
+   <Node id="10" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="11" type="userDefinedFunction">{
+
+                                                         
+
+  var areaHa = f.area().divide(100 * 100);
+
+
+
+                                                              
+
+  return f.set({area: areaHa});
+
+}</Node>
+   <Node id="12" type="eeFunction">map</Node>
+   <Node id="13" type="eeFunction">filter</Node>
+   <Node id="14" type="eeFunction">Map.addLayer</Node>
+   <Node id="15" type="identifier">f</Node>
+   <Node id="16" type="eeFunction">area</Node>
+   <Node id="17" type="eeFunction">divide</Node>
+   <Node id="18" type="complex">{area: areaHa}</Node>
+   <Node id="19" type="identifier">f</Node>
+   <Node id="20" type="eeFunction">set</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="5" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="8" sourceNodeId="10" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="7" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="5" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="14" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="18" targetNodeId="20"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Computed area filter.</Content>
+    </Script>
+    <Script line="2" startPosition="26" endPosition="88">
+        <Content type="comment">// Find US counties smaller than 3k square kilometers in area.</Content>
+    </Script>
+    <Script line="4" startPosition="92" endPosition="136">
+        <Content type="comment">// Load counties from TIGER boundaries table</Content>
+    </Script>
+    <Script line="5" startPosition="138" endPosition="197">
+        <Content type="code">var counties = ee.FeatureCollection('TIGER/2016/Counties');</Content>
+    </Script>
+    <Script line="7" startPosition="201" endPosition="260">
+        <Content type="comment">// Map a function over the counties to set the area of each</Content>
+    </Script>
+    <Script line="8,9,10,11,12,13,14" startPosition="262" endPosition="518">
+        <Content type="code">var countiesWithArea = counties.map(function(f) {
+
+  // Compute area in square meters.  Convert to hectares.
+
+  var areaHa = f.area().divide(100 * 100);
+
+
+
+  // A new property called 'area' will be set on each feature.
+
+  return f.set({area: areaHa});
+
+});</Content>
+    </Script>
+    <Script line="9" startPosition="315" endPosition="370">
+        <Content type="comment">// Compute area in square meters.  Convert to hectares.</Content>
+    </Script>
+    <Script line="12" startPosition="420" endPosition="480">
+        <Content type="comment">// A new property called 'area' will be set on each feature.</Content>
+    </Script>
+    <Script line="16" startPosition="522" endPosition="561">
+        <Content type="comment">// Filter to get only smaller counties.</Content>
+    </Script>
+    <Script line="17" startPosition="563" endPosition="634">
+        <Content type="code">var smallCounties = countiesWithArea.filter(ee.Filter.lt('area', 3e5));</Content>
+    </Script>
+    <Script line="19" startPosition="638" endPosition="685">
+        <Content type="code">Map.addLayer(smallCounties, {color: '900000'});</Content>
+    </Script>
+    <Script line="21" startPosition="689" endPosition="721">
+        <Content type="code">Map.setCenter(-119.7, 38.26, 7);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>6</ServiceNodeId>
+        <GEEScriptPart startPosition="446" endPosition="450">area</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>6</ServiceNodeId>
+        <GEEScriptPart startPosition="621" endPosition="625">area</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="175" endPosition="194">TIGER/2016/Counties</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

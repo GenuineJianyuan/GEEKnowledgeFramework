@@ -1,0 +1,236 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320009" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[-121.767, 46.852]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>SRTM Digital Elevation Data Version 4</SourceName>
+            <Value>CGIAR/SRTM90_V4</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Topography</Value>
+        <Description>This script computes and displays hillshade from SRTM DEM terrain data, based on given sun azimuth and elevation angles.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">46.852</Node>
+   <Node id="2" type="eeFunction">Map.setCenter</Node>
+   <Node id="3" type="literal">11</Node>
+   <Node id="4" type="literal">CGIAR/SRTM90_V4</Node>
+   <Node id="5" type="eeFunction">ee.Image</Node>
+   <Node id="6" type="eeFunction">ee.Algorithms.Terrain</Node>
+   <Node id="7" type="literal">aspect</Node>
+   <Node id="8" type="eeFunction">select</Node>
+   <Node id="9" type="literal">slope</Node>
+   <Node id="10" type="eeFunction">select</Node>
+   <Node id="11" type="userDefinedFunction">radians</Node>
+   <Node id="12" type="userDefinedFunction">radians</Node>
+   <Node id="13" type="userDefinedFunction">radians</Node>
+   <Node id="14" type="literal">1</Node>
+   <Node id="15" type="userDefinedFunction">hillshade</Node>
+   <Node id="16" type="literal">60</Node>
+   <Node id="17" type="userDefinedFunction">hillshade</Node>
+   <Node id="18" type="eeFunction">Map.addLayer</Node>
+   <Node id="19" type="complex">{}</Node>
+   <Node id="20" type="identifier">img</Node>
+   <Node id="21" type="eeFunction">toFloat</Node>
+   <Node id="22" type="eeFunction">multiply</Node>
+   <Node id="23" type="eeFunction">divide</Node>
+   <Node id="24" type="literal">180</Node>
+   <Node id="25" type="identifier">slope</Node>
+   <Node id="26" type="eeFunction">cos</Node>
+   <Node id="27" type="identifier">slope</Node>
+   <Node id="28" type="eeFunction">sin</Node>
+   <Node id="29" type="identifier">ze</Node>
+   <Node id="30" type="eeFunction">ee.Image</Node>
+   <Node id="31" type="eeFunction">radians</Node>
+   <Node id="32" type="eeFunction">sin</Node>
+   <Node id="33" type="eeFunction">cos</Node>
+   <Node id="34" type="eeFunction">multiply</Node>
+   <Node id="35" type="identifier">az</Node>
+   <Node id="36" type="eeFunction">ee.Image</Node>
+   <Node id="37" type="eeFunction">radians</Node>
+   <Node id="38" type="identifier">aspect</Node>
+   <Node id="39" type="eeFunction">subtract</Node>
+   <Node id="40" type="eeFunction">cos</Node>
+   <Node id="41" type="eeFunction">multiply</Node>
+   <Node id="42" type="eeFunction">multiply</Node>
+   <Node id="43" type="eeFunction">add</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="6" targetNodeId="8"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="6" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="8" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="11" sourceNodeId="10" targetNodeId="13"></Relation>
+   <Relation id="12" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="13" sourceNodeId="14" targetNodeId="15"></Relation>
+   <Relation id="14" sourceNodeId="16" targetNodeId="15"></Relation>
+   <Relation id="15" sourceNodeId="13" targetNodeId="15"></Relation>
+   <Relation id="16" sourceNodeId="11" targetNodeId="15"></Relation>
+   <Relation id="17" sourceNodeId="17" targetNodeId="15"></Relation>
+   <Relation id="18" sourceNodeId="15" targetNodeId="18"></Relation>
+   <Relation id="19" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="20" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="21" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="22" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="24" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="25" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="27" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="28" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="29" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="30" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="31" sourceNodeId="26" targetNodeId="34"></Relation>
+   <Relation id="32" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="33" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="34" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="35" sourceNodeId="37" targetNodeId="39"></Relation>
+   <Relation id="36" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="37" sourceNodeId="40" targetNodeId="41"></Relation>
+   <Relation id="38" sourceNodeId="28" targetNodeId="41"></Relation>
+   <Relation id="39" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="40" sourceNodeId="32" targetNodeId="42"></Relation>
+   <Relation id="41" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="42" sourceNodeId="34" targetNodeId="43"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="59">
+        <Content type="comment">// Hillshade example.  This is a demonstration of computing</Content>
+    </Script>
+    <Script line="2" startPosition="61" endPosition="117">
+        <Content type="comment">// a hillshade from terrain data and displaying multiple</Content>
+    </Script>
+    <Script line="3" startPosition="119" endPosition="174">
+        <Content type="comment">// layers based on multiple view geometries.  Hillshade</Content>
+    </Script>
+    <Script line="4" startPosition="176" endPosition="231">
+        <Content type="comment">// creation is also provided by ee.Terrain.hillshade().</Content>
+    </Script>
+    <Script line="6" startPosition="235" endPosition="291">
+        <Content type="comment">// Define a function to convert from degrees to radians.</Content>
+    </Script>
+    <Script line="7,8,9" startPosition="293" endPosition="374">
+        <Content type="code">function radians(img) {
+
+  return img.toFloat().multiply(Math.PI).divide(180);
+
+}</Content>
+    </Script>
+    <Script line="11" startPosition="378" endPosition="439">
+        <Content type="comment">// Define a function to compute a hillshade from terrain data</Content>
+    </Script>
+    <Script line="12" startPosition="441" endPosition="484">
+        <Content type="comment">// for the given sun azimuth and elevation.</Content>
+    </Script>
+    <Script line="13,14,15,16,17,18,19,20,21,22,23,24,25,26,27" startPosition="486" endPosition="1074">
+        <Content type="code">function hillshade(az, ze, slope, aspect) {
+
+  // Convert angles to radians.
+
+  var azimuth = radians(ee.Image(az));
+
+  var zenith = radians(ee.Image(ze));
+
+  // Note that methods on images are needed to do the computation.
+
+  // i.e. JavaScript operators (e.g. +, -, /, *) do not work on images.
+
+  // The following implements:
+
+  // Hillshade = cos(Azimuth - Aspect) * sin(Slope) * sin(Zenith) +
+
+  //     cos(Zenith) * cos(Slope)
+
+  return azimuth.subtract(aspect).cos()
+
+    .multiply(slope.sin())
+
+    .multiply(zenith.sin())
+
+    .add(
+
+      zenith.cos().multiply(slope.cos()));
+
+}</Content>
+    </Script>
+    <Script line="14" startPosition="533" endPosition="562">
+        <Content type="comment">// Convert angles to radians.</Content>
+    </Script>
+    <Script line="17" startPosition="645" endPosition="709">
+        <Content type="comment">// Note that methods on images are needed to do the computation.</Content>
+    </Script>
+    <Script line="18" startPosition="713" endPosition="782">
+        <Content type="comment">// i.e. JavaScript operators (e.g. +, -, /, *) do not work on images.</Content>
+    </Script>
+    <Script line="19" startPosition="786" endPosition="814">
+        <Content type="comment">// The following implements:</Content>
+    </Script>
+    <Script line="20" startPosition="818" endPosition="883">
+        <Content type="comment">// Hillshade = cos(Azimuth - Aspect) * sin(Slope) * sin(Zenith) +</Content>
+    </Script>
+    <Script line="21" startPosition="887" endPosition="918">
+        <Content type="comment">//     cos(Zenith) * cos(Slope)</Content>
+    </Script>
+    <Script line="29" startPosition="1078" endPosition="1124">
+        <Content type="comment">// Compute terrain measures from the SRTM DEM.</Content>
+    </Script>
+    <Script line="30" startPosition="1126" endPosition="1191">
+        <Content type="code">var terrain = ee.Algorithms.Terrain(ee.Image('CGIAR/SRTM90_V4'));</Content>
+    </Script>
+    <Script line="31" startPosition="1193" endPosition="1238">
+        <Content type="code">var slope = radians(terrain.select('slope'));</Content>
+    </Script>
+    <Script line="32" startPosition="1240" endPosition="1287">
+        <Content type="code">var aspect = radians(terrain.select('aspect'));</Content>
+    </Script>
+    <Script line="34" startPosition="1291" endPosition="1327">
+        <Content type="code">Map.setCenter(-121.767, 46.852, 11);</Content>
+    </Script>
+    <Script line="36" startPosition="1331" endPosition="1393">
+        <Content type="code">Map.addLayer(hillshade(1, 60, slope, aspect), {}, 1 + ' deg');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>4</ServiceNodeId>
+        <GEEScriptPart startPosition="1172" endPosition="1187">CGIAR/SRTM90_V4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="1277" endPosition="1283">aspect</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="1229" endPosition="1234">slope</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

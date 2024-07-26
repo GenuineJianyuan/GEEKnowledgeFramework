@@ -1,0 +1,15 @@
+API1,API2
+ee.Geometry.Rectangle,filterBounds
+ee.Geometry.Rectangle,clip
+Image.subtract,Image.gt
+Image.rename,Image.subtract
+filterBounds,filterDate
+reduce.median,Image.normalizedDifference
+Image.add,Image.gte
+Image.gt,Image.add
+Image.normalizedDifference,Image.rename
+Image.gte,Image.select
+filter,reduce.median
+ee.ImageCollection,filterBounds
+Image.add,Image.add
+Image.select, clip

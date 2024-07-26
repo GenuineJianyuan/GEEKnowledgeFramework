@@ -1,0 +1,337 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320027" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2023-04-01</StartTime>
+        <EndTime>2023-10-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[40.3754, 43.5012, -96.6397, -90.1401]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LC08/C02/T1</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>users/your_username/your_sample_dataset</SourceName>
+            <Value>users/your_username/your_sample_dataset</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land surface/agriculture indicators</Value>
+        <Description>The script detects crop areas in Iowa using Landsat 8 imagery and a random forest classifier, and calculates the area of corn cultivation.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: ['yellow', 'green']}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="complex">['yellow', 'green']</Node>
+   <Node id="5" type="literal">10</Node>
+   <Node id="6" type="eeFunction">ee.Classifier.smileRandomForest</Node>
+   <Node id="7" type="literal">LANDSAT/LC08/C02/T1</Node>
+   <Node id="8" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="9" type="literal">-96.6397</Node>
+   <Node id="10" type="eeFunction">ee.List</Node>
+   <Node id="11" type="literal">40.3754</Node>
+   <Node id="12" type="literal">-90.1401</Node>
+   <Node id="13" type="literal">43.5012</Node>
+   <Node id="14" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="15" type="eeFunction">ee.Reducer.sum</Node>
+   <Node id="16" type="complex">{
+
+                  reducer: ee.Reducer.sum(),
+
+                  geometry: iowa,
+
+                  scale: 30,
+
+                  maxPixels: 1e9
+
+                }</Node>
+   <Node id="17" type="literal">30</Node>
+   <Node id="18" type="literal">1000000000</Node>
+   <Node id="19" type="literal">7</Node>
+   <Node id="20" type="eeFunction">Map.centerObject</Node>
+   <Node id="21" type="eeFunction">filterBounds</Node>
+   <Node id="22" type="eeFunction">filterDate</Node>
+   <Node id="23" type="literal">2023-04-01</Node>
+   <Node id="24" type="literal">2023-10-31</Node>
+   <Node id="25" type="eeFunction">median</Node>
+   <Node id="26" type="eeFunction">select</Node>
+   <Node id="27" type="complex">['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7']</Node>
+   <Node id="28" type="literal">users/your_username/your_sample_dataset</Node>
+   <Node id="29" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="30" type="userDefinedFunction">{
+
+  return feature.set(landsat.select(bands).reduceRegion({
+
+    reducer: ee.Reducer.first(),
+
+    geometry: feature.geometry(),
+
+    scale: 30
+
+  }));
+
+}</Node>
+   <Node id="31" type="eeFunction">map</Node>
+   <Node id="32" type="literal">landType</Node>
+   <Node id="33" type="complex">{
+
+  features: trainingData,
+
+  classProperty: 'landType',
+
+  inputProperties: bands
+
+}</Node>
+   <Node id="34" type="eeFunction">train</Node>
+   <Node id="35" type="eeFunction">classify</Node>
+   <Node id="36" type="literal">1</Node>
+   <Node id="37" type="eeFunction">eq</Node>
+   <Node id="38" type="eeFunction">multiply</Node>
+   <Node id="39" type="eeFunction">ee.Image.pixelArea</Node>
+   <Node id="40" type="eeFunction">reduceRegion</Node>
+   <Node id="41" type="literal">Corn Field Area in Iowa:</Node>
+   <Node id="42" type="eeFunction">print</Node>
+   <Node id="43" type="eeFunction">Map.addLayer</Node>
+   <Node id="44" type="literal">Classified Image</Node>
+   <Node id="45" type="identifier">feature</Node>
+   <Node id="46" type="eeFunction">geometry</Node>
+   <Node id="47" type="eeFunction">ee.Reducer.first</Node>
+   <Node id="48" type="complex">{
+
+    reducer: ee.Reducer.first(),
+
+    geometry: feature.geometry(),
+
+    scale: 30
+
+  }</Node>
+   <Node id="49" type="literal">30</Node>
+   <Node id="50" type="identifier">landsat</Node>
+   <Node id="51" type="eeFunction">select</Node>
+   <Node id="52" type="identifier">bands</Node>
+   <Node id="53" type="eeFunction">reduceRegion</Node>
+   <Node id="54" type="identifier">feature</Node>
+   <Node id="55" type="eeFunction">set</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="10"></Relation>
+   <Relation id="10" sourceNodeId="10" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="18" targetNodeId="16"></Relation>
+   <Relation id="14" sourceNodeId="14" targetNodeId="16"></Relation>
+   <Relation id="15" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="16" sourceNodeId="14" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="8" targetNodeId="21"></Relation>
+   <Relation id="18" sourceNodeId="14" targetNodeId="21"></Relation>
+   <Relation id="19" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="20" sourceNodeId="23" targetNodeId="22"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="22"></Relation>
+   <Relation id="22" sourceNodeId="22" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="27" targetNodeId="26"></Relation>
+   <Relation id="25" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="26" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="27" sourceNodeId="29" targetNodeId="31"></Relation>
+   <Relation id="28" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="29" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="30" sourceNodeId="27" targetNodeId="33"></Relation>
+   <Relation id="31" sourceNodeId="6" targetNodeId="34"></Relation>
+   <Relation id="32" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="33" sourceNodeId="26" targetNodeId="35"></Relation>
+   <Relation id="34" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="35" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="36" sourceNodeId="35" targetNodeId="37"></Relation>
+   <Relation id="37" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="38" sourceNodeId="39" targetNodeId="38"></Relation>
+   <Relation id="39" sourceNodeId="38" targetNodeId="40"></Relation>
+   <Relation id="40" sourceNodeId="16" targetNodeId="40"></Relation>
+   <Relation id="41" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="40" targetNodeId="42"></Relation>
+   <Relation id="43" sourceNodeId="2" targetNodeId="43"></Relation>
+   <Relation id="44" sourceNodeId="44" targetNodeId="43"></Relation>
+   <Relation id="45" sourceNodeId="35" targetNodeId="43"></Relation>
+   <Relation id="46" sourceNodeId="45" targetNodeId="46"></Relation>
+   <Relation id="47" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="48" sourceNodeId="46" targetNodeId="48"></Relation>
+   <Relation id="49" sourceNodeId="49" targetNodeId="48"></Relation>
+   <Relation id="50" sourceNodeId="50" targetNodeId="51"></Relation>
+   <Relation id="51" sourceNodeId="52" targetNodeId="51"></Relation>
+   <Relation id="52" sourceNodeId="51" targetNodeId="53"></Relation>
+   <Relation id="53" sourceNodeId="48" targetNodeId="53"></Relation>
+   <Relation id="54" sourceNodeId="54" targetNodeId="55"></Relation>
+   <Relation id="55" sourceNodeId="53" targetNodeId="55"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="22">
+        <Content type="comment">// Crop Area Detection</Content>
+    </Script>
+    <Script line="3" startPosition="26" endPosition="76">
+        <Content type="comment">// Example: How to import a user-uploaded CSV file</Content>
+    </Script>
+    <Script line="4" startPosition="78" endPosition="163">
+        <Content type="code">var uploadedSample = ee.FeatureCollection('users/your_username/your_sample_dataset');</Content>
+    </Script>
+    <Script line="6" startPosition="167" endPosition="197">
+        <Content type="comment">// Set the time range and area</Content>
+    </Script>
+    <Script line="7" startPosition="199" endPosition="224">
+        <Content type="code">var start = '2023-04-01';</Content>
+    </Script>
+    <Script line="8" startPosition="226" endPosition="249">
+        <Content type="code">var end = '2023-10-31';</Content>
+    </Script>
+    <Script line="9" startPosition="251" endPosition="324">
+        <Content type="code">var iowa = ee.Geometry.Rectangle([-96.6397, 40.3754, -90.1401, 43.5012]);</Content>
+    </Script>
+    <Script line="11" startPosition="328" endPosition="353">
+        <Content type="comment">// Load Landsat 8 imagery</Content>
+    </Script>
+    <Script line="12,13,14,15" startPosition="355" endPosition="516">
+        <Content type="code">var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+
+                .filterBounds(iowa)
+
+                .filterDate(start, end)
+
+                .median();</Content>
+    </Script>
+    <Script line="17" startPosition="520" endPosition="535">
+        <Content type="comment">// Select bands</Content>
+    </Script>
+    <Script line="18" startPosition="537" endPosition="592">
+        <Content type="code">var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'];</Content>
+    </Script>
+    <Script line="20" startPosition="596" endPosition="640">
+        <Content type="comment">// Extract band values for each sample point</Content>
+    </Script>
+    <Script line="21,22,23,24,25,26,27" startPosition="642" endPosition="855">
+        <Content type="code">var trainingData = uploadedSample.map(function(feature) {
+
+  return feature.set(landsat.select(bands).reduceRegion({
+
+    reducer: ee.Reducer.first(),
+
+    geometry: feature.geometry(),
+
+    scale: 30
+
+  }));
+
+});</Content>
+    </Script>
+    <Script line="29" startPosition="859" endPosition="880">
+        <Content type="comment">// Train a classifier</Content>
+    </Script>
+    <Script line="30,31,32,33,34" startPosition="882" endPosition="1030">
+        <Content type="code">var classifier = ee.Classifier.smileRandomForest(10).train({
+
+  features: trainingData,
+
+  classProperty: 'landType',
+
+  inputProperties: bands
+
+});</Content>
+    </Script>
+    <Script line="36" startPosition="1034" endPosition="1057">
+        <Content type="comment">// Apply the classifier</Content>
+    </Script>
+    <Script line="37" startPosition="1059" endPosition="1119">
+        <Content type="code">var classified = landsat.select(bands).classify(classifier);</Content>
+    </Script>
+    <Script line="39" startPosition="1123" endPosition="1139">
+        <Content type="comment">// Visualization</Content>
+    </Script>
+    <Script line="40" startPosition="1141" endPosition="1167">
+        <Content type="code">Map.centerObject(iowa, 7);</Content>
+    </Script>
+    <Script line="41" startPosition="1169" endPosition="1262">
+        <Content type="code">Map.addLayer(classified, {min: 0, max: 1, palette: ['yellow', 'green']}, 'Classified Image');</Content>
+    </Script>
+    <Script line="43" startPosition="1266" endPosition="1307">
+        <Content type="comment">// Calculate the area of corn cultivation</Content>
+    </Script>
+    <Script line="44,45,46,47,48,49,50,51" startPosition="1309" endPosition="1588">
+        <Content type="code">var cornArea = classified.eq(1)
+
+                .multiply(ee.Image.pixelArea())
+
+                .reduceRegion({
+
+                  reducer: ee.Reducer.sum(),
+
+                  geometry: iowa,
+
+                  scale: 30,
+
+                  maxPixels: 1e9
+
+                });</Content>
+    </Script>
+    <Script line="53" startPosition="1592" endPosition="1614">
+        <Content type="comment">// Output area results</Content>
+    </Script>
+    <Script line="54" startPosition="1616" endPosition="1660">
+        <Content type="code">print('Corn Field Area in Iowa:', cornArea);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="389" endPosition="408">LANDSAT/LC08/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="212" endPosition="222">2023-04-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="237" endPosition="247">2023-10-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>28</ServiceNodeId>
+        <GEEScriptPart startPosition="121" endPosition="160">users/your_username/your_sample_dataset</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="989" endPosition="997">landType</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="1623" endPosition="1647">Corn Field Area in Iowa:</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>44</ServiceNodeId>
+        <GEEScriptPart startPosition="1243" endPosition="1259">Classified Image</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

@@ -1,0 +1,205 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320007" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2012-01-01</StartTime>
+        <EndTime>2013-01-01</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[-9.43348, -9.22818, -59.81163, -59.27561]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>FORMA/FORMA_500m</SourceName>
+            <Value>FORMA/FORMA_500m</Value>
+        </Source>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>UMD/hansen/global_forest_change_2015</SourceName>
+            <Value>UMD/hansen/global_forest_change_2015</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Forest science</Value>
+        <Description>This script identifies areas of deforestation in 2012 by combining data from the FORMA 500m dataset and Hansen et al. global forest change dataset.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">lossyear</Node>
+   <Node id="2" type="eeFunction">ee.List</Node>
+   <Node id="3" type="literal">UMD/hansen/global_forest_change_2015</Node>
+   <Node id="4" type="eeFunction">ee.Image</Node>
+   <Node id="5" type="eeFunction">select</Node>
+   <Node id="6" type="eeFunction">eq</Node>
+   <Node id="7" type="literal">12</Node>
+   <Node id="8" type="literal">1</Node>
+   <Node id="9" type="eeFunction">eq</Node>
+   <Node id="10" type="literal">FORMA/FORMA_500m</Node>
+   <Node id="11" type="eeFunction">ee.Image</Node>
+   <Node id="12" type="literal">-59.81163</Node>
+   <Node id="13" type="eeFunction">ee.List</Node>
+   <Node id="14" type="literal">-9.43348</Node>
+   <Node id="15" type="literal">-59.27561</Node>
+   <Node id="16" type="literal">-9.22818</Node>
+   <Node id="17" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="18" type="literal">2013-01-01</Node>
+   <Node id="19" type="eeFunction">ee.Date</Node>
+   <Node id="20" type="eeFunction">millis</Node>
+   <Node id="21" type="eeFunction">divide</Node>
+   <Node id="22" type="literal">1000</Node>
+   <Node id="23" type="eeFunction">lte</Node>
+   <Node id="24" type="literal">2012-01-01</Node>
+   <Node id="25" type="eeFunction">ee.Date</Node>
+   <Node id="26" type="eeFunction">millis</Node>
+   <Node id="27" type="eeFunction">divide</Node>
+   <Node id="28" type="literal">1000</Node>
+   <Node id="29" type="eeFunction">gte</Node>
+   <Node id="30" type="eeFunction">and</Node>
+   <Node id="31" type="literal">1</Node>
+   <Node id="32" type="eeFunction">eq</Node>
+   <Node id="33" type="eeFunction">and</Node>
+   <Node id="34" type="eeFunction">updateMask</Node>
+   <Node id="35" type="literal">Hansen and FORMA (yellow)</Node>
+   <Node id="36" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="2" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="5" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="8" sourceNodeId="6" targetNodeId="9"></Relation>
+   <Relation id="9" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="13"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="13"></Relation>
+   <Relation id="14" sourceNodeId="13" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="18" sourceNodeId="22" targetNodeId="21"></Relation>
+   <Relation id="19" sourceNodeId="11" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="21" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="23" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="28" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="11" targetNodeId="29"></Relation>
+   <Relation id="26" sourceNodeId="27" targetNodeId="29"></Relation>
+   <Relation id="27" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="28" sourceNodeId="23" targetNodeId="30"></Relation>
+   <Relation id="29" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="30" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="9" targetNodeId="33"></Relation>
+   <Relation id="32" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="33" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="34" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="35" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="36" sourceNodeId="34" targetNodeId="36"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="16">
+        <Content type="comment">// Forest Change</Content>
+    </Script>
+    <Script line="3" startPosition="20" endPosition="66">
+        <Content type="comment">// Convert dates from milliseconds to seconds.</Content>
+    </Script>
+    <Script line="4" startPosition="68" endPosition="124">
+        <Content type="code">var start = ee.Date('2012-01-01').millis().divide(1000);</Content>
+    </Script>
+    <Script line="5" startPosition="126" endPosition="180">
+        <Content type="code">var end = ee.Date('2013-01-01').millis().divide(1000);</Content>
+    </Script>
+    <Script line="6" startPosition="182" endPosition="261">
+        <Content type="code">var region = ee.Geometry.Rectangle([-59.81163, -9.43348, -59.27561, -9.22818]);</Content>
+    </Script>
+    <Script line="8" startPosition="265" endPosition="295">
+        <Content type="comment">// Load the FORMA 500 dataset.</Content>
+    </Script>
+    <Script line="9" startPosition="297" endPosition="338">
+        <Content type="code">var forma = ee.Image('FORMA/FORMA_500m');</Content>
+    </Script>
+    <Script line="11" startPosition="342" endPosition="394">
+        <Content type="comment">// Create a binary layer from the dates of interest.</Content>
+    </Script>
+    <Script line="12" startPosition="396" endPosition="449">
+        <Content type="code">var forma2012 = forma.gte(start).and(forma.lte(end));</Content>
+    </Script>
+    <Script line="14" startPosition="453" endPosition="503">
+        <Content type="comment">// Load Hansen et al. data and get change in 2012.</Content>
+    </Script>
+    <Script line="15" startPosition="505" endPosition="564">
+        <Content type="code">var gfc = ee.Image('UMD/hansen/global_forest_change_2015');</Content>
+    </Script>
+    <Script line="16" startPosition="566" endPosition="610">
+        <Content type="code">var gfc12 = gfc.select(['lossyear']).eq(12);</Content>
+    </Script>
+    <Script line="18" startPosition="614" endPosition="664">
+        <Content type="comment">// Create an image which is one where the datasets</Content>
+    </Script>
+    <Script line="19" startPosition="666" endPosition="712">
+        <Content type="comment">// both show deforestation and zero elsewhere.</Content>
+    </Script>
+    <Script line="20" startPosition="714" endPosition="763">
+        <Content type="code">var gfc_forma = gfc12.eq(1).and(forma2012.eq(1));</Content>
+    </Script>
+    <Script line="22" startPosition="767" endPosition="807">
+        <Content type="code">var mask=gfc_forma.updateMask(gfc_forma)</Content>
+    </Script>
+    <Script line="23" startPosition="809" endPosition="836">
+        <Content type="comment">// Display data on the map.</Content>
+    </Script>
+    <Script line="24,25,26,27" startPosition="838" endPosition="895">
+        <Content type="code">Map.addLayer(
+
+  mask,
+
+  'Hansen and FORMA (yellow)'
+
+);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>1</ServiceNodeId>
+        <GEEScriptPart startPosition="591" endPosition="599">lossyear</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="525" endPosition="561">UMD/hansen/global_forest_change_2015</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="319" endPosition="335">FORMA/FORMA_500m</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="145" endPosition="155">2013-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="89" endPosition="99">2012-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>35</ServiceNodeId>
+        <GEEScriptPart startPosition="865" endPosition="890">Hansen and FORMA (yellow)</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

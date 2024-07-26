@@ -1,0 +1,15 @@
+API1,API2
+select,filterDate
+ee.ImageCollection,select
+ee.Geometry.Point,ee.Feature
+Image.addBands,Image.sample
+filterDate,reduce.mean
+Image.pixelLonLat,Image.addBands
+Reducer.mean,Reducer.combine
+Image.sample,map
+Collection.reduceColumns,Dictionary.get
+Dictionary.get,FeatureCollection.inverseDistance
+reduce.mean,Image.rename
+Image.rename,Image.addBands
+Reducer.combine,Collection.reduceColumns
+Reducer.stdDev,Reducer.combine

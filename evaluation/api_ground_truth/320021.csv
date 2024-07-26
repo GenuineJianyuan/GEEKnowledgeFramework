@@ -1,0 +1,17 @@
+API1,API2
+Image.arraySort,Image.arraySlice
+Image.arraySlice,Image.arraySort
+filterDate,map
+ee.Image,Image.multiply
+reduce.min,Image.bandNames
+ee.Image,Image.arraySlice
+Image.arraySlice,Image.multiply
+Image.arrayFlatten,Image.select
+Image.normalizedDifference,Image.addBands
+Image.arraySlice,Image.arrayProject
+Image.multiply,Image.arraySort
+ImageCollection.toArray,Image.arraySlice
+ee.Image,Image.normalizedDifference
+Image.arrayProject,Image.arrayFlatten
+bandNames,slice
+ee.ImageCollection,filterDate

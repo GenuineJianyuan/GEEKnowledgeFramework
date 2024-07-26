@@ -1,0 +1,464 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320020" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2021-08-01</StartTime>
+        <EndTime>2021-08-08</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[29.04953121401721, 29.10954031020994, 116.02116319983233, 116.12004015295733]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>Sentinel-2 MSI: MultiSpectral Instrument, Level-1C</SourceName>
+            <Value>COPERNICUS/S2</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Ecosystems</Value>
+        <Description>The script performs Principal Component Analysis (PCA) on Sentinel-2 satellite imagery to extract key components. The output is a multiband image representing the principal components.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="complex">['pc1', 'pc2', 'pc3']</Node>
+   <Node id="2" type="complex">{bands: ['pc1', 'pc2', 'pc3'], min: -2, max: 2}</Node>
+   <Node id="3" type="literal">-2</Node>
+   <Node id="4" type="literal">2</Node>
+   <Node id="5" type="eeFunction">ee.Reducer.mean</Node>
+   <Node id="6" type="complex">{
+
+  reducer: ee.Reducer.mean(),
+
+  geometry: region,
+
+  scale: scale,
+
+  maxPixels: 1e9
+
+}</Node>
+   <Node id="7" type="literal">1000000000</Node>
+   <Node id="8" type="literal">10</Node>
+   <Node id="9" type="eeFunction">ee.Reducer.mean</Node>
+   <Node id="10" type="complex">{
+
+  reducer: ee.Reducer.mean(),
+
+  geometry: region,
+
+  scale: scale,
+
+  maxPixels: 1e9
+
+}</Node>
+   <Node id="11" type="literal">1000000000</Node>
+   <Node id="12" type="literal">CLOUDY_PIXEL_PERCENTAGE</Node>
+   <Node id="13" type="eeFunction">ee.Filter.lt</Node>
+   <Node id="14" type="literal">10</Node>
+   <Node id="15" type="literal">COPERNICUS/S2</Node>
+   <Node id="16" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="17" type="eeFunction">filter</Node>
+   <Node id="18" type="eeFunction">filterDate</Node>
+   <Node id="19" type="literal">2021-08-01</Node>
+   <Node id="20" type="literal">2021-08-08</Node>
+   <Node id="21" type="eeFunction">mosaic</Node>
+   <Node id="22" type="complex">[[116.02116319983233, 29.095141315194134],
+
+          [116.03352281897295, 29.05073173840886],
+
+          [116.09394762366045, 29.04953121401721],
+
+          [116.12004015295733, 29.10954031020994]]</Node>
+   <Node id="23" type="eeFunction">ee.List</Node>
+   <Node id="24" type="eeFunction">ee.Geometry.Polygon</Node>
+   <Node id="25" type="literal">None</Node>
+   <Node id="26" type="literal">False</Node>
+   <Node id="27" type="eeFunction">clip</Node>
+   <Node id="28" type="eeFunction">select</Node>
+   <Node id="29" type="complex">['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12']</Node>
+   <Node id="30" type="eeFunction">reduceRegion</Node>
+   <Node id="31" type="eeFunction">toImage</Node>
+   <Node id="32" type="eeFunction">subtract</Node>
+   <Node id="33" type="userDefinedFunction">getPrincipalComponents</Node>
+   <Node id="34" type="userDefinedFunction">getPrincipalComponents</Node>
+   <Node id="35" type="eeFunction">Map.addLayer</Node>
+   <Node id="36" type="literal">PCA</Node>
+   <Node id="37" type="eeFunction">reduceRegion</Node>
+   <Node id="38" type="eeFunction">bandNames</Node>
+   <Node id="39" type="literal">0</Node>
+   <Node id="40" type="eeFunction">ee.List</Node>
+   <Node id="41" type="complex">['pc1', 'pc2', 'pc3', 'pc4', 'pc5', 'pc6', 'pc7', 'pc8', 'pc9', 'pc10', 'pc11', 'pc12', 'pc13']</Node>
+   <Node id="42" type="eeFunction">ee.List</Node>
+   <Node id="43" type="eeFunction">ee.Reducer.centeredCovariance</Node>
+   <Node id="44" type="complex">{
+
+    reducer: ee.Reducer.centeredCovariance(),
+
+    geometry: region,
+
+    scale: scale,
+
+    maxPixels: 1e9
+
+  }</Node>
+   <Node id="45" type="identifier">region</Node>
+   <Node id="46" type="identifier">scale</Node>
+   <Node id="47" type="literal">1000000000</Node>
+   <Node id="48" type="identifier">image</Node>
+   <Node id="49" type="eeFunction">subtract</Node>
+   <Node id="50" type="identifier">means</Node>
+   <Node id="51" type="eeFunction">toArray</Node>
+   <Node id="52" type="literal">1</Node>
+   <Node id="53" type="eeFunction">toArray</Node>
+   <Node id="54" type="eeFunction">reduceRegion</Node>
+   <Node id="55" type="literal">array</Node>
+   <Node id="56" type="eeFunction">get</Node>
+   <Node id="57" type="eeFunction">ee.Array</Node>
+   <Node id="58" type="eeFunction">eigen</Node>
+   <Node id="59" type="literal">1</Node>
+   <Node id="60" type="eeFunction">slice</Node>
+   <Node id="61" type="literal">1</Node>
+   <Node id="62" type="eeFunction">ee.Image</Node>
+   <Node id="63" type="eeFunction">matrixMultiply</Node>
+   <Node id="64" type="eeFunction">arrayProject</Node>
+   <Node id="65" type="eeFunction">arrayFlatten</Node>
+   <Node id="66" type="literal">1</Node>
+   <Node id="67" type="eeFunction">slice</Node>
+   <Node id="68" type="literal">0</Node>
+   <Node id="69" type="literal">1</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="6"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="8" targetNodeId="10"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="13" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="17" sourceNodeId="20" targetNodeId="18"></Relation>
+   <Relation id="18" sourceNodeId="18" targetNodeId="21"></Relation>
+   <Relation id="19" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="25" targetNodeId="24"></Relation>
+   <Relation id="22" sourceNodeId="26" targetNodeId="24"></Relation>
+   <Relation id="23" sourceNodeId="21" targetNodeId="27"></Relation>
+   <Relation id="24" sourceNodeId="24" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="29" targetNodeId="28"></Relation>
+   <Relation id="27" sourceNodeId="6" targetNodeId="30"></Relation>
+   <Relation id="28" sourceNodeId="28" targetNodeId="30"></Relation>
+   <Relation id="29" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="30" sourceNodeId="28" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="32" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="33" sourceNodeId="8" targetNodeId="33"></Relation>
+   <Relation id="34" sourceNodeId="34" targetNodeId="33"></Relation>
+   <Relation id="35" sourceNodeId="2" targetNodeId="35"></Relation>
+   <Relation id="36" sourceNodeId="36" targetNodeId="35"></Relation>
+   <Relation id="37" sourceNodeId="33" targetNodeId="35"></Relation>
+   <Relation id="38" sourceNodeId="10" targetNodeId="37"></Relation>
+   <Relation id="39" sourceNodeId="28" targetNodeId="37"></Relation>
+   <Relation id="40" sourceNodeId="28" targetNodeId="38"></Relation>
+   <Relation id="41" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="42" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="43" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="44" sourceNodeId="45" targetNodeId="44"></Relation>
+   <Relation id="45" sourceNodeId="46" targetNodeId="44"></Relation>
+   <Relation id="46" sourceNodeId="47" targetNodeId="44"></Relation>
+   <Relation id="47" sourceNodeId="48" targetNodeId="49"></Relation>
+   <Relation id="48" sourceNodeId="50" targetNodeId="49"></Relation>
+   <Relation id="49" sourceNodeId="49" targetNodeId="51"></Relation>
+   <Relation id="50" sourceNodeId="52" targetNodeId="53"></Relation>
+   <Relation id="51" sourceNodeId="51" targetNodeId="53"></Relation>
+   <Relation id="52" sourceNodeId="44" targetNodeId="54"></Relation>
+   <Relation id="53" sourceNodeId="51" targetNodeId="54"></Relation>
+   <Relation id="54" sourceNodeId="55" targetNodeId="56"></Relation>
+   <Relation id="55" sourceNodeId="54" targetNodeId="56"></Relation>
+   <Relation id="56" sourceNodeId="56" targetNodeId="57"></Relation>
+   <Relation id="57" sourceNodeId="57" targetNodeId="58"></Relation>
+   <Relation id="58" sourceNodeId="59" targetNodeId="60"></Relation>
+   <Relation id="59" sourceNodeId="61" targetNodeId="60"></Relation>
+   <Relation id="60" sourceNodeId="58" targetNodeId="60"></Relation>
+   <Relation id="61" sourceNodeId="60" targetNodeId="62"></Relation>
+   <Relation id="62" sourceNodeId="62" targetNodeId="63"></Relation>
+   <Relation id="63" sourceNodeId="53" targetNodeId="63"></Relation>
+   <Relation id="64" sourceNodeId="63" targetNodeId="64"></Relation>
+   <Relation id="65" sourceNodeId="40" targetNodeId="64"></Relation>
+   <Relation id="66" sourceNodeId="64" targetNodeId="65"></Relation>
+   <Relation id="67" sourceNodeId="42" targetNodeId="65"></Relation>
+   <Relation id="68" sourceNodeId="66" targetNodeId="67"></Relation>
+   <Relation id="69" sourceNodeId="68" targetNodeId="67"></Relation>
+   <Relation id="70" sourceNodeId="69" targetNodeId="67"></Relation>
+   <Relation id="71" sourceNodeId="58" targetNodeId="67"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="15">
+        <Content type="comment">// PCA Analysis</Content>
+    </Script>
+    <Script line="2,3,4,5,6,7,8,9" startPosition="17" endPosition="334">
+        <Content type="code">var LeZhiXian = 
+
+    /* color: #98ff00 */
+
+    /* shown: false */
+
+    ee.Geometry.Polygon(
+
+        [[[116.02116319983233, 29.095141315194134],
+
+          [116.03352281897295, 29.05073173840886],
+
+          [116.09394762366045, 29.04953121401721],
+
+          [116.12004015295733, 29.10954031020994]]], null, false);</Content>
+    </Script>
+    <Script line="3" startPosition="39" endPosition="59">
+        <Content type="comment">/* color: #98ff00 */</Content>
+    </Script>
+    <Script line="4" startPosition="65" endPosition="83">
+        <Content type="comment">/* shown: false */</Content>
+    </Script>
+    <Script line="11" startPosition="338" endPosition="373">
+        <Content type="comment">// 1. Data filtering and mosaicking</Content>
+    </Script>
+    <Script line="12,13,14" startPosition="375" endPosition="534">
+        <Content type="code">var sentinelCollection = ee.ImageCollection("COPERNICUS/S2")
+
+  .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', 10))
+
+  .filterDate('2021-08-01', '2021-08-08')</Content>
+    </Script>
+    <Script line="15" startPosition="538" endPosition="625">
+        <Content type="comment">// .filterBounds(LeZhiXian); // Please replace with the actual coordinates of LeZhiXian</Content>
+    </Script>
+    <Script line="17,18" startPosition="629" endPosition="696">
+        <Content type="code">var mosaicImage = sentinelCollection.mosaic()
+
+   .clip(LeZhiXian);</Content>
+    </Script>
+    <Script line="18" startPosition="697" endPosition="755">
+        <Content type="comment">// Please replace with the actual coordinates of LeZhiXian</Content>
+    </Script>
+    <Script line="20" startPosition="759" endPosition="779">
+        <Content type="comment">// 2. Band selection</Content>
+    </Script>
+    <Script line="21" startPosition="781" endPosition="876">
+        <Content type="code">var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B8A', 'B9', 'B10', 'B11', 'B12'];</Content>
+    </Script>
+    <Script line="22" startPosition="878" endPosition="924">
+        <Content type="code">var selectedImage = mosaicImage.select(bands);</Content>
+    </Script>
+    <Script line="24" startPosition="928" endPosition="967">
+        <Content type="comment">// 3. Input parameters for PCA function</Content>
+    </Script>
+    <Script line="25" startPosition="969" endPosition="992">
+        <Content type="code">var region = LeZhiXian;</Content>
+    </Script>
+    <Script line="26" startPosition="994" endPosition="1009">
+        <Content type="code">var scale = 10;</Content>
+    </Script>
+    <Script line="27" startPosition="1011" endPosition="1053">
+        <Content type="code">var bandNames = selectedImage.bandNames();</Content>
+    </Script>
+    <Script line="29" startPosition="1057" endPosition="1083">
+        <Content type="comment">// 4. Calculating averages</Content>
+    </Script>
+    <Script line="30,31,32,33,34,35" startPosition="1085" endPosition="1217">
+        <Content type="code">var means = selectedImage.reduceRegion({
+
+  reducer: ee.Reducer.mean(),
+
+  geometry: region,
+
+  scale: scale,
+
+  maxPixels: 1e9
+
+});</Content>
+    </Script>
+    <Script line="37" startPosition="1221" endPosition="1264">
+        <Content type="comment">// 5. Principal Component Analysis function</Content>
+    </Script>
+    <Script line="38" startPosition="1266" endPosition="1306">
+        <Content type="comment">// Principal Component Analysis function</Content>
+    </Script>
+    <Script line="39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75" startPosition="1308" endPosition="2500">
+        <Content type="code">function getPrincipalComponents(image, scale, region) {
+
+  // Center the image
+
+  var centered = image.subtract(means);
+
+
+
+  // Convert the centered image to an array
+
+  var centeredArray = centered.toArray();
+
+
+
+  // Calculate covariance matrix
+
+  var covar = centeredArray.reduceRegion({
+
+    reducer: ee.Reducer.centeredCovariance(),
+
+    geometry: region,
+
+    scale: scale,
+
+    maxPixels: 1e9
+
+  });
+
+
+
+  // Retrieve the covariance array
+
+  var covarArray = ee.Array(covar.get('array'));
+
+
+
+  // Perform eigenvalue decomposition
+
+  var eigens = covarArray.eigen();
+
+
+
+  // Extract eigenvalues and eigenvectors from the decomposition result
+
+  var eigenValues = eigens.slice(1, 0, 1);
+
+  var eigenVectors = eigens.slice(1, 1);
+
+
+
+  // Convert the centered array to a 2D array
+
+  var arrayImage = centeredArray.toArray(1);
+
+
+
+  // Multiply the eigenvector matrix with the image array to obtain the principal component image
+
+ var principalComponents = ee.Image(eigenVectors)
+
+    .matrixMultiply(arrayImage)
+
+    .arrayProject([0])
+
+    .arrayFlatten([['pc1', 'pc2', 'pc3', 'pc4', 'pc5', 'pc6', 'pc7', 'pc8', 'pc9', 'pc10', 'pc11', 'pc12', 'pc13']]);
+
+
+
+
+
+  return principalComponents;
+
+}</Content>
+    </Script>
+    <Script line="40" startPosition="1367" endPosition="1386">
+        <Content type="comment">// Center the image</Content>
+    </Script>
+    <Script line="43" startPosition="1433" endPosition="1474">
+        <Content type="comment">// Convert the centered image to an array</Content>
+    </Script>
+    <Script line="46" startPosition="1523" endPosition="1553">
+        <Content type="comment">// Calculate covariance matrix</Content>
+    </Script>
+    <Script line="54" startPosition="1719" endPosition="1751">
+        <Content type="comment">// Retrieve the covariance array</Content>
+    </Script>
+    <Script line="57" startPosition="1807" endPosition="1842">
+        <Content type="comment">// Perform eigenvalue decomposition</Content>
+    </Script>
+    <Script line="60" startPosition="1884" endPosition="1953">
+        <Content type="comment">// Extract eigenvalues and eigenvectors from the decomposition result</Content>
+    </Script>
+    <Script line="64" startPosition="2045" endPosition="2088">
+        <Content type="comment">// Convert the centered array to a 2D array</Content>
+    </Script>
+    <Script line="67" startPosition="2140" endPosition="2235">
+        <Content type="comment">// Multiply the eigenvector matrix with the image array to obtain the principal component image</Content>
+    </Script>
+    <Script line="77" startPosition="2504" endPosition="2546">
+        <Content type="comment">// Calculate the mean values for each band</Content>
+    </Script>
+    <Script line="78,79,80,81,82,83" startPosition="2548" endPosition="2690">
+        <Content type="code">var means = selectedImage.reduceRegion({
+
+  reducer: ee.Reducer.mean(),
+
+  geometry: region,
+
+  scale: scale,
+
+  maxPixels: 1e9
+
+}).toImage();</Content>
+    </Script>
+    <Script line="85" startPosition="2694" endPosition="2734">
+        <Content type="comment">// Create an image centered on the means</Content>
+    </Script>
+    <Script line="86" startPosition="2736" endPosition="2786">
+        <Content type="code">var centeredImage = selectedImage.subtract(means);</Content>
+    </Script>
+    <Script line="88" startPosition="2790" endPosition="2883">
+        <Content type="comment">// Then, you can pass the centeredImage as an argument to the getPrincipalComponents function</Content>
+    </Script>
+    <Script line="89" startPosition="2885" endPosition="2952">
+        <Content type="code">var pcImage = getPrincipalComponents(centeredImage, scale, region);</Content>
+    </Script>
+    <Script line="90" startPosition="2954" endPosition="3032">
+        <Content type="code">Map.addLayer(pcImage, {bands: ['pc1', 'pc2', 'pc3'], min: -2, max: 2}, 'PCA');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="461" endPosition="484">CLOUDY_PIXEL_PERCENTAGE</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="420" endPosition="433">COPERNICUS/S2</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="508" endPosition="518">2021-08-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="522" endPosition="532">2021-08-08</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>36</ServiceNodeId>
+        <GEEScriptPart startPosition="3026" endPosition="3029">PCA</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>55</ServiceNodeId>
+        <GEEScriptPart startPosition="1792" endPosition="1797">array</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

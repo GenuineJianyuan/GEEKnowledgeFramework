@@ -1,0 +1,130 @@
+<GEEModelingKnowledgeTemplate name="slope_analysis" description="">
+    <!-- Modeling Knowledge Expression Module -->
+    <ModelingKnowledge>
+        <!-- Descriptive Modeling Knowledge -->
+        <Fact>
+            <TemporalRange>
+                <StartTime>None</StartTime>
+                <EndTime>None</EndTime>
+            </TemporalRange>
+            <GeospatialRange>
+                <GeospatialType>place name</GeospatialType>
+                <Value type="list">[29.97, 31.22, 113.77, 115.05]</Value>
+                <Coordinates>WGS84</Coordinates>
+            </GeospatialRange>
+            <Datasource>
+                <Source>
+                    <SourceType>GEESource</SourceType>
+                    <SourceName>NASA SRTM Digital Elevation 30m</SourceName>
+                    <Value>USGS/SRTMGL1_003</Value>
+                </Source>
+            </Datasource>
+            <Task>
+                <TaskType>GCMD Keywords</TaskType>
+                <Value>Topography</Value>
+                <Description>Create elevation and slope images from USGS data within a specified
+                    area of interest.</Description>
+            </Task>
+        </Fact>
+
+        <!-- Procedural Modeling Knowledge -->
+        <Process>
+            <ServiceNode>
+                <Node id="1" type="literal">0</Node>
+                <Node id="2" type="complex">{min: 0, max: 60, palette: ['00ff00', 'ff0000']}</Node>
+                <Node id="3" type="literal">60</Node>
+                <Node id="4" type="complex">['00ff00', 'ff0000']</Node>
+                <Node id="5" type="literal">0</Node>
+                <Node id="6" type="complex">{min: 0, max: 200}</Node>
+                <Node id="7" type="literal">200</Node>
+                <Node id="8" type="literal">113.77</Node>
+                <Node id="9" type="eeFunction">ee.List</Node>
+                <Node id="10" type="literal">29.97</Node>
+                <Node id="11" type="literal">115.05</Node>
+                <Node id="12" type="literal">31.22</Node>
+                <Node id="13" type="eeFunction">ee.Geometry.Rectangle</Node>
+                <Node id="14" type="literal">USGS/SRTMGL1_003</Node>
+                <Node id="15" type="eeFunction">ee.Image</Node>
+                <Node id="16" type="eeFunction">clip</Node>
+                <Node id="17" type="eeFunction">Map.addLayer</Node>
+                <Node id="18" type="literal">DEM</Node>
+                <Node id="19" type="eeFunction">ee.Terrain.slope</Node>
+                <Node id="20" type="eeFunction">Map.addLayer</Node>
+            </ServiceNode>
+            <Relationship>
+                <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+                <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+                <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+                <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+                <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+                <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+                <Relation id="7" sourceNodeId="10" targetNodeId="9"></Relation>
+                <Relation id="8" sourceNodeId="11" targetNodeId="9"></Relation>
+                <Relation id="9" sourceNodeId="12" targetNodeId="9"></Relation>
+                <Relation id="10" sourceNodeId="9" targetNodeId="13"></Relation>
+                <Relation id="11" sourceNodeId="14" targetNodeId="15"></Relation>
+                <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+                <Relation id="13" sourceNodeId="13" targetNodeId="16"></Relation>
+                <Relation id="14" sourceNodeId="6" targetNodeId="17"></Relation>
+                <Relation id="15" sourceNodeId="18" targetNodeId="17"></Relation>
+                <Relation id="16" sourceNodeId="16" targetNodeId="17"></Relation>
+                <Relation id="17" sourceNodeId="16" targetNodeId="19"></Relation>
+                <Relation id="18" sourceNodeId="2" targetNodeId="20"></Relation>
+                <Relation id="19" sourceNodeId="19" targetNodeId="20"></Relation>
+            </Relationship>
+        </Process>
+    </ModelingKnowledge>
+    <!-- GEE Workflow Script Copy Module -->
+    <SourceCode>
+        <Script line="1" startPosition="0" endPosition="28">
+            <Content type="comment">// Create an elevation image</Content>
+        </Script>
+        <Script line="2" startPosition="30" endPosition="69">
+            <Content type="code">var dem = ee.Image('USGS/SRTMGL1_003');</Content>
+        </Script>
+        <Script line="3" startPosition="71" endPosition="139">
+            <Content type="comment">// Define a geometry of the area of interest as a rectangular
+                region</Content>
+        </Script>
+        <Script line="4" startPosition="141" endPosition="219">
+            <Content type="code">var studyArea = ee.Geometry.Rectangle([113.7700, 29.9700, 115.0500,
+                31.2200]);</Content>
+        </Script>
+        <Script line="5" startPosition="221" endPosition="282">
+            <Content type="comment">// Clip the elevation image to the specified area of interest</Content>
+        </Script>
+        <Script line="6" startPosition="284" endPosition="320">
+            <Content type="code">var targetDem = dem.clip(studyArea);</Content>
+        </Script>
+        <Script line="7" startPosition="322" endPosition="375">
+            <Content type="comment">// Calculate the slope of the clipped elevation image</Content>
+        </Script>
+        <Script line="8" startPosition="377" endPosition="423">
+            <Content type="code">var targetSlope = ee.Terrain.slope(targetDem);</Content>
+        </Script>
+        <Script line="9" startPosition="425" endPosition="468">
+            <Content type="comment">// Add the elevation image layer to the map</Content>
+        </Script>
+        <Script line="10" startPosition="470" endPosition="521">
+            <Content type="code">Map.addLayer(targetDem, {min: 0, max: 200}, 'DEM');</Content>
+        </Script>
+        <Script line="11" startPosition="523" endPosition="556">
+            <Content type="comment">// Add the slope layer to the map</Content>
+        </Script>
+        <Script line="12" startPosition="558" endPosition="634">
+            <Content type="code">Map.addLayer(targetSlope, {min: 0, max: 60, palette: ['00ff00',
+                'ff0000']});</Content>
+        </Script>
+    </SourceCode>
+    <!-- Mapping Module -->
+    <Mapping>
+        <MapEntry>
+            <ServiceNodeId>14</ServiceNodeId>
+            <GEEScriptPart startPosition="50" endPosition="66">USGS/SRTMGL1_003</GEEScriptPart>
+        </MapEntry>
+        <MapEntry>
+            <ServiceNodeId>18</ServiceNodeId>
+            <GEEScriptPart startPosition="515" endPosition="518">DEM</GEEScriptPart>
+        </MapEntry>
+    </Mapping>
+</GEEModelingKnowledgeTemplate>

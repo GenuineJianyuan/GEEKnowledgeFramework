@@ -1,0 +1,376 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320005" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2019-01-01</StartTime>
+        <EndTime>2019-09-30</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[28.73704118280411, 29.26911282738686, 115.98888884930852, 116.77166472821477]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Level 2, Collection 2, Tier 1</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_L2</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Natural hazards</Value>
+        <Description>The script analyzes flood extent in Poyang Lake by comparing water bodies in winter and summer using LANDSAT images, and calculates the total flooded area in square kilometers.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="complex">['0000FF', 'FFFFFF']</Node>
+   <Node id="2" type="complex">{palette: ['0000FF', 'FFFFFF'], min: -1, max: 1}</Node>
+   <Node id="3" type="literal">-1</Node>
+   <Node id="4" type="literal">1</Node>
+   <Node id="5" type="literal">SR_B5</Node>
+   <Node id="6" type="eeFunction">ee.List</Node>
+   <Node id="7" type="literal">SR_B4</Node>
+   <Node id="8" type="literal">SR_B5</Node>
+   <Node id="9" type="eeFunction">ee.List</Node>
+   <Node id="10" type="literal">SR_B4</Node>
+   <Node id="11" type="literal">LANDSAT/LC08/C02/T1_L2</Node>
+   <Node id="12" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="13" type="literal">2019-07-01</Node>
+   <Node id="14" type="eeFunction">filterDate</Node>
+   <Node id="15" type="literal">2019-09-30</Node>
+   <Node id="16" type="eeFunction">min</Node>
+   <Node id="17" type="literal">2019-01-01</Node>
+   <Node id="18" type="eeFunction">filterDate</Node>
+   <Node id="19" type="literal">2019-03-31</Node>
+   <Node id="20" type="eeFunction">min</Node>
+   <Node id="21" type="literal">0</Node>
+   <Node id="22" type="complex">{
+
+              "system:index": "0"
+
+            }</Node>
+   <Node id="23" type="complex">[[115.98888884930852, 29.26911282738686],
+
+                  [115.98888884930852, 28.73704118280411],
+
+                  [116.77166472821477, 28.73704118280411],
+
+                  [116.77166472821477, 29.26911282738686]]</Node>
+   <Node id="24" type="eeFunction">ee.List</Node>
+   <Node id="25" type="eeFunction">ee.Geometry.Polygon</Node>
+   <Node id="26" type="literal">None</Node>
+   <Node id="27" type="literal">False</Node>
+   <Node id="28" type="eeFunction">ee.Feature</Node>
+   <Node id="29" type="eeFunction">ee.List</Node>
+   <Node id="30" type="eeFunction">ee.FeatureCollection</Node>
+   <Node id="31" type="eeFunction">geometry</Node>
+   <Node id="32" type="eeFunction">ee.Reducer.sum</Node>
+   <Node id="33" type="complex">{
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: studyArea.geometry(),
+
+  scale: 30,                        
+
+  maxPixels: 1e13                            
+
+}</Node>
+   <Node id="34" type="literal">30</Node>
+   <Node id="35" type="literal">10000000000000</Node>
+   <Node id="36" type="literal">10</Node>
+   <Node id="37" type="eeFunction">Map.centerObject</Node>
+   <Node id="38" type="eeFunction">clip</Node>
+   <Node id="39" type="eeFunction">normalizedDifference</Node>
+   <Node id="40" type="eeFunction">gt</Node>
+   <Node id="41" type="literal">0.2</Node>
+   <Node id="42" type="eeFunction">clip</Node>
+   <Node id="43" type="eeFunction">normalizedDifference</Node>
+   <Node id="44" type="eeFunction">gt</Node>
+   <Node id="45" type="literal">0.2</Node>
+   <Node id="46" type="eeFunction">subtract</Node>
+   <Node id="47" type="eeFunction">ee.Image.pixelArea</Node>
+   <Node id="48" type="eeFunction">multiply</Node>
+   <Node id="49" type="eeFunction">divide</Node>
+   <Node id="50" type="literal">10000</Node>
+   <Node id="51" type="eeFunction">reduceRegion</Node>
+   <Node id="52" type="literal">nd</Node>
+   <Node id="53" type="eeFunction">get</Node>
+   <Node id="54" type="literal">Total Flooded Area (square kilometers):</Node>
+   <Node id="55" type="eeFunction">print</Node>
+   <Node id="56" type="eeFunction">Map.addLayer</Node>
+   <Node id="57" type="literal">Flooded Areas</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="9"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="10" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="11" sourceNodeId="12" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="14" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="12" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="18" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="18" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="19" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="20" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="21" sourceNodeId="27" targetNodeId="25"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="28"></Relation>
+   <Relation id="23" sourceNodeId="22" targetNodeId="28"></Relation>
+   <Relation id="24" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="25" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="26" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="27" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="28" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="29" sourceNodeId="34" targetNodeId="33"></Relation>
+   <Relation id="30" sourceNodeId="35" targetNodeId="33"></Relation>
+   <Relation id="31" sourceNodeId="36" targetNodeId="37"></Relation>
+   <Relation id="32" sourceNodeId="30" targetNodeId="37"></Relation>
+   <Relation id="33" sourceNodeId="16" targetNodeId="38"></Relation>
+   <Relation id="34" sourceNodeId="30" targetNodeId="38"></Relation>
+   <Relation id="35" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="36" sourceNodeId="6" targetNodeId="39"></Relation>
+   <Relation id="37" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="38" sourceNodeId="41" targetNodeId="40"></Relation>
+   <Relation id="39" sourceNodeId="20" targetNodeId="42"></Relation>
+   <Relation id="40" sourceNodeId="30" targetNodeId="42"></Relation>
+   <Relation id="41" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="42" sourceNodeId="9" targetNodeId="43"></Relation>
+   <Relation id="43" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="44" sourceNodeId="45" targetNodeId="44"></Relation>
+   <Relation id="45" sourceNodeId="40" targetNodeId="46"></Relation>
+   <Relation id="46" sourceNodeId="44" targetNodeId="46"></Relation>
+   <Relation id="47" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="48" sourceNodeId="46" targetNodeId="48"></Relation>
+   <Relation id="49" sourceNodeId="48" targetNodeId="49"></Relation>
+   <Relation id="50" sourceNodeId="50" targetNodeId="49"></Relation>
+   <Relation id="51" sourceNodeId="33" targetNodeId="51"></Relation>
+   <Relation id="52" sourceNodeId="49" targetNodeId="51"></Relation>
+   <Relation id="53" sourceNodeId="52" targetNodeId="53"></Relation>
+   <Relation id="54" sourceNodeId="51" targetNodeId="53"></Relation>
+   <Relation id="55" sourceNodeId="54" targetNodeId="55"></Relation>
+   <Relation id="56" sourceNodeId="53" targetNodeId="55"></Relation>
+   <Relation id="57" sourceNodeId="2" targetNodeId="56"></Relation>
+   <Relation id="58" sourceNodeId="57" targetNodeId="56"></Relation>
+   <Relation id="59" sourceNodeId="46" targetNodeId="56"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="17">
+        <Content type="comment">// Flood Analysis</Content>
+    </Script>
+    <Script line="3" startPosition="21" endPosition="55">
+        <Content type="comment">// Select study area (Poyang Lake)</Content>
+    </Script>
+    <Script line="4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20" startPosition="57" endPosition="593">
+        <Content type="code">var studyArea = 
+
+    /* color: #98ff00 */
+
+    /* displayProperties: [
+
+      {
+
+        "type": "rectangle"
+
+      }
+
+    ] */
+
+    ee.FeatureCollection(
+
+        [ee.Feature(
+
+            ee.Geometry.Polygon(
+
+                [[[115.98888884930852, 29.26911282738686],
+
+                  [115.98888884930852, 28.73704118280411],
+
+                  [116.77166472821477, 28.73704118280411],
+
+                  [116.77166472821477, 29.26911282738686]]], null, false),
+
+            {
+
+              "system:index": "0"
+
+            })]);</Content>
+    </Script>
+    <Script line="5" startPosition="79" endPosition="99">
+        <Content type="comment">/* color: #98ff00 */</Content>
+    </Script>
+    <Script line="6,7,8,9,10" startPosition="105" endPosition="185">
+        <Content type="comment">/* displayProperties: [
+
+      {
+
+        "type": "rectangle"
+
+      }
+
+    ] */</Content>
+    </Script>
+    <Script line="22" startPosition="597" endPosition="634">
+        <Content type="comment">// Define the LANDSAT ImageCollection</Content>
+    </Script>
+    <Script line="23" startPosition="636" endPosition="705">
+        <Content type="code">var landsatCollection = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2');</Content>
+    </Script>
+    <Script line="25" startPosition="709" endPosition="761">
+        <Content type="comment">// Generate images for two periods (Winter / Summer)</Content>
+    </Script>
+    <Script line="26,27,28" startPosition="763" endPosition="918">
+        <Content type="code">var winterWater =  landsatCollection
+
+  .filterDate('2019-01-01', '2019-03-31').min().clip(studyArea)
+
+  .normalizedDifference(['SR_B5', 'SR_B4']).gt(0.2);</Content>
+    </Script>
+    <Script line="30,31,32,33" startPosition="922" endPosition="1080">
+        <Content type="code">var summerWater = landsatCollection
+
+  .filterDate('2019-07-01', '2019-09-30')
+
+  .min().clip(studyArea)
+
+  .normalizedDifference(['SR_B5', 'SR_B4']).gt(0.2);</Content>
+    </Script>
+    <Script line="35" startPosition="1084" endPosition="1153">
+        <Content type="comment">// Calculate the difference in water bodies between winter and summer</Content>
+    </Script>
+    <Script line="36" startPosition="1155" endPosition="1207">
+        <Content type="code">var floodExtent = summerWater.subtract(winterWater);</Content>
+    </Script>
+    <Script line="38" startPosition="1211" endPosition="1254">
+        <Content type="comment">// Visualize the difference as flood extent</Content>
+    </Script>
+    <Script line="39" startPosition="1256" endPosition="1288">
+        <Content type="code">Map.centerObject(studyArea, 10);</Content>
+    </Script>
+    <Script line="40" startPosition="1290" endPosition="1383">
+        <Content type="code">Map.addLayer(floodExtent, {palette: ['0000FF', 'FFFFFF'], min: -1, max: 1}, 'Flooded Areas');</Content>
+    </Script>
+    <Script line="42" startPosition="1387" endPosition="1430">
+        <Content type="comment">// Calculate the area of the flooded region</Content>
+    </Script>
+    <Script line="43" startPosition="1432" endPosition="1505">
+        <Content type="code">var floodArea = floodExtent.multiply(ee.Image.pixelArea()).divide(10000);</Content>
+    </Script>
+    <Script line="43" startPosition="1506" endPosition="1526">
+        <Content type="comment">// square kilometers</Content>
+    </Script>
+    <Script line="44,45,46,47,48,49" startPosition="1528" endPosition="1724">
+        <Content type="code">var statistics = floodArea.reduceRegion({
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: studyArea.geometry(),
+
+  scale: 30, // resolution in meters
+
+  maxPixels: 1e13 // maximum number of pixels
+
+});</Content>
+    </Script>
+    <Script line="47" startPosition="1649" endPosition="1672">
+        <Content type="comment">// resolution in meters</Content>
+    </Script>
+    <Script line="48" startPosition="1692" endPosition="1719">
+        <Content type="comment">// maximum number of pixels</Content>
+    </Script>
+    <Script line="51" startPosition="1728" endPosition="1773">
+        <Content type="comment">// Print the total area of the flooded region</Content>
+    </Script>
+    <Script line="52" startPosition="1775" endPosition="1816">
+        <Content type="code">var floodAreaSqKm = statistics.get('nd');</Content>
+    </Script>
+    <Script line="53" startPosition="1818" endPosition="1882">
+        <Content type="code">print('Total Flooded Area (square kilometers):', floodAreaSqKm);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="892" endPosition="897">SR_B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="1054" endPosition="1059">SR_B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="901" endPosition="906">SR_B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="1063" endPosition="1068">SR_B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="892" endPosition="897">SR_B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="1054" endPosition="1059">SR_B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="901" endPosition="906">SR_B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="1063" endPosition="1068">SR_B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="680" endPosition="702">LANDSAT/LC08/C02/T1_L2</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="974" endPosition="984">2019-07-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="988" endPosition="998">2019-09-30</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="816" endPosition="826">2019-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="830" endPosition="840">2019-03-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>52</ServiceNodeId>
+        <GEEScriptPart startPosition="1811" endPosition="1813">nd</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>54</ServiceNodeId>
+        <GEEScriptPart startPosition="1825" endPosition="1864">Total Flooded Area (square kilometers):</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>57</ServiceNodeId>
+        <GEEScriptPart startPosition="1367" endPosition="1380">Flooded Areas</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

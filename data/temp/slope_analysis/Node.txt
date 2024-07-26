@@ -1,0 +1,22 @@
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 60, palette: ['00ff00', 'ff0000']}</Node>
+   <Node id="3" type="literal">60</Node>
+   <Node id="4" type="complex">['00ff00', 'ff0000']</Node>
+   <Node id="5" type="literal">0</Node>
+   <Node id="6" type="complex">{min: 0, max: 200}</Node>
+   <Node id="7" type="literal">200</Node>
+   <Node id="8" type="literal">113.77</Node>
+   <Node id="9" type="eeFunction">ee.List</Node>
+   <Node id="10" type="literal">29.97</Node>
+   <Node id="11" type="literal">115.05</Node>
+   <Node id="12" type="literal">31.22</Node>
+   <Node id="13" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="14" type="literal">USGS/SRTMGL1_003</Node>
+   <Node id="15" type="eeFunction">ee.Image</Node>
+   <Node id="16" type="eeFunction">clip</Node>
+   <Node id="17" type="eeFunction">Map.addLayer</Node>
+   <Node id="18" type="literal">DEM</Node>
+   <Node id="19" type="eeFunction">ee.Terrain.slope</Node>
+   <Node id="20" type="eeFunction">Map.addLayer</Node>
+</ServiceNode>

@@ -1,0 +1,40 @@
+// Surface Soil Moisture
+
+// Define the boundaries of the three northeastern provinces of China
+var dongbei = ee.Geometry.Rectangle([121.5, 38.5, 135, 53.5]);
+
+// Set the time range
+var start = '2022-06-01';
+var end = '2022-09-30';
+
+// Load Landsat 8 data and calculate NDVI
+var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+                 .filterDate(start, end)
+                 .filterBounds(dongbei);
+
+// Function to calculate NDVI
+function calcNDVI(image) {
+  var ndvi = image.normalizedDifference(['B5', 'B4']).rename('NDVI');
+  return image.addBands(ndvi);
+}
+
+// Apply NDVI calculation
+var withNDVI = landsat.map(calcNDVI);
+
+// Load and filter soil moisture data
+var soilMoisture = ee.ImageCollection('NASA_USDA/HSL/SMAP10KM_soil_moisture')
+                      .filterDate(start, end)
+                      .filterBounds(dongbei);
+
+// Visualization parameters
+var visParamsNDVI = {min: 0, max: 1, palette: ['white', 'green']};
+var visParamsMoisture = {min: -5, max: 25, palette: ['blue', 'limegreen', 'yellow', 'orange', 'red']};
+
+// Clip NDVI and soil moisture data to the boundaries of the three northeastern provinces
+var clippedNDVI = withNDVI.mean().clip(dongbei);
+var clippedMoisture = soilMoisture.mean().clip(dongbei);
+
+// Visualization
+Map.centerObject(dongbei, 6);
+Map.addLayer(clippedNDVI.select('NDVI'), visParamsNDVI, 'NDVI');
+Map.addLayer(clippedMoisture.select('ssm'), visParamsMoisture, 'Soil Moisture');

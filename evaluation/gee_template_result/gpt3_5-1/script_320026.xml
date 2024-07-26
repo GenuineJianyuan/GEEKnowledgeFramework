@@ -1,0 +1,236 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<!-- This file is open-source and can be shared. -->
+<GEEModelingKnowledgeTemplate name="script_320026" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2023-04-01</StartTime>
+        <EndTime>2023-10-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[40.3754, 43.5012, -96.6397, -90.1401]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 Raw Scenes</SourceName>
+            <Value>LANDSAT/LC08/C02/T1</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Agricultural plant science</Value>
+        <Description>The script detects corn fields in Iowa using Landsat 8 imagery and NDVI thresholding. It calculates the area of corn cultivation.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: ['yellow', 'green']}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="complex">['yellow', 'green']</Node>
+   <Node id="5" type="literal">B5</Node>
+   <Node id="6" type="eeFunction">ee.List</Node>
+   <Node id="7" type="literal">B4</Node>
+   <Node id="8" type="literal">LANDSAT/LC08/C02/T1</Node>
+   <Node id="9" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="10" type="literal">-96.6397</Node>
+   <Node id="11" type="eeFunction">ee.List</Node>
+   <Node id="12" type="literal">40.3754</Node>
+   <Node id="13" type="literal">-90.1401</Node>
+   <Node id="14" type="literal">43.5012</Node>
+   <Node id="15" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="16" type="eeFunction">ee.Reducer.sum</Node>
+   <Node id="17" type="complex">{
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: iowa,
+
+  scale: 30,
+
+  maxPixels: 1e9
+
+}</Node>
+   <Node id="18" type="literal">30</Node>
+   <Node id="19" type="literal">1000000000</Node>
+   <Node id="20" type="literal">7</Node>
+   <Node id="21" type="eeFunction">Map.centerObject</Node>
+   <Node id="22" type="eeFunction">filterBounds</Node>
+   <Node id="23" type="eeFunction">filterDate</Node>
+   <Node id="24" type="literal">2023-04-01</Node>
+   <Node id="25" type="literal">2023-10-31</Node>
+   <Node id="26" type="eeFunction">median</Node>
+   <Node id="27" type="eeFunction">normalizedDifference</Node>
+   <Node id="28" type="eeFunction">rename</Node>
+   <Node id="29" type="literal">NDVI</Node>
+   <Node id="30" type="literal">0.4</Node>
+   <Node id="31" type="eeFunction">gt</Node>
+   <Node id="32" type="eeFunction">ee.Image.pixelArea</Node>
+   <Node id="33" type="eeFunction">multiply</Node>
+   <Node id="34" type="eeFunction">reduceRegion</Node>
+   <Node id="35" type="literal">Corn Field Area in Iowa:</Node>
+   <Node id="36" type="eeFunction">print</Node>
+   <Node id="37" type="eeFunction">Map.addLayer</Node>
+   <Node id="38" type="literal">Corn Fields</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="11"></Relation>
+   <Relation id="11" sourceNodeId="11" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="13" sourceNodeId="18" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="15" targetNodeId="17"></Relation>
+   <Relation id="16" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="17" sourceNodeId="15" targetNodeId="21"></Relation>
+   <Relation id="18" sourceNodeId="9" targetNodeId="22"></Relation>
+   <Relation id="19" sourceNodeId="15" targetNodeId="22"></Relation>
+   <Relation id="20" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="23" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="6" targetNodeId="27"></Relation>
+   <Relation id="25" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="26" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="27" sourceNodeId="29" targetNodeId="28"></Relation>
+   <Relation id="28" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="29" sourceNodeId="28" targetNodeId="31"></Relation>
+   <Relation id="30" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="31" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="32" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="33" sourceNodeId="17" targetNodeId="34"></Relation>
+   <Relation id="34" sourceNodeId="35" targetNodeId="36"></Relation>
+   <Relation id="35" sourceNodeId="34" targetNodeId="36"></Relation>
+   <Relation id="36" sourceNodeId="2" targetNodeId="37"></Relation>
+   <Relation id="37" sourceNodeId="38" targetNodeId="37"></Relation>
+   <Relation id="38" sourceNodeId="31" targetNodeId="37"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="22">
+        <Content type="comment">// Crop Area Detection</Content>
+    </Script>
+    <Script line="3" startPosition="26" endPosition="53">
+        <Content type="comment">// Set the study area: Iowa</Content>
+    </Script>
+    <Script line="4" startPosition="55" endPosition="128">
+        <Content type="code">var iowa = ee.Geometry.Rectangle([-96.6397, 40.3754, -90.1401, 43.5012]);</Content>
+    </Script>
+    <Script line="6" startPosition="132" endPosition="153">
+        <Content type="comment">// Set the time range</Content>
+    </Script>
+    <Script line="7" startPosition="155" endPosition="180">
+        <Content type="code">var start = '2023-04-01';</Content>
+    </Script>
+    <Script line="8" startPosition="182" endPosition="205">
+        <Content type="code">var end = '2023-10-31';</Content>
+    </Script>
+    <Script line="10" startPosition="209" endPosition="234">
+        <Content type="comment">// Load Landsat 8 imagery</Content>
+    </Script>
+    <Script line="11,12,13,14" startPosition="236" endPosition="397">
+        <Content type="code">var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+
+                .filterBounds(iowa)
+
+                .filterDate(start, end)
+
+                .median();</Content>
+    </Script>
+    <Script line="16" startPosition="401" endPosition="485">
+        <Content type="comment">// Select bands for corn detection (this requires ground truth data for calibration)</Content>
+    </Script>
+    <Script line="17" startPosition="487" endPosition="556">
+        <Content type="code">var ndvi = landsat.normalizedDifference(['B5', 'B4']).rename('NDVI');</Content>
+    </Script>
+    <Script line="19" startPosition="560" endPosition="608">
+        <Content type="comment">// Set an NDVI threshold to identify corn fields</Content>
+    </Script>
+    <Script line="20" startPosition="610" endPosition="640">
+        <Content type="code">var cornFields = ndvi.gt(0.4);</Content>
+    </Script>
+    <Script line="22" startPosition="644" endPosition="660">
+        <Content type="comment">// Visualization</Content>
+    </Script>
+    <Script line="23" startPosition="662" endPosition="688">
+        <Content type="code">Map.centerObject(iowa, 7);</Content>
+    </Script>
+    <Script line="24" startPosition="690" endPosition="778">
+        <Content type="code">Map.addLayer(cornFields, {min: 0, max: 1, palette: ['yellow', 'green']}, 'Corn Fields');</Content>
+    </Script>
+    <Script line="26" startPosition="782" endPosition="823">
+        <Content type="comment">// Calculate the area of corn cultivation</Content>
+    </Script>
+    <Script line="27,28,29,30,31,32" startPosition="825" endPosition="978">
+        <Content type="code">var area = cornFields.multiply(ee.Image.pixelArea()).reduceRegion({
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: iowa,
+
+  scale: 30,
+
+  maxPixels: 1e9
+
+});</Content>
+    </Script>
+    <Script line="34" startPosition="982" endPosition="1004">
+        <Content type="comment">// Output area results</Content>
+    </Script>
+    <Script line="35" startPosition="1006" endPosition="1046">
+        <Content type="code">print('Corn Field Area in Iowa:', area);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="529" endPosition="531">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="535" endPosition="537">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="270" endPosition="289">LANDSAT/LC08/C02/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="168" endPosition="178">2023-04-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>25</ServiceNodeId>
+        <GEEScriptPart startPosition="193" endPosition="203">2023-10-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>29</ServiceNodeId>
+        <GEEScriptPart startPosition="549" endPosition="553">NDVI</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>35</ServiceNodeId>
+        <GEEScriptPart startPosition="1013" endPosition="1037">Corn Field Area in Iowa:</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>38</ServiceNodeId>
+        <GEEScriptPart startPosition="764" endPosition="775">Corn Fields</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

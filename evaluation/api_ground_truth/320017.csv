@@ -1,0 +1,13 @@
+API1,API2
+ee.Image,Image.clip
+ee.Image,Terrain.slope
+ee.FeatureCollection,Image.clip
+Image.normalizedDifference,Image.multiply
+Image.add,Image.add
+ee.Image,map
+Image.clip,Image.multiply
+Image.clip,Image.normalizedDifference
+Terrain.slope,expression
+expression,Image.clip
+Image.multiply,Image.add
+map,Image.multiply

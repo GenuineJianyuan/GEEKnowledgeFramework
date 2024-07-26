@@ -1,0 +1,26 @@
+Tool Name,Description,Ref
+Add Surface Information,Attributes features with spatial information derived from a surface.,https://desktop.arcgis.com/en/arcmap/latest/tools/3d-analyst-toolbox/add-surface-information.htm
+Aspect,Derives the aspect from each cell of a raster surface. The aspect identifies the compass direction that the downhill slope faces for each location.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/aspect.htm
+Clip,"Cuts out a portion of a raster dataset, mosaic dataset, or image service layer/ Extracts input features that overlay the clip features.",https://desktop.arcgis.com/en/arcmap/latest/tools/analysis-toolbox/clip.htm
+Contour,Creates a feature class of contours from a raster surface.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/contour.htm
+Euclidean Distance,"Calculates, for each cell, the Euclidean distance to the closest source.",https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/euclidean-distance.htm
+Fill,Fills sinks in a surface raster to remove small imperfections in the data.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/fill.htm
+Flow Direction,"Creates a raster of flow direction from each cell to its downslope neighbor, or neighbors, using D8, Multiple Flow Direction (MFD) or D-Infinity (DINF) methods",https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/flow-direction.htm
+Interpolate Shape,Creates 3D features by interpolating z-values from a surface.,https://desktop.arcgis.com/en/arcmap/latest/tools/3d-analyst-toolbox/interpolate-shape.htm
+Kriging,Interpolates a raster surface from points using kriging.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/kriging.htm
+Reclassify,Reclassifies (or changes) the values in a raster.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/reclassify.htm
+Slope,Identifies the slope (gradient or steepness) from each cell of a raster.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/slope.htm
+Zonal Statistics,Calculates statistics on values of a raster within the zones of another dataset.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/zonal-statistics.htm
+Slice,Divides the range of raster values into classes using various methods such as equal interval or natural breaks.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/slice.htm
+Kernel Density,Calculates a magnitude-per-unit area from point or polyline features using a kernel function to fit a smoothly tapered surface to each point or polyline.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/kernel-density.htm
+Intersect,Computes a geometric intersection of the input features. Features or portions of features which overlap in all layers and/or feature classes will be written to the output feature class.,https://desktop.arcgis.com/en/arcmap/latest/tools/analysis-toolbox/intersect.htm
+Plus,Adds (sums) the values of two rasters on a cell-by-cell basis.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/plus.htm
+Times,Multiplies the values of two rasters on a cell-by-cell basis.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/times.htm
+Con,Performs a conditional if/else evaluation on each of the input cells of an input raster.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/con-.htm
+Buffer,Creates buffer polygons around input features to a specified distance.,https://desktop.arcgis.com/en/arcmap/latest/tools/analysis-toolbox/buffer.htm
+Dissolve,Aggregates features based on specified attributes.,https://desktop.arcgis.com/en/arcmap/latest/tools/data-management-toolbox/dissolve.htm
+Spatial Join,Joins attributes from one feature to another based on the spatial relationship. The target features and the joined attributes from the join features are written to the output feature class.,https://desktop.arcgis.com/en/arcmap/latest/tools/analysis-toolbox/spatial-join.htm
+IDW,Interpolates a raster surface from points using an inverse distance weighted (IDW) technique.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/idw.htm
+Extract by Mask,Extracts the cells of a raster that correspond to the areas defined by a mask.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/extract-by-mask.htm
+Divide,Divides the values of two rasters on a cell-by-cell basis.,https://desktop.arcgis.com/en/arcmap/latest/tools/spatial-analyst-toolbox/divide.htm
+NDVI,"The normalized difference vegetation index (NDVI) is a standardized index allowing you to generate an image displaying greenness, also known as relative biomass. This index takes advantage of the contrast of characteristics between two bands from a multispectral raster dataset¡ªthe chlorophyll pigment absorption in the red band and the high reflectivity of plant material in the near-infrared (NIR) band.",https://desktop.arcgis.com/en/arcmap/latest/manage-data/raster-and-images/ndvi-function.htm

@@ -1,0 +1,12 @@
+// Create an elevation image
+var dem = ee.Image('USGS/SRTMGL1_003');
+// Define a geometry of the area of interest as a rectangular region
+var studyArea = ee.Geometry.Rectangle([113.7700, 29.9700, 115.0500, 31.2200]);
+// Clip the elevation image to the specified area of interest
+var targetDem = dem.clip(studyArea);
+// Calculate the slope of the clipped elevation image
+var targetSlope = ee.Terrain.slope(targetDem);
+// Add the elevation image layer to the map
+Map.addLayer(targetDem, {min: 0, max: 200}, 'DEM');
+// Add the slope layer to the map
+Map.addLayer(targetSlope, {min: 0, max: 60, palette: ['00ff00', 'ff0000']});

@@ -1,0 +1,56 @@
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="44">
+        <Content type="comment">// landslide sustainability evaluation model</Content>
+    </Script>
+    <Script line="3" startPosition="46" endPosition="100">
+        <Content type="code">var LULC = ee.Image("users/region/XunwuCounty/Xunwu");</Content>
+    </Script>
+    <Script line="4" startPosition="101" endPosition="179">
+        <Content type="code">var boundary = ee.FeatureCollection("users/region/XunwuCounty/XunwuBoundary");</Content>
+    </Script>
+    <Script line="6" startPosition="181" endPosition="252">
+        <Content type="comment">// Use the remap() method to replace original values with target values</Content>
+    </Script>
+    <Script line="7" startPosition="253" endPosition="342">
+        <Content type="code">var remappedImage = LULC.remap([1, 2, 3, 6, 8, 9], [0.33, 0.60, 0.02, 0, 0.04, 0.01], 0);</Content>
+    </Script>
+    <Script line="9" startPosition="344" endPosition="422">
+        <Content type="code">var landsat = ee.Image("users/region/XunwuCounty/Landsat_2018").clip(boundary)</Content>
+    </Script>
+    <Script line="11" startPosition="424" endPosition="441">
+        <Content type="comment">// Calculate NDVI</Content>
+    </Script>
+    <Script line="12" startPosition="442" endPosition="496">
+        <Content type="code">var ndvi = landsat.normalizedDifference(['B5', 'B4']);</Content>
+    </Script>
+    <Script line="14" startPosition="498" endPosition="539">
+        <Content type="comment">// Load SRTM Digital Elevation Model data</Content>
+    </Script>
+    <Script line="15" startPosition="540" endPosition="579">
+        <Content type="code">var dem = ee.Image('USGS/SRTMGL1_003');</Content>
+    </Script>
+    <Script line="17" startPosition="581" endPosition="599">
+        <Content type="comment">// Calculate slope</Content>
+    </Script>
+    <Script line="18" startPosition="600" endPosition="634">
+        <Content type="code">var slope = ee.Terrain.slope(dem);</Content>
+    </Script>
+    <Script line="20" startPosition="636" endPosition="665">
+        <Content type="comment">// Create a conditional image</Content>
+    </Script>
+    <Script line="21,22,23,24,25,26,27" startPosition="666" endPosition="864">
+        <Content type="code">var slope_categories = slope.expression(
+    "b('slope') &lt; 20 ? 0.65 :" +
+    "b('slope') &lt; 30 ? 0.31 :" +
+    "b('slope') &lt; 40 ? 0.02 :" +
+    "b('slope') &lt; 50 ? 0.01 :" +
+    "0"
+).clip(boundary);</Content>
+    </Script>
+    <Script line="29" startPosition="866" endPosition="966">
+        <Content type="code">var result = ndvi.multiply(1.5).add(slope_categories.multiply(6.2)).add(remappedImage.multiply(2.3))</Content>
+    </Script>
+    <Script line="31" startPosition="968" endPosition="1028">
+        <Content type="code">Export.image.toDrive(result,'exported_result',30, boundary);</Content>
+    </Script>
+</SourceCode>

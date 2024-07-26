@@ -1,0 +1,5 @@
+API1,API2
+ee.FeatureCollection,map
+ee.Filter.lt,filter
+Feature.area,Number.divide
+map,filter

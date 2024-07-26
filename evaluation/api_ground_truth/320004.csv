@@ -1,0 +1,17 @@
+API1,API2
+Image.addBands,Image.sample
+Classifier.train,Image.classify
+Landsat.simpleComposite,Image.classify
+first,Image.select
+Image.select,Image.subtract
+Image.subtract,Image.addBands
+filterDate,first
+Image.classify,Image.clip
+Classifier.smileCart,Classifier.train
+Landsat.simpleComposite,Image.addBands
+ee.ImageCollection,filter
+Image.sample,Classifier.train
+filterDate,Landsat.simpleComposite
+ee.Geometry.Polygon,clip
+ee.Geometry.Polygon,filterBounds
+filterBounds, filterDate

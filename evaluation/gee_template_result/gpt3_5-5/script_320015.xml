@@ -1,0 +1,248 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320015" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2021-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[39.26, 41.03, 115.25, 117.3]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LC08/C01/T1</SourceName>
+            <Value>LANDSAT/LC08/C01/T1</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>This script calculates the NDVI difference between 2020 and 2021 for the Beijing region using Landsat 8 imagery.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">-0.5</Node>
+   <Node id="2" type="complex">{min: -0.5, max: 0.5, palette: ['blue', 'white', 'green']}</Node>
+   <Node id="3" type="literal">0.5</Node>
+   <Node id="4" type="complex">['blue', 'white', 'green']</Node>
+   <Node id="5" type="userDefinedFunction">getNDVI</Node>
+   <Node id="6" type="identifier">getNDVI</Node>
+   <Node id="7" type="identifier">getNDVI</Node>
+   <Node id="8" type="literal">LANDSAT/LC08/C01/T1</Node>
+   <Node id="9" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="10" type="literal">115.25</Node>
+   <Node id="11" type="eeFunction">ee.List</Node>
+   <Node id="12" type="literal">39.26</Node>
+   <Node id="13" type="literal">117.3</Node>
+   <Node id="14" type="literal">41.03</Node>
+   <Node id="15" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="16" type="eeFunction">filterBounds</Node>
+   <Node id="17" type="eeFunction">filterDate</Node>
+   <Node id="18" type="literal">2021-01-01</Node>
+   <Node id="19" type="literal">2021-12-31</Node>
+   <Node id="20" type="eeFunction">map</Node>
+   <Node id="21" type="eeFunction">median</Node>
+   <Node id="22" type="eeFunction">filterBounds</Node>
+   <Node id="23" type="eeFunction">filterDate</Node>
+   <Node id="24" type="literal">2020-01-01</Node>
+   <Node id="25" type="literal">2020-12-31</Node>
+   <Node id="26" type="eeFunction">map</Node>
+   <Node id="27" type="eeFunction">median</Node>
+   <Node id="28" type="eeFunction">subtract</Node>
+   <Node id="29" type="eeFunction">rename</Node>
+   <Node id="30" type="literal">NDVI_Diff</Node>
+   <Node id="31" type="eeFunction">clip</Node>
+   <Node id="32" type="eeFunction">Map.addLayer</Node>
+   <Node id="33" type="literal">NDVI Difference</Node>
+   <Node id="34" type="literal">B5</Node>
+   <Node id="35" type="eeFunction">ee.List</Node>
+   <Node id="36" type="literal">B4</Node>
+   <Node id="37" type="identifier">image</Node>
+   <Node id="38" type="eeFunction">normalizedDifference</Node>
+   <Node id="39" type="eeFunction">rename</Node>
+   <Node id="40" type="literal">NDVI</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="5" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="14" targetNodeId="11"></Relation>
+   <Relation id="11" sourceNodeId="11" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="9" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="14" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="18" targetNodeId="17"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="17"></Relation>
+   <Relation id="17" sourceNodeId="17" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="6" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="20" sourceNodeId="9" targetNodeId="22"></Relation>
+   <Relation id="21" sourceNodeId="15" targetNodeId="22"></Relation>
+   <Relation id="22" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="24" sourceNodeId="25" targetNodeId="23"></Relation>
+   <Relation id="25" sourceNodeId="23" targetNodeId="26"></Relation>
+   <Relation id="26" sourceNodeId="7" targetNodeId="26"></Relation>
+   <Relation id="27" sourceNodeId="26" targetNodeId="27"></Relation>
+   <Relation id="28" sourceNodeId="21" targetNodeId="28"></Relation>
+   <Relation id="29" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="30" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="31" sourceNodeId="30" targetNodeId="29"></Relation>
+   <Relation id="32" sourceNodeId="29" targetNodeId="31"></Relation>
+   <Relation id="33" sourceNodeId="15" targetNodeId="31"></Relation>
+   <Relation id="34" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="35" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="36" sourceNodeId="2" targetNodeId="32"></Relation>
+   <Relation id="37" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="38" sourceNodeId="36" targetNodeId="35"></Relation>
+   <Relation id="39" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="40" sourceNodeId="35" targetNodeId="38"></Relation>
+   <Relation id="41" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="42" sourceNodeId="40" targetNodeId="39"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Land Use Cover Change</Content>
+    </Script>
+    <Script line="3" startPosition="28" endPosition="97">
+        <Content type="comment">// Define the latitude and longitude boundaries of the Beijing region</Content>
+    </Script>
+    <Script line="4" startPosition="99" endPosition="173">
+        <Content type="code">var beijingRegion = ee.Geometry.Rectangle([115.25, 39.26, 117.30, 41.03]);</Content>
+    </Script>
+    <Script line="6" startPosition="177" endPosition="195">
+        <Content type="comment">// Set time ranges</Content>
+    </Script>
+    <Script line="7" startPosition="197" endPosition="226">
+        <Content type="code">var start2020 = '2020-01-01';</Content>
+    </Script>
+    <Script line="8" startPosition="228" endPosition="255">
+        <Content type="code">var end2020 = '2020-12-31';</Content>
+    </Script>
+    <Script line="9" startPosition="257" endPosition="286">
+        <Content type="code">var start2021 = '2021-01-01';</Content>
+    </Script>
+    <Script line="10" startPosition="288" endPosition="315">
+        <Content type="code">var end2021 = '2021-12-31';</Content>
+    </Script>
+    <Script line="12" startPosition="319" endPosition="357">
+        <Content type="comment">// Load the Landsat 8 image collection</Content>
+    </Script>
+    <Script line="13" startPosition="359" endPosition="415">
+        <Content type="code">var landsat = ee.ImageCollection('LANDSAT/LC08/C01/T1');</Content>
+    </Script>
+    <Script line="15" startPosition="419" endPosition="457">
+        <Content type="comment">// Define a function to calculate NDVI</Content>
+    </Script>
+    <Script line="16,17,18" startPosition="459" endPosition="554">
+        <Content type="code">function getNDVI(image) {
+
+  return image.normalizedDifference(['B5', 'B4']).rename('NDVI');
+
+}</Content>
+    </Script>
+    <Script line="20" startPosition="558" endPosition="608">
+        <Content type="comment">// Filter, compose 2020 images, and calculate NDVI</Content>
+    </Script>
+    <Script line="21,22,23,24" startPosition="610" endPosition="783">
+        <Content type="code">var ndvi2020 = landsat.filterBounds(beijingRegion)
+
+                     .filterDate(start2020, end2020)
+
+                     .map(getNDVI)
+
+                     .median();</Content>
+    </Script>
+    <Script line="26" startPosition="787" endPosition="837">
+        <Content type="comment">// Filter, compose 2021 images, and calculate NDVI</Content>
+    </Script>
+    <Script line="27,28,29,30" startPosition="839" endPosition="1012">
+        <Content type="code">var ndvi2021 = landsat.filterBounds(beijingRegion)
+
+                     .filterDate(start2021, end2021)
+
+                     .map(getNDVI)
+
+                     .median();</Content>
+    </Script>
+    <Script line="32" startPosition="1016" endPosition="1044">
+        <Content type="comment">// Calculate NDVI difference</Content>
+    </Script>
+    <Script line="33" startPosition="1046" endPosition="1109">
+        <Content type="code">var ndviDiff = ndvi2021.subtract(ndvi2020).rename('NDVI_Diff');</Content>
+    </Script>
+    <Script line="35" startPosition="1113" endPosition="1140">
+        <Content type="comment">// Visualization parameters</Content>
+    </Script>
+    <Script line="36" startPosition="1142" endPosition="1218">
+        <Content type="code">var ndviParams = {min: -0.5, max: 0.5, palette: ['blue', 'white', 'green']};</Content>
+    </Script>
+    <Script line="38" startPosition="1222" endPosition="1261">
+        <Content type="comment">// Add NDVI difference layer to the map</Content>
+    </Script>
+    <Script line="39" startPosition="1263" endPosition="1337">
+        <Content type="code">Map.addLayer(ndviDiff.clip(beijingRegion), ndviParams, 'NDVI Difference');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="393" endPosition="412">LANDSAT/LC08/C01/T1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="274" endPosition="284">2021-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>19</ServiceNodeId>
+        <GEEScriptPart startPosition="303" endPosition="313">2021-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="214" endPosition="224">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>25</ServiceNodeId>
+        <GEEScriptPart startPosition="243" endPosition="253">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>30</ServiceNodeId>
+        <GEEScriptPart startPosition="1097" endPosition="1106">NDVI_Diff</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>33</ServiceNodeId>
+        <GEEScriptPart startPosition="1319" endPosition="1334">NDVI Difference</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="524" endPosition="526">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>36</ServiceNodeId>
+        <GEEScriptPart startPosition="530" endPosition="532">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>40</ServiceNodeId>
+        <GEEScriptPart startPosition="544" endPosition="548">NDVI</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

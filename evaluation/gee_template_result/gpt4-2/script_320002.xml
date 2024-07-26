@@ -1,0 +1,453 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320002" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2017-06-08</StartTime>
+        <EndTime>2017-06-08</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[-106.06, 37.71]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>LANDSAT/LC08/C02/T1_TOA/LC08_034034_20170608</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_TOA/LC08_034034_20170608</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land surface/agriculture indicators</Value>
+        <Description>This script detects center-pivot irrigation systems by identifying circular patterns in NDVI data from Landsat imagery. The outputs are highlighted kernel peaks and ring centers indicating potential irrigation circles.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">4285FF</Node>
+   <Node id="2" type="complex">{palette: '4285FF'}</Node>
+   <Node id="3" type="literal">meters</Node>
+   <Node id="4" type="eeFunction">ee.Kernel.circle</Node>
+   <Node id="5" type="literal">False</Node>
+   <Node id="6" type="literal">1</Node>
+   <Node id="7" type="literal">meters</Node>
+   <Node id="8" type="eeFunction">ee.Kernel.circle</Node>
+   <Node id="9" type="literal">False</Node>
+   <Node id="10" type="literal">True</Node>
+   <Node id="11" type="eeFunction">add</Node>
+   <Node id="12" type="literal">FF3737</Node>
+   <Node id="13" type="complex">{palette: 'FF3737'}</Node>
+   <Node id="14" type="complex">farmSize * 1.8</Node>
+   <Node id="15" type="complex">{radius: farmSize * 1.8, units: 'meters'}</Node>
+   <Node id="16" type="literal">meters</Node>
+   <Node id="17" type="literal">meters</Node>
+   <Node id="18" type="eeFunction">ee.Kernel.square</Node>
+   <Node id="19" type="literal">500</Node>
+   <Node id="20" type="literal">meters</Node>
+   <Node id="21" type="eeFunction">ee.Kernel.circle</Node>
+   <Node id="22" type="complex">{kernel: circleKernel}</Node>
+   <Node id="23" type="complex">{kernel: circleKernel}</Node>
+   <Node id="24" type="literal">B5</Node>
+   <Node id="25" type="eeFunction">ee.List</Node>
+   <Node id="26" type="literal">B4</Node>
+   <Node id="27" type="literal">LANDSAT/LC08/C02/T1_TOA/LC08_034034_20170608</Node>
+   <Node id="28" type="eeFunction">ee.Image</Node>
+   <Node id="29" type="eeFunction">normalizedDifference</Node>
+   <Node id="30" type="literal">0</Node>
+   <Node id="31" type="eeFunction">ee.Algorithms.CannyEdgeDetector</Node>
+   <Node id="32" type="literal">0.3</Node>
+   <Node id="33" type="eeFunction">gt</Node>
+   <Node id="34" type="eeFunction">convolve</Node>
+   <Node id="35" type="eeFunction">gt</Node>
+   <Node id="36" type="literal">0.5</Node>
+   <Node id="37" type="eeFunction">focal_max</Node>
+   <Node id="38" type="eeFunction">updateMask</Node>
+   <Node id="39" type="eeFunction">Map.addLayer</Node>
+   <Node id="40" type="literal">Ring centers</Node>
+   <Node id="41" type="eeFunction">convolve</Node>
+   <Node id="42" type="eeFunction">convolve</Node>
+   <Node id="43" type="eeFunction">subtract</Node>
+   <Node id="44" type="eeFunction">abs</Node>
+   <Node id="45" type="eeFunction">multiply</Node>
+   <Node id="46" type="literal">100</Node>
+   <Node id="47" type="eeFunction">toByte</Node>
+   <Node id="48" type="eeFunction">focal_max</Node>
+   <Node id="49" type="eeFunction">neq</Node>
+   <Node id="50" type="eeFunction">where</Node>
+   <Node id="51" type="literal">0</Node>
+   <Node id="52" type="literal">2</Node>
+   <Node id="53" type="eeFunction">gt</Node>
+   <Node id="54" type="eeFunction">focal_max</Node>
+   <Node id="55" type="eeFunction">updateMask</Node>
+   <Node id="56" type="eeFunction">Map.addLayer</Node>
+   <Node id="57" type="literal">Kernel Peaks</Node>
+   <Node id="58" type="literal">0</Node>
+   <Node id="59" type="complex">{min: 0, max: 1, palette: palette}</Node>
+   <Node id="60" type="literal">1</Node>
+   <Node id="61" type="complex">[
+
+  'FFFFFF', 'CE7E45', 'DF923D', 'F1B555', 'FCD163', '99B718',
+
+  '74A901', '66A000', '529400', '3E8601', '207401', '056201',
+
+  '004C00', '023B01', '012E01', '011D01', '011301']</Node>
+   <Node id="62" type="eeFunction">Map.addLayer</Node>
+   <Node id="63" type="literal">Landsat NDVI</Node>
+   <Node id="64" type="literal">37.71</Node>
+   <Node id="65" type="eeFunction">Map.setCenter</Node>
+   <Node id="66" type="literal">12</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="5" targetNodeId="4"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="4"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="8"></Relation>
+   <Relation id="7" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="8" sourceNodeId="4" targetNodeId="11"></Relation>
+   <Relation id="9" sourceNodeId="8" targetNodeId="11"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="11" sourceNodeId="14" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="16" targetNodeId="15"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="14" sourceNodeId="19" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="21"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="18" sourceNodeId="21" targetNodeId="23"></Relation>
+   <Relation id="19" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="20" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="21" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="22" sourceNodeId="25" targetNodeId="29"></Relation>
+   <Relation id="23" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="24" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="25" sourceNodeId="29" targetNodeId="31"></Relation>
+   <Relation id="26" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="27" sourceNodeId="31" targetNodeId="33"></Relation>
+   <Relation id="28" sourceNodeId="33" targetNodeId="34"></Relation>
+   <Relation id="29" sourceNodeId="11" targetNodeId="34"></Relation>
+   <Relation id="30" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="31" sourceNodeId="36" targetNodeId="35"></Relation>
+   <Relation id="32" sourceNodeId="35" targetNodeId="37"></Relation>
+   <Relation id="33" sourceNodeId="22" targetNodeId="37"></Relation>
+   <Relation id="34" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="35" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="36" sourceNodeId="38" targetNodeId="39"></Relation>
+   <Relation id="37" sourceNodeId="2" targetNodeId="39"></Relation>
+   <Relation id="38" sourceNodeId="40" targetNodeId="39"></Relation>
+   <Relation id="39" sourceNodeId="29" targetNodeId="41"></Relation>
+   <Relation id="40" sourceNodeId="18" targetNodeId="41"></Relation>
+   <Relation id="41" sourceNodeId="29" targetNodeId="42"></Relation>
+   <Relation id="42" sourceNodeId="21" targetNodeId="42"></Relation>
+   <Relation id="43" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="44" sourceNodeId="41" targetNodeId="43"></Relation>
+   <Relation id="45" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="46" sourceNodeId="44" targetNodeId="45"></Relation>
+   <Relation id="47" sourceNodeId="46" targetNodeId="45"></Relation>
+   <Relation id="48" sourceNodeId="45" targetNodeId="47"></Relation>
+   <Relation id="49" sourceNodeId="15" targetNodeId="48"></Relation>
+   <Relation id="50" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="51" sourceNodeId="47" targetNodeId="49"></Relation>
+   <Relation id="52" sourceNodeId="48" targetNodeId="49"></Relation>
+   <Relation id="53" sourceNodeId="49" targetNodeId="50"></Relation>
+   <Relation id="54" sourceNodeId="51" targetNodeId="50"></Relation>
+   <Relation id="55" sourceNodeId="47" targetNodeId="50"></Relation>
+   <Relation id="56" sourceNodeId="52" targetNodeId="53"></Relation>
+   <Relation id="57" sourceNodeId="50" targetNodeId="53"></Relation>
+   <Relation id="58" sourceNodeId="23" targetNodeId="54"></Relation>
+   <Relation id="59" sourceNodeId="53" targetNodeId="54"></Relation>
+   <Relation id="60" sourceNodeId="54" targetNodeId="55"></Relation>
+   <Relation id="61" sourceNodeId="54" targetNodeId="55"></Relation>
+   <Relation id="62" sourceNodeId="55" targetNodeId="56"></Relation>
+   <Relation id="63" sourceNodeId="13" targetNodeId="56"></Relation>
+   <Relation id="64" sourceNodeId="57" targetNodeId="56"></Relation>
+   <Relation id="65" sourceNodeId="58" targetNodeId="59"></Relation>
+   <Relation id="66" sourceNodeId="60" targetNodeId="59"></Relation>
+   <Relation id="67" sourceNodeId="61" targetNodeId="59"></Relation>
+   <Relation id="68" sourceNodeId="59" targetNodeId="62"></Relation>
+   <Relation id="69" sourceNodeId="63" targetNodeId="62"></Relation>
+   <Relation id="70" sourceNodeId="29" targetNodeId="62"></Relation>
+   <Relation id="71" sourceNodeId="64" targetNodeId="65"></Relation>
+   <Relation id="72" sourceNodeId="66" targetNodeId="65"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="36">
+        <Content type="comment">// Center-pivot Irrigation Detector.</Content>
+    </Script>
+    <Script line="2" startPosition="38" endPosition="40">
+        <Content type="comment">//</Content>
+    </Script>
+    <Script line="3" startPosition="42" endPosition="83">
+        <Content type="comment">// Finds circles that are 500m in radius.</Content>
+    </Script>
+    <Script line="4" startPosition="85" endPosition="119">
+        <Content type="code">Map.setCenter(-106.06, 37.71, 12);</Content>
+    </Script>
+    <Script line="6" startPosition="123" endPosition="146">
+        <Content type="comment">// A nice NDVI palette.</Content>
+    </Script>
+    <Script line="7,8,9,10" startPosition="148" endPosition="343">
+        <Content type="code">var palette = [
+
+  'FFFFFF', 'CE7E45', 'DF923D', 'F1B555', 'FCD163', '99B718',
+
+  '74A901', '66A000', '529400', '3E8601', '207401', '056201',
+
+  '004C00', '023B01', '012E01', '011D01', '011301'];</Content>
+    </Script>
+    <Script line="12" startPosition="347" endPosition="390">
+        <Content type="comment">// Just display the image with the palette.</Content>
+    </Script>
+    <Script line="13" startPosition="392" endPosition="461">
+        <Content type="code">var image = ee.Image('LANDSAT/LC08/C02/T1_TOA/LC08_034034_20170608');</Content>
+    </Script>
+    <Script line="14" startPosition="463" endPosition="514">
+        <Content type="code">var ndvi = image.normalizedDifference(['B5','B4']);</Content>
+    </Script>
+    <Script line="16" startPosition="518" endPosition="589">
+        <Content type="code">Map.addLayer(ndvi, {min: 0, max: 1, palette: palette}, 'Landsat NDVI');</Content>
+    </Script>
+    <Script line="18" startPosition="593" endPosition="661">
+        <Content type="comment">// Find the difference between convolution with circles and squares.</Content>
+    </Script>
+    <Script line="19" startPosition="663" endPosition="728">
+        <Content type="comment">// This difference, in theory, will be strongest at the center of</Content>
+    </Script>
+    <Script line="20" startPosition="730" endPosition="796">
+        <Content type="comment">// circles in the image. This region is filled with circular farms</Content>
+    </Script>
+    <Script line="21" startPosition="798" endPosition="833">
+        <Content type="comment">// with radii on the order of 500m.</Content>
+    </Script>
+    <Script line="22" startPosition="835" endPosition="854">
+        <Content type="code">var farmSize = 500;</Content>
+    </Script>
+    <Script line="22" startPosition="856" endPosition="887">
+        <Content type="comment">// Radius of a farm, in meters.</Content>
+    </Script>
+    <Script line="23" startPosition="889" endPosition="945">
+        <Content type="code">var circleKernel = ee.Kernel.circle(farmSize, 'meters');</Content>
+    </Script>
+    <Script line="24" startPosition="947" endPosition="1003">
+        <Content type="code">var squareKernel = ee.Kernel.square(farmSize, 'meters');</Content>
+    </Script>
+    <Script line="25" startPosition="1005" endPosition="1047">
+        <Content type="code">var circles = ndvi.convolve(circleKernel);</Content>
+    </Script>
+    <Script line="26" startPosition="1049" endPosition="1091">
+        <Content type="code">var squares = ndvi.convolve(squareKernel);</Content>
+    </Script>
+    <Script line="27" startPosition="1093" endPosition="1130">
+        <Content type="code">var diff = circles.subtract(squares);</Content>
+    </Script>
+    <Script line="29" startPosition="1134" endPosition="1203">
+        <Content type="comment">// Scale by 100 and find the best fitting pixel in each neighborhood.</Content>
+    </Script>
+    <Script line="30" startPosition="1205" endPosition="1250">
+        <Content type="code">var diff = diff.abs().multiply(100).toByte();</Content>
+    </Script>
+    <Script line="31" startPosition="1252" endPosition="1320">
+        <Content type="code">var max = diff.focal_max({radius: farmSize * 1.8, units: 'meters'});</Content>
+    </Script>
+    <Script line="32" startPosition="1322" endPosition="1369">
+        <Content type="comment">// If a pixel isn't the local max, set it to 0.</Content>
+    </Script>
+    <Script line="33" startPosition="1371" endPosition="1412">
+        <Content type="code">var local = diff.where(diff.neq(max), 0);</Content>
+    </Script>
+    <Script line="34" startPosition="1414" endPosition="1439">
+        <Content type="code">var thresh = local.gt(2);</Content>
+    </Script>
+    <Script line="36" startPosition="1443" endPosition="1506">
+        <Content type="comment">// Here, we highlight the maximum differences as "Kernel Peaks"</Content>
+    </Script>
+    <Script line="37" startPosition="1508" endPosition="1532">
+        <Content type="comment">// and draw them in red.</Content>
+    </Script>
+    <Script line="38" startPosition="1534" endPosition="1587">
+        <Content type="code">var peaks = thresh.focal_max({kernel: circleKernel});</Content>
+    </Script>
+    <Script line="39" startPosition="1589" endPosition="1664">
+        <Content type="code">Map.addLayer(peaks.updateMask(peaks), {palette: 'FF3737'}, 'Kernel Peaks');</Content>
+    </Script>
+    <Script line="41" startPosition="1668" endPosition="1745">
+        <Content type="comment">// Detect the edges of the features.  Discard the edges with lower intensity.</Content>
+    </Script>
+    <Script line="42" startPosition="1747" endPosition="1800">
+        <Content type="code">var canny = ee.Algorithms.CannyEdgeDetector(ndvi, 0);</Content>
+    </Script>
+    <Script line="43" startPosition="1802" endPosition="1823">
+        <Content type="code">canny = canny.gt(0.3)</Content>
+    </Script>
+    <Script line="45" startPosition="1827" endPosition="1879">
+        <Content type="comment">// Create a "ring" kernel from two circular kernels.</Content>
+    </Script>
+    <Script line="46" startPosition="1881" endPosition="1946">
+        <Content type="code">var inner = ee.Kernel.circle(farmSize - 20, 'meters', false, -1);</Content>
+    </Script>
+    <Script line="47" startPosition="1948" endPosition="2012">
+        <Content type="code">var outer = ee.Kernel.circle(farmSize + 20, 'meters', false, 1);</Content>
+    </Script>
+    <Script line="48" startPosition="2014" endPosition="2048">
+        <Content type="code">var ring = outer.add(inner, true);</Content>
+    </Script>
+    <Script line="50" startPosition="2052" endPosition="2129">
+        <Content type="comment">// Highlight the places where the feature edges best match the circle kernel.</Content>
+    </Script>
+    <Script line="51" startPosition="2131" endPosition="2208">
+        <Content type="code">var centers = canny.convolve(ring).gt(0.5).focal_max({kernel: circleKernel});</Content>
+    </Script>
+    <Script line="52" startPosition="2210" endPosition="2289">
+        <Content type="code">Map.addLayer(centers.updateMask(centers), {palette: '4285FF'}, 'Ring centers');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>1</ServiceNodeId>
+        <GEEScriptPart startPosition="2263" endPosition="2269">4285FF</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="936" endPosition="942">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="994" endPosition="1000">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="1310" endPosition="1316">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="1926" endPosition="1932">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>3</ServiceNodeId>
+        <GEEScriptPart startPosition="1993" endPosition="1999">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="936" endPosition="942">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="994" endPosition="1000">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="1310" endPosition="1316">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="1926" endPosition="1932">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>7</ServiceNodeId>
+        <GEEScriptPart startPosition="1993" endPosition="1999">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="1638" endPosition="1644">FF3737</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="936" endPosition="942">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="994" endPosition="1000">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="1310" endPosition="1316">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="1926" endPosition="1932">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>16</ServiceNodeId>
+        <GEEScriptPart startPosition="1993" endPosition="1999">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="936" endPosition="942">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="994" endPosition="1000">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="1310" endPosition="1316">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="1926" endPosition="1932">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="1993" endPosition="1999">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="936" endPosition="942">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="994" endPosition="1000">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="1310" endPosition="1316">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="1926" endPosition="1932">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="1993" endPosition="1999">meters</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="503" endPosition="505">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="508" endPosition="510">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>27</ServiceNodeId>
+        <GEEScriptPart startPosition="414" endPosition="458">LANDSAT/LC08/C02/T1_TOA/LC08_034034_20170608</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>40</ServiceNodeId>
+        <GEEScriptPart startPosition="2274" endPosition="2286">Ring centers</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>57</ServiceNodeId>
+        <GEEScriptPart startPosition="1493" endPosition="1505">Kernel Peaks</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>57</ServiceNodeId>
+        <GEEScriptPart startPosition="1649" endPosition="1661">Kernel Peaks</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>63</ServiceNodeId>
+        <GEEScriptPart startPosition="574" endPosition="586">Landsat NDVI</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

@@ -1,0 +1,11 @@
+API1,API2
+ee.Geometry.Rectangle,filterBounds
+Image.normalizedDifference,expression
+expression,Image.reduceRegion
+reduce.median,Image.normalizedDifference
+filterBounds,filterDate
+Reducer.mean,Reducer.combine
+filter,reduce.median
+ee.ImageCollection,filter
+Reducer.combine,Image.reduceRegion
+Reducer.stdDev,Reducer.combine

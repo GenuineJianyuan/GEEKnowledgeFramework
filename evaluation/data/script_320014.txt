@@ -1,0 +1,45 @@
+// LAI Calculation
+
+// Select analysis area
+var roi = ee.Geometry.Rectangle(-122.35, 37.45, -122.05, 37.75); // For example, the San Francisco Bay Area is chosen here
+
+// Import Landsat 8 Data
+var landsatCollection = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA')
+  .filterBounds(roi)
+  .filterDate('2020-01-01', '2020-12-31'); // Replace with your desired date range
+
+// Select an image (multiple images can be selected as needed)
+var landsatImage = landsatCollection.median();
+
+// Calculate NDVI (Normalized Difference Vegetation Index)
+var ndvi = landsatImage.normalizedDifference(['B5', 'B4']);
+
+// Calculate LAI
+var lai = ndvi.expression(
+  '0.899 * (1.007 / (NDVI - 0.069) - 0.018)',
+  {
+    'NDVI': ndvi
+  }
+);
+
+// Visualize LAI
+var laiVis = {
+  min: 0,
+  max: 6, // Adjust the maximum value according to your data range
+  palette: ['000000', '00FF00'] // Customize the color palette
+};
+
+Map.centerObject(roi, 10);
+Map.addLayer(lai, laiVis, 'Leaf Area Index (LAI)');
+
+// Print statistical information of the LAI image
+var stats = lai.reduceRegion({
+  reducer: ee.Reducer.mean().combine({
+    reducer2: ee.Reducer.stdDev(),
+    sharedInputs: true
+  }),
+  geometry: roi,
+  scale: 30 // Set an appropriate value based on data resolution
+});
+
+print('LAI Mean:', stats);

@@ -1,0 +1,211 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320008" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2017-01-01</StartTime>
+        <EndTime>2017-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>[-122.0808, 37.3947]</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 TOA Reflectance</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_TOA</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>This script performs HSV-based pan-sharpening on a Landsat 8 image to enhance its spatial resolution. The output is a pan-sharpened RGB image.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0.3</Node>
+   <Node id="2" type="complex">{max: 0.3}</Node>
+   <Node id="3" type="literal">0.3</Node>
+   <Node id="4" type="complex">{max: 0.3}</Node>
+   <Node id="5" type="literal">37.3947</Node>
+   <Node id="6" type="eeFunction">Map.setCenter</Node>
+   <Node id="7" type="literal">14</Node>
+   <Node id="8" type="literal">37.3947</Node>
+   <Node id="9" type="eeFunction">ee.Geometry.Point</Node>
+   <Node id="10" type="literal">LANDSAT/LC08/C02/T1_TOA</Node>
+   <Node id="11" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="12" type="eeFunction">filterDate</Node>
+   <Node id="13" type="literal">2017-01-01</Node>
+   <Node id="14" type="literal">2017-12-31</Node>
+   <Node id="15" type="eeFunction">filterBounds</Node>
+   <Node id="16" type="eeFunction">sort</Node>
+   <Node id="17" type="literal">CLOUD_COVER</Node>
+   <Node id="18" type="eeFunction">first</Node>
+   <Node id="19" type="eeFunction">ee.Image</Node>
+   <Node id="20" type="literal">B8</Node>
+   <Node id="21" type="eeFunction">select</Node>
+   <Node id="22" type="literal">B4</Node>
+   <Node id="23" type="eeFunction">select</Node>
+   <Node id="24" type="literal">B3</Node>
+   <Node id="25" type="literal">B2</Node>
+   <Node id="26" type="eeFunction">Map.addLayer</Node>
+   <Node id="27" type="literal">Original</Node>
+   <Node id="28" type="eeFunction">rgbToHsv</Node>
+   <Node id="29" type="eeFunction">select</Node>
+   <Node id="30" type="literal">hue</Node>
+   <Node id="31" type="literal">saturation</Node>
+   <Node id="32" type="eeFunction">ee.Image.cat</Node>
+   <Node id="33" type="eeFunction">hsvToRgb</Node>
+   <Node id="34" type="eeFunction">Map.addLayer</Node>
+   <Node id="35" type="literal">Pansharpened</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="4" sourceNodeId="7" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="6" sourceNodeId="10" targetNodeId="11"></Relation>
+   <Relation id="7" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="8" sourceNodeId="13" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="14" targetNodeId="12"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="15"></Relation>
+   <Relation id="11" sourceNodeId="9" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="14" sourceNodeId="16" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="16" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="17" sourceNodeId="19" targetNodeId="21"></Relation>
+   <Relation id="18" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="19" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="20" sourceNodeId="25" targetNodeId="23"></Relation>
+   <Relation id="21" sourceNodeId="19" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="4" targetNodeId="26"></Relation>
+   <Relation id="23" sourceNodeId="27" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="23" targetNodeId="26"></Relation>
+   <Relation id="25" sourceNodeId="23" targetNodeId="28"></Relation>
+   <Relation id="26" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="27" sourceNodeId="30" targetNodeId="29"></Relation>
+   <Relation id="28" sourceNodeId="31" targetNodeId="29"></Relation>
+   <Relation id="29" sourceNodeId="29" targetNodeId="32"></Relation>
+   <Relation id="30" sourceNodeId="21" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="32" targetNodeId="33"></Relation>
+   <Relation id="32" sourceNodeId="2" targetNodeId="34"></Relation>
+   <Relation id="33" sourceNodeId="35" targetNodeId="34"></Relation>
+   <Relation id="34" sourceNodeId="33" targetNodeId="34"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="27">
+        <Content type="comment">// HSV-based Pan-Sharpening</Content>
+    </Script>
+    <Script line="3" startPosition="31" endPosition="92">
+        <Content type="comment">// Grab a sample L8 image and pull out the RGB and pan bands.</Content>
+    </Script>
+    <Script line="4,5,6,7,8" startPosition="94" endPosition="297">
+        <Content type="code">var image = ee.Image(ee.ImageCollection('LANDSAT/LC08/C02/T1_TOA')
+
+  .filterDate('2017-01-01', '2017-12-31')
+
+  .filterBounds(ee.Geometry.Point(-122.0808, 37.3947))
+
+  .sort('CLOUD_COVER')
+
+  .first());</Content>
+    </Script>
+    <Script line="10" startPosition="301" endPosition="342">
+        <Content type="code">var rgb = image.select('B4', 'B3', 'B2');</Content>
+    </Script>
+    <Script line="11" startPosition="344" endPosition="373">
+        <Content type="code">var pan = image.select('B8');</Content>
+    </Script>
+    <Script line="13" startPosition="377" endPosition="442">
+        <Content type="comment">// Convert to HSV, swap in the pan band, and convert back to RGB.</Content>
+    </Script>
+    <Script line="14" startPosition="444" endPosition="500">
+        <Content type="code">var huesat = rgb.rgbToHsv().select('hue', 'saturation');</Content>
+    </Script>
+    <Script line="15" startPosition="502" endPosition="551">
+        <Content type="code">var upres = ee.Image.cat(huesat, pan).hsvToRgb();</Content>
+    </Script>
+    <Script line="17" startPosition="555" endPosition="615">
+        <Content type="comment">// There are many fine places to look; here is one.  Comment</Content>
+    </Script>
+    <Script line="18" startPosition="617" endPosition="679">
+        <Content type="comment">// this out if you want to twiddle knobs while panning around.</Content>
+    </Script>
+    <Script line="19" startPosition="681" endPosition="719">
+        <Content type="code">Map.setCenter(-122.0808, 37.3947, 14);</Content>
+    </Script>
+    <Script line="21" startPosition="723" endPosition="788">
+        <Content type="comment">// Display before and after layers using the same vis parameters.</Content>
+    </Script>
+    <Script line="22" startPosition="790" endPosition="832">
+        <Content type="code">Map.addLayer(rgb, {max: 0.3}, 'Original');</Content>
+    </Script>
+    <Script line="23" startPosition="834" endPosition="882">
+        <Content type="code">Map.addLayer(upres, {max: 0.3}, 'Pansharpened');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>10</ServiceNodeId>
+        <GEEScriptPart startPosition="135" endPosition="158">LANDSAT/LC08/C02/T1_TOA</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="177" endPosition="187">2017-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="191" endPosition="201">2017-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="270" endPosition="281">CLOUD_COVER</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="368" endPosition="370">B8</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>22</ServiceNodeId>
+        <GEEScriptPart startPosition="325" endPosition="327">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="331" endPosition="333">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>25</ServiceNodeId>
+        <GEEScriptPart startPosition="337" endPosition="339">B2</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>27</ServiceNodeId>
+        <GEEScriptPart startPosition="821" endPosition="829">Original</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>30</ServiceNodeId>
+        <GEEScriptPart startPosition="480" endPosition="483">hue</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>31</ServiceNodeId>
+        <GEEScriptPart startPosition="487" endPosition="497">saturation</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>35</ServiceNodeId>
+        <GEEScriptPart startPosition="867" endPosition="879">Pansharpened</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

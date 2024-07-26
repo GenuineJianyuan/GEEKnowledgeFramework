@@ -1,0 +1,35 @@
+// Crop Area Detection
+
+// Set the study area: Iowa
+var iowa = ee.Geometry.Rectangle([-96.6397, 40.3754, -90.1401, 43.5012]);
+
+// Set the time range
+var start = '2023-04-01';
+var end = '2023-10-31';
+
+// Load Landsat 8 imagery
+var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+                .filterBounds(iowa)
+                .filterDate(start, end)
+                .median();
+
+// Select bands for corn detection (this requires ground truth data for calibration)
+var ndvi = landsat.normalizedDifference(['B5', 'B4']).rename('NDVI');
+
+// Set an NDVI threshold to identify corn fields
+var cornFields = ndvi.gt(0.4);
+
+// Visualization
+Map.centerObject(iowa, 7);
+Map.addLayer(cornFields, {min: 0, max: 1, palette: ['yellow', 'green']}, 'Corn Fields');
+
+// Calculate the area of corn cultivation
+var area = cornFields.multiply(ee.Image.pixelArea()).reduceRegion({
+  reducer: ee.Reducer.sum(),
+  geometry: iowa,
+  scale: 30,
+  maxPixels: 1e9
+});
+
+// Output area results
+print('Corn Field Area in Iowa:', area);

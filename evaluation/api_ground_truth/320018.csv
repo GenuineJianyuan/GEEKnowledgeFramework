@@ -1,0 +1,6 @@
+API1,API2
+Image.normalizedDifference,Image.subtract
+ee.Image,Image.mask
+Image.mask,Image.updateMask
+ee.Image,Image.normalizedDifference
+Image.subtract,Image.updateMask

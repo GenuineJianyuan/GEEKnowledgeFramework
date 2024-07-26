@@ -1,0 +1,32 @@
+// Select the Landsat image collection and filter by date range
+var startDate = '2020-01-01';
+var endDate = '2020-12-31';
+
+var collection = ee.ImageCollection('LANDSAT/LC08/C01/T1_SR')
+  .filterDate(startDate, endDate)
+  .filterBounds(ee.Geometry.Point(-122.262, 37.871));
+
+// Select the bands to be composited
+var bands = ['B2', 'B3', 'B4', 'B5', 'B6', 'B7'];
+
+// Composite the images
+var compositeImage = collection.select(bands).mean();
+
+// Visualize the composite image
+var visParams = {
+  bands: ['B4', 'B3', 'B2'],
+  min: 0,
+  max: 3000,
+  gamma: 1.4
+};
+
+Map.addLayer(compositeImage, visParams, 'Composite Image');
+
+// Export the composite image
+Export.image.toDrive({
+  image: compositeImage,
+  description: 'landsat_composite',
+  scale: 30,
+  region: ee.Geometry.Point(-122.262, 37.871).buffer(1000),
+  maxPixels: 1e10
+});

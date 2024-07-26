@@ -1,0 +1,17 @@
+API1,API2
+Image.clip,Image.addBands
+filter,reduce.mean
+Image.addBands,Image.reduceRegion
+eq,filter
+ee.FeatureCollection,filter
+Image.select,filterDate
+reduce.mean,Image.select
+Image.addBands,Image.addBands
+ee.Image,Image.select
+reduce.mean,Image.clip
+ee.ImageCollection,filter
+filter,Image.clip
+Image.select,Image.addBands
+Reducer.linearRegression,Image.reduceRegion
+Image.select,Image.clip
+

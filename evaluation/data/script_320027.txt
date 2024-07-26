@@ -1,0 +1,54 @@
+// Crop Area Detection
+
+// Example: How to import a user-uploaded CSV file
+var uploadedSample = ee.FeatureCollection('users/your_username/your_sample_dataset');
+
+// Set the time range and area
+var start = '2023-04-01';
+var end = '2023-10-31';
+var iowa = ee.Geometry.Rectangle([-96.6397, 40.3754, -90.1401, 43.5012]);
+
+// Load Landsat 8 imagery
+var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1')
+                .filterBounds(iowa)
+                .filterDate(start, end)
+                .median();
+
+// Select bands
+var bands = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'];
+
+// Extract band values for each sample point
+var trainingData = uploadedSample.map(function(feature) {
+  return feature.set(landsat.select(bands).reduceRegion({
+    reducer: ee.Reducer.first(),
+    geometry: feature.geometry(),
+    scale: 30
+  }));
+});
+
+// Train a classifier
+var classifier = ee.Classifier.smileRandomForest(10).train({
+  features: trainingData,
+  classProperty: 'landType',
+  inputProperties: bands
+});
+
+// Apply the classifier
+var classified = landsat.select(bands).classify(classifier);
+
+// Visualization
+Map.centerObject(iowa, 7);
+Map.addLayer(classified, {min: 0, max: 1, palette: ['yellow', 'green']}, 'Classified Image');
+
+// Calculate the area of corn cultivation
+var cornArea = classified.eq(1)
+                .multiply(ee.Image.pixelArea())
+                .reduceRegion({
+                  reducer: ee.Reducer.sum(),
+                  geometry: iowa,
+                  scale: 30,
+                  maxPixels: 1e9
+                });
+
+// Output area results
+print('Corn Field Area in Iowa:', cornArea);

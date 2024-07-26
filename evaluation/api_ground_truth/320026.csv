@@ -1,0 +1,14 @@
+API1,API2
+ee.Geometry.Rectangle,filterBounds
+Image.rename,Image.gt
+Image.gt,Image.multiply
+ee.Image,Image.gt
+filterBounds,filterDate
+reduce.median,Image.normalizedDifference
+filter,filter
+Image.normalizedDifference,Image.rename
+Reducer.sum,Image.reduceRegion
+filterDate,median
+Image.pixelArea,Image.multiply
+ee.ImageCollection,filterBounds
+Image.multiply,Image.reduceRegion

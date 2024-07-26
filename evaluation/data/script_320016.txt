@@ -1,0 +1,60 @@
+// Land Use Cover Change
+
+// Define the latitude and longitude boundaries of the Beijing region
+var beijingRegion = ee.Geometry.Rectangle([115.25, 39.26, 117.30, 41.03]);
+
+// Set time ranges
+var start2000 = '2000-01-01';
+var end2000 = '2000-12-31';
+var start2020 = '2020-01-01';
+var end2020 = '2020-12-31';
+
+// Load Landsat 5 image collection for 2000
+var landsat2000 = ee.ImageCollection('LANDSAT/LT05/C02/T1_TOA')
+                  .filterBounds(beijingRegion)
+                  .filterDate(start2000, end2000)
+                  .median();
+
+// Load Landsat 8 image collection for 2020
+var landsat2020 = ee.ImageCollection('LANDSAT/LC08/C02/T1_RT_TOA')
+                  .filterBounds(beijingRegion)
+                  .filterDate(start2020, end2020)
+                  .median();
+
+// Calculate NDVI, NDWI, and NDBI for 2000 and 2020
+var ndvi2000 = landsat2000.normalizedDifference(['B4', 'B3']).rename('NDVI_2000'); // Landsat 5
+var ndvi2020 = landsat2020.normalizedDifference(['B5', 'B4']).rename('NDVI_2020'); // Landsat 8
+
+var ndwi2000 = landsat2000.normalizedDifference(['B4', 'B2']).rename('NDWI_2000'); // Landsat 5
+var ndwi2020 = landsat2020.normalizedDifference(['B5', 'B3']).rename('NDWI_2020'); // Landsat 8
+
+var ndbi2000 = landsat2000.normalizedDifference(['B3', 'B5']).rename('NDBI_2000'); // Landsat 5
+var ndbi2020 = landsat2020.normalizedDifference(['B4', 'B6']).rename('NDBI_2020'); // Landsat 8
+
+// Set thresholds
+var ndwiThreshold = 0.1;
+var ndviThreshold = 0.1;
+var ndbiThreshold = 0.1;
+
+// Determine land cover changes
+var ndwiChange = ndwi2020.subtract(ndwi2000).gt(ndwiThreshold);
+var ndviChange = ndvi2020.subtract(ndvi2000).gt(ndviThreshold);
+var ndbiChange = ndbi2020.subtract(ndbi2000).gt(ndbiThreshold);
+
+// Combine three binary layers
+var changeMask = ndwiChange.add(ndviChange).add(ndbiChange);
+
+// Assess land cover change
+var changeResult = changeMask.gte(2); // A value of 2 or more indicates a change
+
+// Create a change detection layer
+var changeLayer = changeResult.select([0], ['Change']);
+
+// Visualization parameters
+var visParams = {min: 0, max: 1, palette: ['000000', 'FFFFFF']}; // Black for 0, white for 1, to denote change areas
+
+// Add the change detection layer to the map
+Map.addLayer(changeLayer.clip(beijingRegion), visParams, 'Land Cover Change');
+
+// Set the map's center point
+Map.centerObject(beijingRegion, 9);

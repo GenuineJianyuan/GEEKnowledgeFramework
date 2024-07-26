@@ -1,0 +1,17 @@
+API1,API2
+geometry,Image.reduceRegion
+ee.Geometry.Polygon,ee.Feature
+Image.divide,Image.reduceRegion
+Image.subtract,Image.multiply
+Collection,geometry
+Image.pixelArea,Image.multiply
+Image.normalizedDifference,Image.gt
+Image.gt,Image.subtract
+reduce.min,Image.clip
+Image.reduceRegion,Dictionary.get
+Image.clip,Image.normalizedDifference
+Reducer.sum,Image.reduceRegion
+Collection,Image.clip
+ee.ImageCollection,filter
+Image.multiply,Image.divide
+filter,reduce.min

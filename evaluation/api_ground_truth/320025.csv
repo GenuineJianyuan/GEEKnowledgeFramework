@@ -1,0 +1,11 @@
+API1,API2
+ee.Geometry.Rectangle,clip
+ee.Geometry.Rectangle,paint
+ee.Image,paint
+Image.cluster,Image.clip
+Clusterer.train,Image.cluster
+Image.sample,Clusterer.train
+Clusterer.wekaKMeans,Clusterer.train
+Image.clip,Image.randomVisualizer
+ee.Image,Image.sample
+ee.Image,Image.cluster

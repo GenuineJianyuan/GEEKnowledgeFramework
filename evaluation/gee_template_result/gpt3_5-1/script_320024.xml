@@ -1,0 +1,298 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<!-- This file is open-source and can be shared. -->
+<GEEModelingKnowledgeTemplate name="script_320024" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>None</StartTime>
+        <EndTime>None</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>None(geonameId=3172215)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>GMTED2010: Global Multi-resolution Terrain Elevation Data 2010</SourceName>
+            <Value>USGS/GMTED2010</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Topography</Value>
+        <Description>The script uses elevation data to create a custom visualization of topography, including hillshade and sea level. The output is a styled visualization of the elevation data.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">000022</Node>
+   <Node id="2" type="complex">{palette:'000022'}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="complex">{min: 1, max: 3000, palette: elevationPalette}</Node>
+   <Node id="5" type="literal">3000</Node>
+   <Node id="6" type="complex">['006600', '002200', 'fff700', 'ab7634', 'c4d0ff', 'ffffff']</Node>
+   <Node id="7" type="literal">000022</Node>
+   <Node id="8" type="complex">{palette:'000022'}</Node>
+   <Node id="9" type="literal">50.709</Node>
+   <Node id="10" type="eeFunction">Map.setCenter</Node>
+   <Node id="11" type="literal">6</Node>
+   <Node id="12" type="literal">USGS/GMTED2010</Node>
+   <Node id="13" type="eeFunction">ee.Image</Node>
+   <Node id="14" type="literal">0</Node>
+   <Node id="15" type="eeFunction">lte</Node>
+   <Node id="16" type="eeFunction">mask</Node>
+   <Node id="17" type="eeFunction">visualize</Node>
+   <Node id="18" type="eeFunction">not</Node>
+   <Node id="19" type="eeFunction">mask</Node>
+   <Node id="20" type="eeFunction">visualize</Node>
+   <Node id="21" type="eeFunction">ee.List</Node>
+   <Node id="22" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="23" type="eeFunction">mosaic</Node>
+   <Node id="24" type="literal">255</Node>
+   <Node id="25" type="eeFunction">divide</Node>
+   <Node id="26" type="eeFunction">rgbToHsv</Node>
+   <Node id="27" type="literal">0</Node>
+   <Node id="28" type="eeFunction">select</Node>
+   <Node id="29" type="literal">1</Node>
+   <Node id="30" type="complex">{}</Node>
+   <Node id="31" type="eeFunction">Map.addLayer</Node>
+   <Node id="32" type="literal">elev palette</Node>
+   <Node id="33" type="literal">False</Node>
+   <Node id="34" type="eeFunction">mask</Node>
+   <Node id="35" type="eeFunction">Map.addLayer</Node>
+   <Node id="36" type="literal">sea</Node>
+   <Node id="37" type="literal">False</Node>
+   <Node id="38" type="eeFunction">ee.Terrain.hillshade</Node>
+   <Node id="39" type="literal">255</Node>
+   <Node id="40" type="eeFunction">divide</Node>
+   <Node id="41" type="eeFunction">addBands</Node>
+   <Node id="42" type="eeFunction">hsvToRgb</Node>
+   <Node id="43" type="eeFunction">multiply</Node>
+   <Node id="44" type="literal">255</Node>
+   <Node id="45" type="eeFunction">byte</Node>
+   <Node id="46" type="complex">{}</Node>
+   <Node id="47" type="eeFunction">Map.addLayer</Node>
+   <Node id="48" type="literal">styled</Node>
+   <Node id="49" type="complex">{}</Node>
+   <Node id="50" type="eeFunction">Map.addLayer</Node>
+   <Node id="51" type="literal">hillshade</Node>
+   <Node id="52" type="literal">False</Node>
+   <Node id="53" type="complex">{}</Node>
+   <Node id="54" type="eeFunction">Map.addLayer</Node>
+   <Node id="55" type="literal">elev</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="4"></Relation>
+   <Relation id="3" sourceNodeId="5" targetNodeId="4"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="4"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="9" sourceNodeId="14" targetNodeId="15"></Relation>
+   <Relation id="10" sourceNodeId="13" targetNodeId="15"></Relation>
+   <Relation id="11" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="2" targetNodeId="17"></Relation>
+   <Relation id="15" sourceNodeId="15" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="17" sourceNodeId="13" targetNodeId="19"></Relation>
+   <Relation id="18" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="4" targetNodeId="20"></Relation>
+   <Relation id="20" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="21" sourceNodeId="17" targetNodeId="21"></Relation>
+   <Relation id="22" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="23" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="24" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="25" sourceNodeId="23" targetNodeId="25"></Relation>
+   <Relation id="26" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="27" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="28" sourceNodeId="29" targetNodeId="28"></Relation>
+   <Relation id="29" sourceNodeId="26" targetNodeId="28"></Relation>
+   <Relation id="30" sourceNodeId="30" targetNodeId="31"></Relation>
+   <Relation id="31" sourceNodeId="32" targetNodeId="31"></Relation>
+   <Relation id="32" sourceNodeId="33" targetNodeId="31"></Relation>
+   <Relation id="33" sourceNodeId="23" targetNodeId="31"></Relation>
+   <Relation id="34" sourceNodeId="15" targetNodeId="34"></Relation>
+   <Relation id="35" sourceNodeId="15" targetNodeId="34"></Relation>
+   <Relation id="36" sourceNodeId="34" targetNodeId="35"></Relation>
+   <Relation id="37" sourceNodeId="8" targetNodeId="35"></Relation>
+   <Relation id="38" sourceNodeId="36" targetNodeId="35"></Relation>
+   <Relation id="39" sourceNodeId="37" targetNodeId="35"></Relation>
+   <Relation id="40" sourceNodeId="13" targetNodeId="38"></Relation>
+   <Relation id="41" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="42" sourceNodeId="38" targetNodeId="40"></Relation>
+   <Relation id="43" sourceNodeId="28" targetNodeId="41"></Relation>
+   <Relation id="44" sourceNodeId="40" targetNodeId="41"></Relation>
+   <Relation id="45" sourceNodeId="41" targetNodeId="42"></Relation>
+   <Relation id="46" sourceNodeId="42" targetNodeId="43"></Relation>
+   <Relation id="47" sourceNodeId="44" targetNodeId="43"></Relation>
+   <Relation id="48" sourceNodeId="43" targetNodeId="45"></Relation>
+   <Relation id="49" sourceNodeId="46" targetNodeId="47"></Relation>
+   <Relation id="50" sourceNodeId="48" targetNodeId="47"></Relation>
+   <Relation id="51" sourceNodeId="45" targetNodeId="47"></Relation>
+   <Relation id="52" sourceNodeId="49" targetNodeId="50"></Relation>
+   <Relation id="53" sourceNodeId="51" targetNodeId="50"></Relation>
+   <Relation id="54" sourceNodeId="52" targetNodeId="50"></Relation>
+   <Relation id="55" sourceNodeId="38" targetNodeId="50"></Relation>
+   <Relation id="56" sourceNodeId="53" targetNodeId="54"></Relation>
+   <Relation id="57" sourceNodeId="55" targetNodeId="54"></Relation>
+   <Relation id="58" sourceNodeId="13" targetNodeId="54"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="59">
+        <Content type="comment">// Use an elevation dataset and terrain functions to create</Content>
+    </Script>
+    <Script line="2" startPosition="61" endPosition="100">
+        <Content type="comment">// a custom visualization of topography</Content>
+    </Script>
+    <Script line="4" startPosition="104" endPosition="137">
+        <Content type="comment">// Load a global elevation image.</Content>
+    </Script>
+    <Script line="5" startPosition="139" endPosition="177">
+        <Content type="code">var elev = ee.Image('USGS/GMTED2010');</Content>
+    </Script>
+    <Script line="7" startPosition="181" endPosition="212">
+        <Content type="comment">// Zoom to an area of interest.</Content>
+    </Script>
+    <Script line="8" startPosition="214" endPosition="249">
+        <Content type="code">Map.setCenter(-121.069, 50.709, 6);</Content>
+    </Script>
+    <Script line="10" startPosition="253" endPosition="285">
+        <Content type="comment">// Add the elevation to the map.</Content>
+    </Script>
+    <Script line="11" startPosition="287" endPosition="318">
+        <Content type="code">Map.addLayer(elev, {}, 'elev');</Content>
+    </Script>
+    <Script line="13" startPosition="322" endPosition="393">
+        <Content type="comment">// Use the terrain algorithms to compute a hillshade with 8-bit values.</Content>
+    </Script>
+    <Script line="14" startPosition="395" endPosition="434">
+        <Content type="code">var shade = ee.Terrain.hillshade(elev);</Content>
+    </Script>
+    <Script line="15" startPosition="436" endPosition="480">
+        <Content type="code">Map.addLayer(shade, {}, 'hillshade', false);</Content>
+    </Script>
+    <Script line="17" startPosition="484" endPosition="547">
+        <Content type="comment">// Create a "sea" variable to be used for cartographic purposes</Content>
+    </Script>
+    <Script line="18" startPosition="549" endPosition="571">
+        <Content type="code">var sea = elev.lte(0);</Content>
+    </Script>
+    <Script line="19" startPosition="573" endPosition="635">
+        <Content type="code">Map.addLayer(sea.mask(sea), {palette:'000022'}, 'sea', false);</Content>
+    </Script>
+    <Script line="21" startPosition="639" endPosition="693">
+        <Content type="comment">// Create a custom elevation palette from hex strings.</Content>
+    </Script>
+    <Script line="22" startPosition="695" endPosition="779">
+        <Content type="code">var elevationPalette = ['006600', '002200', 'fff700', 'ab7634', 'c4d0ff', 'ffffff'];</Content>
+    </Script>
+    <Script line="23" startPosition="781" endPosition="843">
+        <Content type="comment">// Use these visualization parameters, customized by location.</Content>
+    </Script>
+    <Script line="24" startPosition="845" endPosition="908">
+        <Content type="code">var visParams = {min: 1, max: 3000, palette: elevationPalette};</Content>
+    </Script>
+    <Script line="26" startPosition="912" endPosition="964">
+        <Content type="comment">// Create a mosaic of the sea and the elevation data</Content>
+    </Script>
+    <Script line="27,28,29,30,31,32" startPosition="966" endPosition="1200">
+        <Content type="code">var visualized = ee.ImageCollection([
+
+  // Mask the elevation to get only land
+
+  elev.mask(sea.not()).visualize(visParams),
+
+  // Use the sea mask directly to display sea.
+
+  sea.mask(sea).visualize({palette:'000022'})
+
+]).mosaic();</Content>
+    </Script>
+    <Script line="28" startPosition="1007" endPosition="1045">
+        <Content type="comment">// Mask the elevation to get only land</Content>
+    </Script>
+    <Script line="30" startPosition="1095" endPosition="1139">
+        <Content type="comment">// Use the sea mask directly to display sea.</Content>
+    </Script>
+    <Script line="34" startPosition="1204" endPosition="1282">
+        <Content type="comment">// Note that the visualization image doesn't require visualization parameters.</Content>
+    </Script>
+    <Script line="35" startPosition="1284" endPosition="1336">
+        <Content type="code">Map.addLayer(visualized, {}, 'elev palette', false);</Content>
+    </Script>
+    <Script line="37" startPosition="1340" endPosition="1416">
+        <Content type="comment">// Convert the visualized elevation to HSV, first converting to [0, 1] data.</Content>
+    </Script>
+    <Script line="38" startPosition="1418" endPosition="1462">
+        <Content type="code">var hsv = visualized.divide(255).rgbToHsv();</Content>
+    </Script>
+    <Script line="39" startPosition="1464" endPosition="1508">
+        <Content type="comment">// Select only the hue and saturation bands.</Content>
+    </Script>
+    <Script line="40" startPosition="1510" endPosition="1536">
+        <Content type="code">var hs = hsv.select(0, 1);</Content>
+    </Script>
+    <Script line="41" startPosition="1538" endPosition="1612">
+        <Content type="comment">// Convert the hillshade to [0, 1] data, as expected by the HSV algorithm.</Content>
+    </Script>
+    <Script line="42" startPosition="1614" endPosition="1640">
+        <Content type="code">var v = shade.divide(255);</Content>
+    </Script>
+    <Script line="43" startPosition="1642" endPosition="1709">
+        <Content type="comment">// Create a visualization image by converting back to RGB from HSV.</Content>
+    </Script>
+    <Script line="44" startPosition="1711" endPosition="1775">
+        <Content type="comment">// Note the cast to byte in order to export the image correctly.</Content>
+    </Script>
+    <Script line="45" startPosition="1777" endPosition="1834">
+        <Content type="code">var rgb = hs.addBands(v).hsvToRgb().multiply(255).byte();</Content>
+    </Script>
+    <Script line="46" startPosition="1836" endPosition="1868">
+        <Content type="code">Map.addLayer(rgb, {}, 'styled');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="160" endPosition="174">USGS/GMTED2010</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>32</ServiceNodeId>
+        <GEEScriptPart startPosition="1314" endPosition="1326">elev palette</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>36</ServiceNodeId>
+        <GEEScriptPart startPosition="497" endPosition="500">sea</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>36</ServiceNodeId>
+        <GEEScriptPart startPosition="622" endPosition="625">sea</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>48</ServiceNodeId>
+        <GEEScriptPart startPosition="1859" endPosition="1865">styled</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>51</ServiceNodeId>
+        <GEEScriptPart startPosition="461" endPosition="470">hillshade</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>55</ServiceNodeId>
+        <GEEScriptPart startPosition="311" endPosition="315">elev</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

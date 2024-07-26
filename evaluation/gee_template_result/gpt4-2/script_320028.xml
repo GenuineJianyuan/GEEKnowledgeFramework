@@ -1,0 +1,224 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320028" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2020-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>[75, 15, 85, 25]</Value>
+        <Reference>None</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>UserSource</SourceType>
+            <SourceName>MODIS/006/MCD12Q1</SourceName>
+            <Value>MODIS/006/MCD12Q1</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>The script detects corn cultivation areas in a specified region of India using MODIS land cover data from 2020 and calculates the total area of corn fields.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: ['yellow','green']}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="complex">['yellow','green']</Node>
+   <Node id="5" type="literal">MODIS/006/MCD12Q1</Node>
+   <Node id="6" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="7" type="eeFunction">filterDate</Node>
+   <Node id="8" type="literal">2020-01-01</Node>
+   <Node id="9" type="literal">2020-12-31</Node>
+   <Node id="10" type="eeFunction">first</Node>
+   <Node id="11" type="literal">LC_Type1</Node>
+   <Node id="12" type="eeFunction">select</Node>
+   <Node id="13" type="literal">75</Node>
+   <Node id="14" type="eeFunction">ee.List</Node>
+   <Node id="15" type="literal">15</Node>
+   <Node id="16" type="literal">85</Node>
+   <Node id="17" type="literal">25</Node>
+   <Node id="18" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="19" type="eeFunction">ee.Reducer.sum</Node>
+   <Node id="20" type="complex">{
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: indiaRegion,
+
+  scale: 500,                                            
+
+  maxPixels: 1e9
+
+}</Node>
+   <Node id="21" type="literal">500</Node>
+   <Node id="22" type="literal">1000000000</Node>
+   <Node id="23" type="literal">5</Node>
+   <Node id="24" type="eeFunction">Map.centerObject</Node>
+   <Node id="25" type="eeFunction">clip</Node>
+   <Node id="26" type="eeFunction">eq</Node>
+   <Node id="27" type="literal">12</Node>
+   <Node id="28" type="eeFunction">ee.Image.pixelArea</Node>
+   <Node id="29" type="eeFunction">multiply</Node>
+   <Node id="30" type="eeFunction">reduceRegion</Node>
+   <Node id="31" type="literal">Corn Field Area in India Region:</Node>
+   <Node id="32" type="eeFunction">print</Node>
+   <Node id="33" type="eeFunction">Map.addLayer</Node>
+   <Node id="34" type="literal">Corn Areas</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="6" targetNodeId="7"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="7"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="7"></Relation>
+   <Relation id="8" sourceNodeId="7" targetNodeId="10"></Relation>
+   <Relation id="9" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="10" sourceNodeId="10" targetNodeId="12"></Relation>
+   <Relation id="11" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="12" sourceNodeId="15" targetNodeId="14"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="14"></Relation>
+   <Relation id="14" sourceNodeId="17" targetNodeId="14"></Relation>
+   <Relation id="15" sourceNodeId="14" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="19" targetNodeId="20"></Relation>
+   <Relation id="17" sourceNodeId="21" targetNodeId="20"></Relation>
+   <Relation id="18" sourceNodeId="22" targetNodeId="20"></Relation>
+   <Relation id="19" sourceNodeId="18" targetNodeId="20"></Relation>
+   <Relation id="20" sourceNodeId="23" targetNodeId="24"></Relation>
+   <Relation id="21" sourceNodeId="18" targetNodeId="24"></Relation>
+   <Relation id="22" sourceNodeId="12" targetNodeId="25"></Relation>
+   <Relation id="23" sourceNodeId="18" targetNodeId="25"></Relation>
+   <Relation id="24" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="25" sourceNodeId="27" targetNodeId="26"></Relation>
+   <Relation id="26" sourceNodeId="28" targetNodeId="29"></Relation>
+   <Relation id="27" sourceNodeId="26" targetNodeId="29"></Relation>
+   <Relation id="28" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="29" sourceNodeId="20" targetNodeId="30"></Relation>
+   <Relation id="30" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="31" sourceNodeId="30" targetNodeId="32"></Relation>
+   <Relation id="32" sourceNodeId="2" targetNodeId="33"></Relation>
+   <Relation id="33" sourceNodeId="34" targetNodeId="33"></Relation>
+   <Relation id="34" sourceNodeId="26" targetNodeId="33"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="22">
+        <Content type="comment">// Crop Area Detection</Content>
+    </Script>
+    <Script line="3" startPosition="26" endPosition="89">
+        <Content type="comment">// Set the research area: For example, select a region in India</Content>
+    </Script>
+    <Script line="4" startPosition="91" endPosition="149">
+        <Content type="code">var indiaRegion = ee.Geometry.Rectangle([75, 15, 85, 25]);</Content>
+    </Script>
+    <Script line="6" startPosition="153" endPosition="189">
+        <Content type="comment">// Load the MODIS land cover dataset</Content>
+    </Script>
+    <Script line="7,8,9" startPosition="191" endPosition="347">
+        <Content type="code">var modisLandCover = ee.ImageCollection("MODIS/006/MCD12Q1")
+
+                      .filterDate('2020-01-01', '2020-12-31')
+
+                      .first();</Content>
+    </Script>
+    <Script line="11" startPosition="351" endPosition="403">
+        <Content type="comment">// Select the correct band - for example, 'LC_Type1'</Content>
+    </Script>
+    <Script line="12" startPosition="405" endPosition="473">
+        <Content type="code">var landCover = modisLandCover.select('LC_Type1').clip(indiaRegion);</Content>
+    </Script>
+    <Script line="14" startPosition="477" endPosition="521">
+        <Content type="comment">// Select the land cover type for corn areas</Content>
+    </Script>
+    <Script line="15" startPosition="523" endPosition="689">
+        <Content type="comment">// Assuming that in the land cover types, corn fields are marked with a specific number, such as 12 (this number needs to be verified according to the actual dataset)</Content>
+    </Script>
+    <Script line="16" startPosition="691" endPosition="718">
+        <Content type="code">var cornLandCoverType = 12;</Content>
+    </Script>
+    <Script line="18" startPosition="722" endPosition="744">
+        <Content type="comment">// Identify corn areas</Content>
+    </Script>
+    <Script line="19" startPosition="746" endPosition="794">
+        <Content type="code">var cornAreas = landCover.eq(cornLandCoverType);</Content>
+    </Script>
+    <Script line="21" startPosition="798" endPosition="814">
+        <Content type="comment">// Visualization</Content>
+    </Script>
+    <Script line="22" startPosition="816" endPosition="849">
+        <Content type="code">Map.centerObject(indiaRegion, 5);</Content>
+    </Script>
+    <Script line="23" startPosition="851" endPosition="936">
+        <Content type="code">Map.addLayer(cornAreas, {min: 0, max: 1, palette: ['yellow','green']}, 'Corn Areas');</Content>
+    </Script>
+    <Script line="25" startPosition="940" endPosition="981">
+        <Content type="comment">// Calculate the area of corn cultivation</Content>
+    </Script>
+    <Script line="26,27,28,29,30,31" startPosition="983" endPosition="1187">
+        <Content type="code">var area = cornAreas.multiply(ee.Image.pixelArea()).reduceRegion({
+
+  reducer: ee.Reducer.sum(),
+
+  geometry: indiaRegion,
+
+  scale: 500, // Adjust based on the dataset's resolution
+
+  maxPixels: 1e9
+
+});</Content>
+    </Script>
+    <Script line="29" startPosition="1121" endPosition="1164">
+        <Content type="comment">// Adjust based on the dataset's resolution</Content>
+    </Script>
+    <Script line="33" startPosition="1191" endPosition="1213">
+        <Content type="comment">// Output area results</Content>
+    </Script>
+    <Script line="34" startPosition="1215" endPosition="1263">
+        <Content type="code">print('Corn Field Area in India Region:', area);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="232" endPosition="249">MODIS/006/MCD12Q1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="288" endPosition="298">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="302" endPosition="312">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="394" endPosition="402">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="444" endPosition="452">LC_Type1</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>31</ServiceNodeId>
+        <GEEScriptPart startPosition="1222" endPosition="1254">Corn Field Area in India Region:</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>34</ServiceNodeId>
+        <GEEScriptPart startPosition="923" endPosition="933">Corn Areas</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

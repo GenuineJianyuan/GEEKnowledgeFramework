@@ -1,0 +1,577 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320016" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>2000-01-01</StartTime>
+        <EndTime>2020-12-31</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value type="list">[39.26, 41.03, 115.25, 117.3]</Value>
+        <Coordinates>WGS84</Coordinates>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 5 TM Collection 2 Tier 1 TOA Reflectance</SourceName>
+            <Value>LANDSAT/LT05/C02/T1_TOA</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 8 Collection 2 Tier 1 and Real-Time data TOA Reflectance</SourceName>
+            <Value>LANDSAT/LC08/C02/T1_RT_TOA</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Land use/land cover</Value>
+        <Description>The script aims to detect land cover changes in the Beijing region using Landsat imagery from 2000 and 2020.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">0</Node>
+   <Node id="2" type="complex">{min: 0, max: 1, palette: ['000000', 'FFFFFF']}</Node>
+   <Node id="3" type="literal">1</Node>
+   <Node id="4" type="complex">['000000', 'FFFFFF']</Node>
+   <Node id="5" type="literal">Change</Node>
+   <Node id="6" type="eeFunction">ee.List</Node>
+   <Node id="7" type="literal">0</Node>
+   <Node id="8" type="eeFunction">ee.List</Node>
+   <Node id="9" type="literal">B4</Node>
+   <Node id="10" type="eeFunction">ee.List</Node>
+   <Node id="11" type="literal">B6</Node>
+   <Node id="12" type="literal">B3</Node>
+   <Node id="13" type="eeFunction">ee.List</Node>
+   <Node id="14" type="literal">B5</Node>
+   <Node id="15" type="literal">B5</Node>
+   <Node id="16" type="eeFunction">ee.List</Node>
+   <Node id="17" type="literal">B3</Node>
+   <Node id="18" type="literal">B4</Node>
+   <Node id="19" type="eeFunction">ee.List</Node>
+   <Node id="20" type="literal">B2</Node>
+   <Node id="21" type="literal">B5</Node>
+   <Node id="22" type="eeFunction">ee.List</Node>
+   <Node id="23" type="literal">B4</Node>
+   <Node id="24" type="literal">B4</Node>
+   <Node id="25" type="eeFunction">ee.List</Node>
+   <Node id="26" type="literal">B3</Node>
+   <Node id="27" type="literal">LANDSAT/LC08/C02/T1_RT_TOA</Node>
+   <Node id="28" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="29" type="literal">LANDSAT/LT05/C02/T1_TOA</Node>
+   <Node id="30" type="eeFunction">ee.ImageCollection</Node>
+   <Node id="31" type="literal">115.25</Node>
+   <Node id="32" type="eeFunction">ee.List</Node>
+   <Node id="33" type="literal">39.26</Node>
+   <Node id="34" type="literal">117.3</Node>
+   <Node id="35" type="literal">41.03</Node>
+   <Node id="36" type="eeFunction">ee.Geometry.Rectangle</Node>
+   <Node id="37" type="literal">9</Node>
+   <Node id="38" type="eeFunction">Map.centerObject</Node>
+   <Node id="39" type="eeFunction">filterBounds</Node>
+   <Node id="40" type="eeFunction">filterDate</Node>
+   <Node id="41" type="literal">2020-01-01</Node>
+   <Node id="42" type="literal">2020-12-31</Node>
+   <Node id="43" type="eeFunction">median</Node>
+   <Node id="44" type="eeFunction">normalizedDifference</Node>
+   <Node id="45" type="eeFunction">rename</Node>
+   <Node id="46" type="literal">NDBI_2020</Node>
+   <Node id="47" type="eeFunction">normalizedDifference</Node>
+   <Node id="48" type="eeFunction">rename</Node>
+   <Node id="49" type="literal">NDWI_2020</Node>
+   <Node id="50" type="eeFunction">normalizedDifference</Node>
+   <Node id="51" type="eeFunction">rename</Node>
+   <Node id="52" type="literal">NDVI_2020</Node>
+   <Node id="53" type="eeFunction">filterBounds</Node>
+   <Node id="54" type="eeFunction">filterDate</Node>
+   <Node id="55" type="literal">2000-01-01</Node>
+   <Node id="56" type="literal">2000-12-31</Node>
+   <Node id="57" type="eeFunction">median</Node>
+   <Node id="58" type="eeFunction">normalizedDifference</Node>
+   <Node id="59" type="eeFunction">rename</Node>
+   <Node id="60" type="literal">NDBI_2000</Node>
+   <Node id="61" type="eeFunction">subtract</Node>
+   <Node id="62" type="eeFunction">gt</Node>
+   <Node id="63" type="literal">0.1</Node>
+   <Node id="64" type="eeFunction">normalizedDifference</Node>
+   <Node id="65" type="eeFunction">rename</Node>
+   <Node id="66" type="literal">NDWI_2000</Node>
+   <Node id="67" type="eeFunction">subtract</Node>
+   <Node id="68" type="eeFunction">gt</Node>
+   <Node id="69" type="literal">0.1</Node>
+   <Node id="70" type="eeFunction">normalizedDifference</Node>
+   <Node id="71" type="eeFunction">rename</Node>
+   <Node id="72" type="literal">NDVI_2000</Node>
+   <Node id="73" type="eeFunction">subtract</Node>
+   <Node id="74" type="eeFunction">gt</Node>
+   <Node id="75" type="literal">0.1</Node>
+   <Node id="76" type="eeFunction">add</Node>
+   <Node id="77" type="eeFunction">add</Node>
+   <Node id="78" type="literal">2</Node>
+   <Node id="79" type="eeFunction">gte</Node>
+   <Node id="80" type="eeFunction">select</Node>
+   <Node id="81" type="eeFunction">clip</Node>
+   <Node id="82" type="eeFunction">Map.addLayer</Node>
+   <Node id="83" type="literal">Land Cover Change</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="2"></Relation>
+   <Relation id="4" sourceNodeId="5" targetNodeId="6"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="8"></Relation>
+   <Relation id="6" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="7" sourceNodeId="11" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="12" targetNodeId="13"></Relation>
+   <Relation id="9" sourceNodeId="14" targetNodeId="13"></Relation>
+   <Relation id="10" sourceNodeId="15" targetNodeId="16"></Relation>
+   <Relation id="11" sourceNodeId="17" targetNodeId="16"></Relation>
+   <Relation id="12" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="13" sourceNodeId="20" targetNodeId="19"></Relation>
+   <Relation id="14" sourceNodeId="21" targetNodeId="22"></Relation>
+   <Relation id="15" sourceNodeId="23" targetNodeId="22"></Relation>
+   <Relation id="16" sourceNodeId="24" targetNodeId="25"></Relation>
+   <Relation id="17" sourceNodeId="26" targetNodeId="25"></Relation>
+   <Relation id="18" sourceNodeId="27" targetNodeId="28"></Relation>
+   <Relation id="19" sourceNodeId="29" targetNodeId="30"></Relation>
+   <Relation id="20" sourceNodeId="31" targetNodeId="32"></Relation>
+   <Relation id="21" sourceNodeId="33" targetNodeId="32"></Relation>
+   <Relation id="22" sourceNodeId="34" targetNodeId="32"></Relation>
+   <Relation id="23" sourceNodeId="35" targetNodeId="32"></Relation>
+   <Relation id="24" sourceNodeId="32" targetNodeId="36"></Relation>
+   <Relation id="25" sourceNodeId="37" targetNodeId="38"></Relation>
+   <Relation id="26" sourceNodeId="36" targetNodeId="38"></Relation>
+   <Relation id="27" sourceNodeId="28" targetNodeId="39"></Relation>
+   <Relation id="28" sourceNodeId="36" targetNodeId="39"></Relation>
+   <Relation id="29" sourceNodeId="39" targetNodeId="40"></Relation>
+   <Relation id="30" sourceNodeId="41" targetNodeId="40"></Relation>
+   <Relation id="31" sourceNodeId="42" targetNodeId="40"></Relation>
+   <Relation id="32" sourceNodeId="40" targetNodeId="43"></Relation>
+   <Relation id="33" sourceNodeId="10" targetNodeId="44"></Relation>
+   <Relation id="34" sourceNodeId="43" targetNodeId="44"></Relation>
+   <Relation id="35" sourceNodeId="44" targetNodeId="45"></Relation>
+   <Relation id="36" sourceNodeId="46" targetNodeId="45"></Relation>
+   <Relation id="37" sourceNodeId="16" targetNodeId="47"></Relation>
+   <Relation id="38" sourceNodeId="43" targetNodeId="47"></Relation>
+   <Relation id="39" sourceNodeId="47" targetNodeId="48"></Relation>
+   <Relation id="40" sourceNodeId="49" targetNodeId="48"></Relation>
+   <Relation id="41" sourceNodeId="22" targetNodeId="50"></Relation>
+   <Relation id="42" sourceNodeId="43" targetNodeId="50"></Relation>
+   <Relation id="43" sourceNodeId="50" targetNodeId="51"></Relation>
+   <Relation id="44" sourceNodeId="52" targetNodeId="51"></Relation>
+   <Relation id="45" sourceNodeId="30" targetNodeId="53"></Relation>
+   <Relation id="46" sourceNodeId="36" targetNodeId="53"></Relation>
+   <Relation id="47" sourceNodeId="53" targetNodeId="54"></Relation>
+   <Relation id="48" sourceNodeId="55" targetNodeId="54"></Relation>
+   <Relation id="49" sourceNodeId="56" targetNodeId="54"></Relation>
+   <Relation id="50" sourceNodeId="54" targetNodeId="57"></Relation>
+   <Relation id="51" sourceNodeId="13" targetNodeId="58"></Relation>
+   <Relation id="52" sourceNodeId="57" targetNodeId="58"></Relation>
+   <Relation id="53" sourceNodeId="58" targetNodeId="59"></Relation>
+   <Relation id="54" sourceNodeId="60" targetNodeId="59"></Relation>
+   <Relation id="55" sourceNodeId="45" targetNodeId="61"></Relation>
+   <Relation id="56" sourceNodeId="59" targetNodeId="61"></Relation>
+   <Relation id="57" sourceNodeId="61" targetNodeId="62"></Relation>
+   <Relation id="58" sourceNodeId="63" targetNodeId="62"></Relation>
+   <Relation id="59" sourceNodeId="19" targetNodeId="64"></Relation>
+   <Relation id="60" sourceNodeId="57" targetNodeId="64"></Relation>
+   <Relation id="61" sourceNodeId="64" targetNodeId="65"></Relation>
+   <Relation id="62" sourceNodeId="66" targetNodeId="65"></Relation>
+   <Relation id="63" sourceNodeId="48" targetNodeId="67"></Relation>
+   <Relation id="64" sourceNodeId="65" targetNodeId="67"></Relation>
+   <Relation id="65" sourceNodeId="67" targetNodeId="68"></Relation>
+   <Relation id="66" sourceNodeId="69" targetNodeId="68"></Relation>
+   <Relation id="67" sourceNodeId="25" targetNodeId="70"></Relation>
+   <Relation id="68" sourceNodeId="57" targetNodeId="70"></Relation>
+   <Relation id="69" sourceNodeId="70" targetNodeId="71"></Relation>
+   <Relation id="70" sourceNodeId="72" targetNodeId="71"></Relation>
+   <Relation id="71" sourceNodeId="51" targetNodeId="73"></Relation>
+   <Relation id="72" sourceNodeId="71" targetNodeId="73"></Relation>
+   <Relation id="73" sourceNodeId="73" targetNodeId="74"></Relation>
+   <Relation id="74" sourceNodeId="75" targetNodeId="74"></Relation>
+   <Relation id="75" sourceNodeId="68" targetNodeId="76"></Relation>
+   <Relation id="76" sourceNodeId="74" targetNodeId="76"></Relation>
+   <Relation id="77" sourceNodeId="76" targetNodeId="77"></Relation>
+   <Relation id="78" sourceNodeId="62" targetNodeId="77"></Relation>
+   <Relation id="79" sourceNodeId="78" targetNodeId="79"></Relation>
+   <Relation id="80" sourceNodeId="77" targetNodeId="79"></Relation>
+   <Relation id="81" sourceNodeId="8" targetNodeId="80"></Relation>
+   <Relation id="82" sourceNodeId="6" targetNodeId="80"></Relation>
+   <Relation id="83" sourceNodeId="79" targetNodeId="80"></Relation>
+   <Relation id="84" sourceNodeId="80" targetNodeId="81"></Relation>
+   <Relation id="85" sourceNodeId="36" targetNodeId="81"></Relation>
+   <Relation id="86" sourceNodeId="81" targetNodeId="82"></Relation>
+   <Relation id="87" sourceNodeId="83" targetNodeId="82"></Relation>
+   <Relation id="88" sourceNodeId="2" targetNodeId="82"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="24">
+        <Content type="comment">// Land Use Cover Change</Content>
+    </Script>
+    <Script line="3" startPosition="28" endPosition="97">
+        <Content type="comment">// Define the latitude and longitude boundaries of the Beijing region</Content>
+    </Script>
+    <Script line="4" startPosition="99" endPosition="173">
+        <Content type="code">var beijingRegion = ee.Geometry.Rectangle([115.25, 39.26, 117.30, 41.03]);</Content>
+    </Script>
+    <Script line="6" startPosition="177" endPosition="195">
+        <Content type="comment">// Set time ranges</Content>
+    </Script>
+    <Script line="7" startPosition="197" endPosition="226">
+        <Content type="code">var start2000 = '2000-01-01';</Content>
+    </Script>
+    <Script line="8" startPosition="228" endPosition="255">
+        <Content type="code">var end2000 = '2000-12-31';</Content>
+    </Script>
+    <Script line="9" startPosition="257" endPosition="286">
+        <Content type="code">var start2020 = '2020-01-01';</Content>
+    </Script>
+    <Script line="10" startPosition="288" endPosition="315">
+        <Content type="code">var end2020 = '2020-12-31';</Content>
+    </Script>
+    <Script line="12" startPosition="319" endPosition="362">
+        <Content type="comment">// Load Landsat 5 image collection for 2000</Content>
+    </Script>
+    <Script line="13,14,15,16" startPosition="364" endPosition="556">
+        <Content type="code">var landsat2000 = ee.ImageCollection('LANDSAT/LT05/C02/T1_TOA')
+
+                  .filterBounds(beijingRegion)
+
+                  .filterDate(start2000, end2000)
+
+                  .median();</Content>
+    </Script>
+    <Script line="18" startPosition="560" endPosition="603">
+        <Content type="comment">// Load Landsat 8 image collection for 2020</Content>
+    </Script>
+    <Script line="19,20,21,22" startPosition="605" endPosition="800">
+        <Content type="code">var landsat2020 = ee.ImageCollection('LANDSAT/LC08/C02/T1_RT_TOA')
+
+                  .filterBounds(beijingRegion)
+
+                  .filterDate(start2020, end2020)
+
+                  .median();</Content>
+    </Script>
+    <Script line="24" startPosition="804" endPosition="855">
+        <Content type="comment">// Calculate NDVI, NDWI, and NDBI for 2000 and 2020</Content>
+    </Script>
+    <Script line="25" startPosition="857" endPosition="939">
+        <Content type="code">var ndvi2000 = landsat2000.normalizedDifference(['B4', 'B3']).rename('NDVI_2000');</Content>
+    </Script>
+    <Script line="25" startPosition="940" endPosition="952">
+        <Content type="comment">// Landsat 5</Content>
+    </Script>
+    <Script line="26" startPosition="954" endPosition="1036">
+        <Content type="code">var ndvi2020 = landsat2020.normalizedDifference(['B5', 'B4']).rename('NDVI_2020');</Content>
+    </Script>
+    <Script line="26" startPosition="1037" endPosition="1049">
+        <Content type="comment">// Landsat 8</Content>
+    </Script>
+    <Script line="28" startPosition="1053" endPosition="1135">
+        <Content type="code">var ndwi2000 = landsat2000.normalizedDifference(['B4', 'B2']).rename('NDWI_2000');</Content>
+    </Script>
+    <Script line="28" startPosition="1136" endPosition="1148">
+        <Content type="comment">// Landsat 5</Content>
+    </Script>
+    <Script line="29" startPosition="1150" endPosition="1232">
+        <Content type="code">var ndwi2020 = landsat2020.normalizedDifference(['B5', 'B3']).rename('NDWI_2020');</Content>
+    </Script>
+    <Script line="29" startPosition="1233" endPosition="1245">
+        <Content type="comment">// Landsat 8</Content>
+    </Script>
+    <Script line="31" startPosition="1249" endPosition="1331">
+        <Content type="code">var ndbi2000 = landsat2000.normalizedDifference(['B3', 'B5']).rename('NDBI_2000');</Content>
+    </Script>
+    <Script line="31" startPosition="1332" endPosition="1344">
+        <Content type="comment">// Landsat 5</Content>
+    </Script>
+    <Script line="32" startPosition="1346" endPosition="1428">
+        <Content type="code">var ndbi2020 = landsat2020.normalizedDifference(['B4', 'B6']).rename('NDBI_2020');</Content>
+    </Script>
+    <Script line="32" startPosition="1429" endPosition="1441">
+        <Content type="comment">// Landsat 8</Content>
+    </Script>
+    <Script line="34" startPosition="1445" endPosition="1462">
+        <Content type="comment">// Set thresholds</Content>
+    </Script>
+    <Script line="35" startPosition="1464" endPosition="1488">
+        <Content type="code">var ndwiThreshold = 0.1;</Content>
+    </Script>
+    <Script line="36" startPosition="1490" endPosition="1514">
+        <Content type="code">var ndviThreshold = 0.1;</Content>
+    </Script>
+    <Script line="37" startPosition="1516" endPosition="1540">
+        <Content type="code">var ndbiThreshold = 0.1;</Content>
+    </Script>
+    <Script line="39" startPosition="1544" endPosition="1575">
+        <Content type="comment">// Determine land cover changes</Content>
+    </Script>
+    <Script line="40" startPosition="1577" endPosition="1640">
+        <Content type="code">var ndwiChange = ndwi2020.subtract(ndwi2000).gt(ndwiThreshold);</Content>
+    </Script>
+    <Script line="41" startPosition="1642" endPosition="1705">
+        <Content type="code">var ndviChange = ndvi2020.subtract(ndvi2000).gt(ndviThreshold);</Content>
+    </Script>
+    <Script line="42" startPosition="1707" endPosition="1770">
+        <Content type="code">var ndbiChange = ndbi2020.subtract(ndbi2000).gt(ndbiThreshold);</Content>
+    </Script>
+    <Script line="44" startPosition="1774" endPosition="1804">
+        <Content type="comment">// Combine three binary layers</Content>
+    </Script>
+    <Script line="45" startPosition="1806" endPosition="1866">
+        <Content type="code">var changeMask = ndwiChange.add(ndviChange).add(ndbiChange);</Content>
+    </Script>
+    <Script line="47" startPosition="1870" endPosition="1897">
+        <Content type="comment">// Assess land cover change</Content>
+    </Script>
+    <Script line="48" startPosition="1899" endPosition="1936">
+        <Content type="code">var changeResult = changeMask.gte(2);</Content>
+    </Script>
+    <Script line="48" startPosition="1937" endPosition="1979">
+        <Content type="comment">// A value of 2 or more indicates a change</Content>
+    </Script>
+    <Script line="50" startPosition="1983" endPosition="2017">
+        <Content type="comment">// Create a change detection layer</Content>
+    </Script>
+    <Script line="51" startPosition="2019" endPosition="2074">
+        <Content type="code">var changeLayer = changeResult.select([0], ['Change']);</Content>
+    </Script>
+    <Script line="53" startPosition="2078" endPosition="2105">
+        <Content type="comment">// Visualization parameters</Content>
+    </Script>
+    <Script line="54" startPosition="2107" endPosition="2171">
+        <Content type="code">var visParams = {min: 0, max: 1, palette: ['000000', 'FFFFFF']};</Content>
+    </Script>
+    <Script line="54" startPosition="2172" endPosition="2223">
+        <Content type="comment">// Black for 0, white for 1, to denote change areas</Content>
+    </Script>
+    <Script line="56" startPosition="2227" endPosition="2271">
+        <Content type="comment">// Add the change detection layer to the map</Content>
+    </Script>
+    <Script line="57" startPosition="2273" endPosition="2351">
+        <Content type="code">Map.addLayer(changeLayer.clip(beijingRegion), visParams, 'Land Cover Change');</Content>
+    </Script>
+    <Script line="59" startPosition="2355" endPosition="2384">
+        <Content type="comment">// Set the map's center point</Content>
+    </Script>
+    <Script line="60" startPosition="2386" endPosition="2421">
+        <Content type="code">Map.centerObject(beijingRegion, 9);</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="2064" endPosition="2070">Change</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>5</ServiceNodeId>
+        <GEEScriptPart startPosition="2342" endPosition="2348">Change</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="907" endPosition="909">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="1010" endPosition="1012">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="1103" endPosition="1105">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>9</ServiceNodeId>
+        <GEEScriptPart startPosition="1396" endPosition="1398">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="1402" endPosition="1404">B6</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="913" endPosition="915">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="1206" endPosition="1208">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>12</ServiceNodeId>
+        <GEEScriptPart startPosition="1299" endPosition="1301">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="1004" endPosition="1006">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="1200" endPosition="1202">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>14</ServiceNodeId>
+        <GEEScriptPart startPosition="1305" endPosition="1307">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="1004" endPosition="1006">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="1200" endPosition="1202">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>15</ServiceNodeId>
+        <GEEScriptPart startPosition="1305" endPosition="1307">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="913" endPosition="915">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="1206" endPosition="1208">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>17</ServiceNodeId>
+        <GEEScriptPart startPosition="1299" endPosition="1301">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="907" endPosition="909">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="1010" endPosition="1012">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="1103" endPosition="1105">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>18</ServiceNodeId>
+        <GEEScriptPart startPosition="1396" endPosition="1398">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="1109" endPosition="1111">B2</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="1004" endPosition="1006">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="1200" endPosition="1202">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>21</ServiceNodeId>
+        <GEEScriptPart startPosition="1305" endPosition="1307">B5</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="907" endPosition="909">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="1010" endPosition="1012">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="1103" endPosition="1105">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>23</ServiceNodeId>
+        <GEEScriptPart startPosition="1396" endPosition="1398">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="907" endPosition="909">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="1010" endPosition="1012">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="1103" endPosition="1105">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="1396" endPosition="1398">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="913" endPosition="915">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="1206" endPosition="1208">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>26</ServiceNodeId>
+        <GEEScriptPart startPosition="1299" endPosition="1301">B3</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>27</ServiceNodeId>
+        <GEEScriptPart startPosition="643" endPosition="669">LANDSAT/LC08/C02/T1_RT_TOA</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>29</ServiceNodeId>
+        <GEEScriptPart startPosition="402" endPosition="425">LANDSAT/LT05/C02/T1_TOA</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>41</ServiceNodeId>
+        <GEEScriptPart startPosition="274" endPosition="284">2020-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>42</ServiceNodeId>
+        <GEEScriptPart startPosition="303" endPosition="313">2020-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>46</ServiceNodeId>
+        <GEEScriptPart startPosition="1416" endPosition="1425">NDBI_2020</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>49</ServiceNodeId>
+        <GEEScriptPart startPosition="1220" endPosition="1229">NDWI_2020</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>52</ServiceNodeId>
+        <GEEScriptPart startPosition="1024" endPosition="1033">NDVI_2020</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>55</ServiceNodeId>
+        <GEEScriptPart startPosition="214" endPosition="224">2000-01-01</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>56</ServiceNodeId>
+        <GEEScriptPart startPosition="243" endPosition="253">2000-12-31</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>60</ServiceNodeId>
+        <GEEScriptPart startPosition="1319" endPosition="1328">NDBI_2000</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>66</ServiceNodeId>
+        <GEEScriptPart startPosition="1123" endPosition="1132">NDWI_2000</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>72</ServiceNodeId>
+        <GEEScriptPart startPosition="927" endPosition="936">NDVI_2000</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>83</ServiceNodeId>
+        <GEEScriptPart startPosition="2331" endPosition="2348">Land Cover Change</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>

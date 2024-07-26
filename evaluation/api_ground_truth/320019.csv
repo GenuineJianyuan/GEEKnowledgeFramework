@@ -1,0 +1,17 @@
+API1,API2
+ee.Geometry.Point,ee.Feature
+Landsat.simpleComposite,Image.Segmentation.SNIC
+Image.rename,Image.classify
+Image.sampleRegions,Classifier.train
+Classifier.smileRandomForest,Classifier.train
+Image.Segmentation.SNIC,Image.select
+Image.Segmentation.seedGrid,Image.Segmentation.SNIC
+filterDate,Landsat.simpleComposite
+ee.FeatureCollection,ee.FeatureCollection.merge
+Classifier.train,Image.classify
+ee.FeatureCollection.merge,Image.sampleRegions
+ee.FeatureCollection.merge,ee.FeatureCollection.merge
+ee.ImageCollection,filter
+Image.select,Image.sampleRegions
+Image.select,Image.rename
+Landsat.simpleComposite,Image.select

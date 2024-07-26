@@ -1,0 +1,184 @@
+<!-- This document is open-source and may be freely shared and distributed. -->
+<GEEModelingKnowledgeTemplate name="script_320018" description="">
+ <!-- Modeling Knowledge Expression Module -->
+<ModelingKnowledge>
+<!-- Descriptive Modeling Knowledge -->
+<Fact>
+    <TemporalRange>
+        <StartTime>1990-06-04</StartTime>
+        <EndTime>2010-06-11</EndTime>
+    </TemporalRange>
+    <GeospatialRange>
+        <GeospatialType>place name</GeospatialType>
+        <Value>None(geonameId=3172215)</Value>
+        <Reference>GeoNames</Reference>
+    </GeospatialRange>
+    <Datasource>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>USGS Landsat 5 TM Collection 2 Tier 1 TOA Reflectance</SourceName>
+            <Value>LANDSAT/LT05/C02/T1_TOA</Value>
+        </Source>
+        <Source>
+            <SourceType>GEESource</SourceType>
+            <SourceName>SRTM Digital Elevation Data Version 4</SourceName>
+            <Value>CGIAR/SRTM90_V4</Value>
+        </Source>
+    </Datasource>
+    <Task>
+        <TaskType>GCMD Keywords</TaskType>
+        <Value>Vegetation</Value>
+        <Description>This script calculates the NDVI difference between two Landsat 5 images taken 20 years apart and masks it with a land mask.</Description>
+    </Task>
+</Fact>
+
+ <!-- Procedural Modeling Knowledge -->
+<Process>
+<ServiceNode>
+   <Node id="1" type="literal">37.6295</Node>
+   <Node id="2" type="eeFunction">Map.setCenter</Node>
+   <Node id="3" type="literal">9</Node>
+   <Node id="4" type="literal">-0.5</Node>
+   <Node id="5" type="complex">{min: -0.5, max: 0.5, palette: ['FF0000', 'FFFFFF', '0000FF']}</Node>
+   <Node id="6" type="literal">0.5</Node>
+   <Node id="7" type="complex">['FF0000', 'FFFFFF', '0000FF']</Node>
+   <Node id="8" type="literal">CGIAR/SRTM90_V4</Node>
+   <Node id="9" type="eeFunction">ee.Image</Node>
+   <Node id="10" type="eeFunction">mask</Node>
+   <Node id="11" type="literal">LANDSAT/LT05/C02/T1_TOA/LT05_044034_20100611</Node>
+   <Node id="12" type="eeFunction">ee.Image</Node>
+   <Node id="13" type="literal">LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900604</Node>
+   <Node id="14" type="eeFunction">ee.Image</Node>
+   <Node id="15" type="userDefinedFunction">getNDVI</Node>
+   <Node id="16" type="userDefinedFunction">getNDVI</Node>
+   <Node id="17" type="userDefinedFunction">getNDVI</Node>
+   <Node id="18" type="eeFunction">subtract</Node>
+   <Node id="19" type="eeFunction">updateMask</Node>
+   <Node id="20" type="literal">NDVI difference</Node>
+   <Node id="21" type="eeFunction">Map.addLayer</Node>
+   <Node id="22" type="literal">B4</Node>
+   <Node id="23" type="eeFunction">ee.List</Node>
+   <Node id="24" type="literal">B3</Node>
+   <Node id="25" type="identifier">image</Node>
+   <Node id="26" type="eeFunction">normalizedDifference</Node>
+</ServiceNode>
+<Relationship>
+   <Relation id="1" sourceNodeId="1" targetNodeId="2"></Relation>
+   <Relation id="2" sourceNodeId="3" targetNodeId="2"></Relation>
+   <Relation id="3" sourceNodeId="4" targetNodeId="5"></Relation>
+   <Relation id="4" sourceNodeId="6" targetNodeId="5"></Relation>
+   <Relation id="5" sourceNodeId="7" targetNodeId="5"></Relation>
+   <Relation id="6" sourceNodeId="8" targetNodeId="9"></Relation>
+   <Relation id="7" sourceNodeId="9" targetNodeId="10"></Relation>
+   <Relation id="8" sourceNodeId="11" targetNodeId="12"></Relation>
+   <Relation id="9" sourceNodeId="13" targetNodeId="14"></Relation>
+   <Relation id="10" sourceNodeId="12" targetNodeId="15"></Relation>
+   <Relation id="11" sourceNodeId="16" targetNodeId="15"></Relation>
+   <Relation id="12" sourceNodeId="14" targetNodeId="17"></Relation>
+   <Relation id="13" sourceNodeId="16" targetNodeId="17"></Relation>
+   <Relation id="14" sourceNodeId="15" targetNodeId="18"></Relation>
+   <Relation id="15" sourceNodeId="17" targetNodeId="18"></Relation>
+   <Relation id="16" sourceNodeId="18" targetNodeId="19"></Relation>
+   <Relation id="17" sourceNodeId="10" targetNodeId="19"></Relation>
+   <Relation id="18" sourceNodeId="20" targetNodeId="21"></Relation>
+   <Relation id="19" sourceNodeId="19" targetNodeId="21"></Relation>
+   <Relation id="20" sourceNodeId="5" targetNodeId="21"></Relation>
+   <Relation id="21" sourceNodeId="22" targetNodeId="23"></Relation>
+   <Relation id="22" sourceNodeId="24" targetNodeId="23"></Relation>
+   <Relation id="23" sourceNodeId="25" targetNodeId="26"></Relation>
+   <Relation id="24" sourceNodeId="23" targetNodeId="26"></Relation>
+</Relationship>
+</Process>
+</ModelingKnowledge>
+<!-- GEE Workflow Script Copy Module -->
+<SourceCode>
+    <Script line="1" startPosition="0" endPosition="11">
+        <Content type="comment">//NDVI mask</Content>
+    </Script>
+    <Script line="3" startPosition="15" endPosition="65">
+        <Content type="comment">// This function gets NDVI from Landsat 5 imagery.</Content>
+    </Script>
+    <Script line="4,5,6" startPosition="67" endPosition="154">
+        <Content type="code">var getNDVI = function(image) {
+
+  return image.normalizedDifference(['B4', 'B3']);
+
+};</Content>
+    </Script>
+    <Script line="8" startPosition="158" endPosition="203">
+        <Content type="comment">// Load two Landsat 5 images, 20 years apart.</Content>
+    </Script>
+    <Script line="9" startPosition="205" endPosition="275">
+        <Content type="code">var image1 = ee.Image('LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900604');</Content>
+    </Script>
+    <Script line="10" startPosition="277" endPosition="347">
+        <Content type="code">var image2 = ee.Image('LANDSAT/LT05/C02/T1_TOA/LT05_044034_20100611');</Content>
+    </Script>
+    <Script line="12" startPosition="351" endPosition="383">
+        <Content type="comment">// Compute NDVI from the scenes.</Content>
+    </Script>
+    <Script line="13" startPosition="385" endPosition="413">
+        <Content type="code">var ndvi1 = getNDVI(image1);</Content>
+    </Script>
+    <Script line="14" startPosition="415" endPosition="443">
+        <Content type="code">var ndvi2 = getNDVI(image2);</Content>
+    </Script>
+    <Script line="16" startPosition="447" endPosition="481">
+        <Content type="comment">// Compute the difference in NDVI.</Content>
+    </Script>
+    <Script line="17" startPosition="483" endPosition="526">
+        <Content type="code">var ndviDifference = ndvi2.subtract(ndvi1);</Content>
+    </Script>
+    <Script line="18" startPosition="528" endPosition="568">
+        <Content type="comment">// Load the land mask from the SRTM DEM.</Content>
+    </Script>
+    <Script line="19" startPosition="570" endPosition="620">
+        <Content type="code">var landMask = ee.Image('CGIAR/SRTM90_V4').mask();</Content>
+    </Script>
+    <Script line="21" startPosition="624" endPosition="678">
+        <Content type="comment">// Update the NDVI difference mask with the land mask.</Content>
+    </Script>
+    <Script line="22" startPosition="680" endPosition="739">
+        <Content type="code">var maskedDifference = ndviDifference.updateMask(landMask);</Content>
+    </Script>
+    <Script line="24" startPosition="743" endPosition="772">
+        <Content type="comment">// Display the masked result.</Content>
+    </Script>
+    <Script line="25" startPosition="774" endPosition="853">
+        <Content type="code">var vizParams = {min: -0.5, max: 0.5, palette: ['FF0000', 'FFFFFF', '0000FF']};</Content>
+    </Script>
+    <Script line="26" startPosition="855" endPosition="892">
+        <Content type="code">Map.setCenter(-122.2531, 37.6295, 9);</Content>
+    </Script>
+    <Script line="27" startPosition="894" endPosition="955">
+        <Content type="code">Map.addLayer(maskedDifference, vizParams, 'NDVI difference');</Content>
+    </Script>
+</SourceCode>
+<!-- Mapping Module -->
+<Mapping>
+    <MapEntry>
+        <ServiceNodeId>8</ServiceNodeId>
+        <GEEScriptPart startPosition="595" endPosition="610">CGIAR/SRTM90_V4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>11</ServiceNodeId>
+        <GEEScriptPart startPosition="300" endPosition="344">LANDSAT/LT05/C02/T1_TOA/LT05_044034_20100611</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>13</ServiceNodeId>
+        <GEEScriptPart startPosition="228" endPosition="272">LANDSAT/LT05/C02/T1_TOA/LT05_044034_19900604</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>20</ServiceNodeId>
+        <GEEScriptPart startPosition="937" endPosition="952">NDVI difference</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>22</ServiceNodeId>
+        <GEEScriptPart startPosition="138" endPosition="140">B4</GEEScriptPart>
+    </MapEntry>
+    <MapEntry>
+        <ServiceNodeId>24</ServiceNodeId>
+        <GEEScriptPart startPosition="144" endPosition="146">B3</GEEScriptPart>
+    </MapEntry>
+</Mapping>
+</GEEModelingKnowledgeTemplate>
